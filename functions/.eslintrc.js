@@ -9,6 +9,8 @@ module.exports = {
     "google",
   ],
   rules: {
-    quotes: ["error", "double"],
+    'linebreak-style': ["warn", "windows"],
+    'quote-props': ["warn", "consistent-as-needed"],
+    quotes: ["warn", "double"],
   },
 };

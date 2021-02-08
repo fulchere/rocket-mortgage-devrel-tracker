@@ -1,4 +1,4 @@
-// The Cloud Functions for Firebase SDK to create Cloud Functions and setup triggers.
+// The Cloud Functions for Firebase SDK to create Cloud Functions an
 const functions = require('firebase-functions');
 
 // The Firebase Admin SDK to access Firestore.
