@@ -8,6 +8,15 @@ module.exports = {
     "eslint:recommended",
     "google",
   ],
+  ecmaFeatures: {
+    "arrowFunctions": true,
+    "blockBindings": true,
+    "classes": true,
+    "defaultParams": true,
+    "modules": true,
+    "spread": true,
+    "globalReturn": true,
+  },
   rules: {
     'linebreak-style': ["warn", "windows"],
     'quote-props': ["warn", "consistent-as-needed"],
