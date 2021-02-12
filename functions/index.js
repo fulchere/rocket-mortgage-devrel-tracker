@@ -7,8 +7,6 @@ const admin = require('firebase-admin');
 const { firebaseConfig } = require('firebase-functions');
 admin.initializeApp();
 
-// Take the text parameter passed to this HTTP endpoint and insert it into 
-// Firestore under the path /messages/:documentId/original
 exports.addRating = functions.https.onRequest(async (req, res) => {
 
   // Grab the required parameters
@@ -27,4 +25,24 @@ exports.addRating = functions.https.onRequest(async (req, res) => {
 
   // Send back a message that we've successfully written the message
   res.json({result: `New rating added to ratings collection with ID: ${writeResult.id} added.`});
+});
+
+exports.addHost = functions.https.onRequest(async (req, res) => {
+
+  // Grab the required parameters
+  const email = req.query.email;
+  const event_ids = req.query.event_ids.split(',');
+  const name = req.query.name;
+  const phone_number = req.query.phone_number;
+  
+  const new_host = {email: email,
+                    event_ids: event_ids,
+                    name: name,
+                    phone_number: phone_number}
+
+  // Push the new rating into the hosts collection within Firestore
+  const writeResult = await admin.firestore().collection('hosts').add(new_host);
+
+  // Send back a message that we've successfully written the message
+  res.json({result: `New rating added to hosts collection with ID: ${writeResult.id} added.`});
 });
