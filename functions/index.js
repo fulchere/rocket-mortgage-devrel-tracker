@@ -20,7 +20,7 @@ exports.addRating = functions.https.onRequest(async (req, res) => {
   const new_rating = {event_id: parseInt(event_id),
                       rating: parseInt(rating),
                       speaker_id: parseInt(speaker_id),
-                      timestamp: FirebaseFirestore.Timestamp(timestamp)}
+                      timestamp: timestamp}
 
   // Push the new rating into the ratings collection within Firestore
   const writeResult = await admin.firestore().collection('ratings').add(new_rating);
