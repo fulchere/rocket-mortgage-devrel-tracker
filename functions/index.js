@@ -4,6 +4,7 @@ const functions = require('firebase-functions');
 
 // The Firebase Admin SDK to access Firestore.
 const admin = require('firebase-admin');
+const { firebaseConfig } = require('firebase-functions');
 admin.initializeApp();
 
 // Take the text parameter passed to this HTTP endpoint and insert it into 
@@ -16,10 +17,10 @@ exports.addRating = functions.https.onRequest(async (req, res) => {
   const speaker_id = req.query.speaker_id;
   const timestamp = req.query.timestamp;
   
-  const new_rating = {event_id: event_id,
-                      rating: rating,
-                      speaker_id: speaker_id,
-                      timestamp: timestamp}
+  const new_rating = {event_id: parseInt(event_id),
+                      rating: parseInt(rating),
+                      speaker_id: parseInt(speaker_id),
+                      timestamp: FirebaseFirestore.Timestamp(timestamp)}
 
   // Push the new rating into the ratings collection within Firestore
   const writeResult = await admin.firestore().collection('ratings').add(new_rating);
