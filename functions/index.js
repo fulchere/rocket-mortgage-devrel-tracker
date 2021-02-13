@@ -46,3 +46,21 @@ exports.addHost = functions.https.onRequest(async (req, res) => {
   // Send back a message that we've successfully written the message
   res.json({result: `New rating added to hosts collection with ID: ${writeResult.id} added.`});
 });
+
+exports.addBooth = functions.https.onRequest(async (req, res) => {
+
+    // Grab the required parameters
+    const event_id = req.query.event_id;
+    const name = req.query.name;
+    const speaker_ids = req.query.speaker_ids.split(',');
+
+    const new_booth = {event_id: parseInt(event_id),
+        name: name,
+        speaker_ids: speaker_ids}
+
+    // Push the new rating into the hosts collection within Firestore
+    const writeResult = await admin.firestore().collection('booths').add(new_booth);
+
+    // Send back a message that we've successfully written the message
+    res.json({result: `New rating added to booths collection with ID: ${writeResult.id} added.`});
+});
