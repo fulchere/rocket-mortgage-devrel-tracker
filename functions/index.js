@@ -37,7 +37,7 @@ exports.addCallForPapers = functions.https.onRequest(async (req, res) => {
     const submitted = req.query.submitted;
 
     const new_callForPapers = {accepted: accepted,
-        deadline: deadline
+        deadline: deadline,
         event_id: parseInt(event_id),
         speaker_id: parseInt(speaker_id),
         submitted: submitted}
