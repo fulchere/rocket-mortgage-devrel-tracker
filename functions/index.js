@@ -64,3 +64,25 @@ exports.addBooth = functions.https.onRequest(async (req, res) => {
     // Send back a message that we've successfully written the message
     res.json({result: `New rating added to booths collection with ID: ${writeResult.id} added.`});
 });
+
+exports.addBooth = functions.https.onRequest(async (req, res) => {
+
+    // Grab the required parameters
+    const accepted = req.query.accepted;
+    const deadline = req.query.deadline;
+    const event_id = req.query.event_id;
+    const speaker_id = req.query.speaker_id;
+    const submitted = req.query.submitted;
+
+    const new_callForPapers = {accepted: accepted,
+        deadline: deadline
+        event_id: parseInt(event_id),
+        speaker_id: parseInt(speaker_id),
+        submitted: submitted}
+
+    // Push the new rating into the hosts collection within Firestore
+    const writeResult = await admin.firestore().collection('callForPapers').add(new_callForPapers);
+
+    // Send back a message that we've successfully written the message
+    res.json({result: `New rating added to callForPapers collection with ID: ${writeResult.id} added.`});
+});
