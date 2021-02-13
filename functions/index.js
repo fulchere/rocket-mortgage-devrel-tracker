@@ -7,6 +7,7 @@ const admin = require('firebase-admin');
 const { firebaseConfig } = require('firebase-functions');
 admin.initializeApp();
 
+// Booth Collection
 exports.addBooth = functions.https.onRequest(async (req, res) => {
 
     // Grab the required parameters
@@ -25,6 +26,7 @@ exports.addBooth = functions.https.onRequest(async (req, res) => {
     res.json({result: `New rating added to booths collection with ID: ${writeResult.id} added.`});
 });
 
+// CallForPapers Collection
 exports.addCallForPapers = functions.https.onRequest(async (req, res) => {
 
     // Grab the required parameters
@@ -47,6 +49,7 @@ exports.addCallForPapers = functions.https.onRequest(async (req, res) => {
     res.json({result: `New rating added to callForPapers collection with ID: ${writeResult.id} added.`});
 });
 
+// Event Collection
 exports.addEvent = functions.https.onRequest(async (req, res) => {
 
     // Grab the required parameters
@@ -81,6 +84,7 @@ exports.addEvent = functions.https.onRequest(async (req, res) => {
     res.json({result: `New rating added to events collection with ID: ${writeResult.id} added.`});
 });
 
+// Host Collection
 exports.addHost = functions.https.onRequest(async (req, res) => {
 
     // Grab the required parameters
@@ -101,6 +105,7 @@ exports.addHost = functions.https.onRequest(async (req, res) => {
     res.json({result: `New rating added to hosts collection with ID: ${writeResult.id} added.`});
 });
 
+// Media Collection
 exports.addMedia = functions.https.onRequest(async (req, res) => {
 
     // Grab the required parameters
@@ -119,6 +124,7 @@ exports.addMedia = functions.https.onRequest(async (req, res) => {
     res.json({result: `New rating added to media collection with ID: ${writeResult.id} added.`});
 });
 
+// Rating Collection
 exports.addRating = functions.https.onRequest(async (req, res) => {
 
   // Grab the required parameters
@@ -137,4 +143,29 @@ exports.addRating = functions.https.onRequest(async (req, res) => {
 
   // Send back a message that we've successfully written the message
   res.json({result: `New rating added to ratings collection with ID: ${writeResult.id} added.`});
+});
+
+// Speaker Collection
+exports.addSpeaker = functions.https.onRequest(async (req, res) => {
+
+    // Grab the required parameters
+    const booth_ids = req.query.booth_ids.split(',');
+    const email = req.query.email;
+    const media_ids = req.query.media_ids.split(',');
+    const name = req.query.name;
+    const role = req.query.role;
+    const talk_ids = req.query.talk_ids.split(',');
+
+    const new_media = {booth_ids: booth_ids,
+        email: email,
+        media_ids: media_ids,
+        name: name,
+        role: role,
+        talk_ids: talk_ids}
+
+    // Push the new rating into the hosts collection within Firestore
+    const writeResult = await admin.firestore().collection('speakers').add(new_speaker);
+
+    // Send back a message that we've successfully written the message
+    res.json({result: `New rating added to speakers collection with ID: ${writeResult.id} added.`});
 });
