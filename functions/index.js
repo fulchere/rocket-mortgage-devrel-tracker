@@ -101,6 +101,24 @@ exports.addHost = functions.https.onRequest(async (req, res) => {
     res.json({result: `New rating added to hosts collection with ID: ${writeResult.id} added.`});
 });
 
+exports.addMedia = functions.https.onRequest(async (req, res) => {
+
+    // Grab the required parameters
+    const name = req.query.name;
+    const speaker_ids = req.query.speaker_ids.split(',');
+    const type = req.query.type;
+
+    const new_media = {name: name,
+        speaker_ids: speaker_ids,
+        type: type}
+
+    // Push the new rating into the hosts collection within Firestore
+    const writeResult = await admin.firestore().collection('media').add(new_media);
+
+    // Send back a message that we've successfully written the message
+    res.json({result: `New rating added to media collection with ID: ${writeResult.id} added.`});
+});
+
 exports.addRating = functions.https.onRequest(async (req, res) => {
 
   // Grab the required parameters
