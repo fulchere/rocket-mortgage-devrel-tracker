@@ -65,7 +65,7 @@ exports.addBooth = functions.https.onRequest(async (req, res) => {
     res.json({result: `New rating added to booths collection with ID: ${writeResult.id} added.`});
 });
 
-exports.addBooth = functions.https.onRequest(async (req, res) => {
+exports.addCallForPapers = functions.https.onRequest(async (req, res) => {
 
     // Grab the required parameters
     const accepted = req.query.accepted;
