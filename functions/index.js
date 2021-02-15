@@ -253,6 +253,18 @@ exports.getMedia = functions.https.onRequest(async (req, res) => {
 
     const mediaResult = snapshot.docs.map(doc => doc.data());
 
-    // Send back all the documents from the events collection
+    // Send back all the documents from the media collection
     res.json({documents: mediaResult});
+});
+
+// Get all documents in the ratings collection
+exports.getRating = functions.https.onRequest(async (req, res) => {
+
+    const ratingRef = await admin.firestore().collection('ratings');
+    const snapshot = await ratingRef.get();
+
+    const ratingResult = snapshot.docs.map(doc => doc.data());
+
+    // Send back all the documents from the ratings collection
+    res.json({documents: ratingResult});
 });
