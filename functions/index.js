@@ -224,7 +224,7 @@ exports.addTalk = functions.https.onRequest(async (req, res) => {
     res.json({result: `New rating added to talks collection with ID: ${writeResult.id} added.`});
 });
 
-// Get all documents in the booth collection
+// Get all documents in the booths collection
 exports.getBooths = functions.https.onRequest(async (req, res) => {
 
     const boothRef = await admin.firestore().collection('booths');
@@ -232,7 +232,7 @@ exports.getBooths = functions.https.onRequest(async (req, res) => {
 
     const boothResult = snapshot.docs.map(doc => doc.data());
 
-    // Send back all the documents from the booth collection
+    // Send back all the documents from the booths collection
     res.json({documents: boothResult});
 });
 
@@ -246,5 +246,17 @@ exports.getCallforpapers = functions.https.onRequest(async (req, res) => {
 
     // Send back all the documents from the callforpapers collection
     res.json({documents: callforpapersResult});
+});
+
+// Get all documents in the events collection
+exports.getEvent = functions.https.onRequest(async (req, res) => {
+
+    const eventRef = await admin.firestore().collection('events');
+    const snapshot = await eventRef.get();
+
+    const eventResult = snapshot.docs.map(doc => doc.data());
+
+    // Send back all the documents from the events collection
+    res.json({documents: eventResult});
 });
 
