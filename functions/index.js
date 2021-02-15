@@ -27,7 +27,7 @@ exports.addBooth = functions.https.onRequest(async (req, res) => {
 });
 
 // CallForPapers Collection
-exports.addCallForPapers = functions.https.onRequest(async (req, res) => {
+exports.addCallforpapers = functions.https.onRequest(async (req, res) => {
 
     // Grab the required parameters
     const accepted = req.query.accepted;
@@ -36,17 +36,17 @@ exports.addCallForPapers = functions.https.onRequest(async (req, res) => {
     const speaker_id = req.query.speaker_id;
     const submitted = req.query.submitted;
 
-    const new_callForPapers = {accepted: accepted,
+    const new_callforpapers = {accepted: accepted,
         deadline: deadline,
         event_id: parseInt(event_id),
         speaker_id: parseInt(speaker_id),
         submitted: submitted}
 
     // Push the new rating into the hosts collection within Firestore
-    const writeResult = await admin.firestore().collection('callForPapers').add(new_callForPapers);
+    const writeResult = await admin.firestore().collection('callforpapers').add(new_callforpapers);
 
     // Send back a message that we've successfully written the message
-    res.json({result: `New rating added to callForPapers collection with ID: ${writeResult.id} added.`});
+    res.json({result: `New rating added to callforpapers collection with ID: ${writeResult.id} added.`});
 });
 
 // Event Collection
