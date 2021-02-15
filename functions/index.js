@@ -235,3 +235,16 @@ exports.getBooths = functions.https.onRequest(async (req, res) => {
     // Send back all the documents from the booth collection
     res.json({documents: boothResult});
 });
+
+// Get all documents in the callforpapers collection
+exports.getCallforpapers = functions.https.onRequest(async (req, res) => {
+
+    const callforpapersRef = await admin.firestore().collection('callforpapers');
+    const snapshot = await callforpapersRef.get();
+
+    const callforpapersResult = snapshot.docs.map(doc => doc.data());
+
+    // Send back all the documents from the callforpapers collection
+    res.json({documents: callforpapersResult});
+});
+
