@@ -297,3 +297,15 @@ exports.getRating = functions.https.onRequest(async (req, res) => {
     // Send back all the documents from the ratings collection
     res.json({documents: ratingResult});
 });
+
+// Get all documents in the speakers collection
+exports.getSpeaker = functions.https.onRequest(async (req, res) => {
+
+    const speakerRef = await admin.firestore().collection('speakers');
+    const snapshot = await speakerRef.get();
+
+    const speakerResult = snapshot.docs.map(doc => doc.data());
+
+    // Send back all the documents from the speakers collection
+    res.json({documents: speakerResult});
+});
