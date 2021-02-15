@@ -7,7 +7,7 @@ const admin = require('firebase-admin');
 const { firebaseConfig } = require('firebase-functions');
 admin.initializeApp();
 
-// Booth Collection
+// Booths Collection
 exports.addBooth = functions.https.onRequest(async (req, res) => {
 
     // Grab the required parameters
@@ -49,7 +49,7 @@ exports.addCallforpapers = functions.https.onRequest(async (req, res) => {
     res.json({result: `New rating added to callforpapers collection with ID: ${writeResult.id} added.`});
 });
 
-// Event Collection
+// Events Collection
 exports.addEvent = functions.https.onRequest(async (req, res) => {
 
     // Grab the required parameters
@@ -84,7 +84,7 @@ exports.addEvent = functions.https.onRequest(async (req, res) => {
     res.json({result: `New rating added to events collection with ID: ${writeResult.id} added.`});
 });
 
-// Host Collection
+// Hosts Collection
 exports.addHost = functions.https.onRequest(async (req, res) => {
 
     // Grab the required parameters
@@ -124,7 +124,7 @@ exports.addMedia = functions.https.onRequest(async (req, res) => {
     res.json({result: `New rating added to media collection with ID: ${writeResult.id} added.`});
 });
 
-// Rating Collection
+// Ratings Collection
 exports.addRating = functions.https.onRequest(async (req, res) => {
 
   // Grab the required parameters
@@ -145,7 +145,7 @@ exports.addRating = functions.https.onRequest(async (req, res) => {
   res.json({result: `New rating added to ratings collection with ID: ${writeResult.id} added.`});
 });
 
-// Speaker Collection
+// Speakers Collection
 exports.addSpeaker = functions.https.onRequest(async (req, res) => {
 
     // Grab the required parameters
@@ -170,7 +170,7 @@ exports.addSpeaker = functions.https.onRequest(async (req, res) => {
     res.json({result: `New rating added to speakers collection with ID: ${writeResult.id} added.`});
 });
 
-// Talk Collection
+// Talks Collection
 exports.addTalk = functions.https.onRequest(async (req, res) => {
 
     // Grab the required parameters
@@ -234,7 +234,7 @@ exports.getBoothByEventId = functions.https.onRequest(async (req, res) => {
 
     const boothResult = snapshot.docs.map(doc => doc.data());
 
-    // Send back all the documents from the booth collection
+    // Send back all the documents from the booths collection
     res.json({documents: boothResult});
 });
 
@@ -250,3 +250,38 @@ exports.getCallforpapers = functions.https.onRequest(async (req, res) => {
     res.json({documents: callforpapersResult});
 });
 
+// Get all documents in the events collection
+exports.getEvent = functions.https.onRequest(async (req, res) => {
+
+    const eventRef = await admin.firestore().collection('events');
+    const snapshot = await eventRef.get();
+
+    const eventResult = snapshot.docs.map(doc => doc.data());
+
+    // Send back all the documents from the events collection
+    res.json({documents: eventResult});
+});
+
+// Get all documents in the hosts collection
+exports.getHost = functions.https.onRequest(async (req, res) => {
+
+    const hostRef = await admin.firestore().collection('hosts');
+    const snapshot = await hostRef.get();
+
+    const hostResult = snapshot.docs.map(doc => doc.data());
+
+    // Send back all the documents from the hosts collection
+    res.json({documents: hostResult});
+});
+
+// Get all documents in the media collection
+exports.getMedia = functions.https.onRequest(async (req, res) => {
+
+    const mediaRef = await admin.firestore().collection('media');
+    const snapshot = await mediaRef.get();
+
+    const mediaResult = snapshot.docs.map(doc => doc.data());
+
+    // Send back all the documents from the events collection
+    res.json({documents: mediaResult});
+});
