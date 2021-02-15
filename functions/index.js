@@ -226,7 +226,7 @@ exports.addTalk = functions.https.onRequest(async (req, res) => {
 
 // Get all documents in the booths collection
 exports.getBooths = functions.https.onRequest(async (req, res) => {
-
+    
     const boothRef = await admin.firestore().collection('booths');
     const snapshot = await boothRef.get();
 
