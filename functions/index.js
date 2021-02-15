@@ -197,33 +197,6 @@ exports.addTalk = functions.https.onRequest(async (req, res) => {
     res.json({result: `New rating added to talks collection with ID: ${writeResult.id} added.`});
 });
 
-// Talk Collection
-exports.addTalk = functions.https.onRequest(async (req, res) => {
-
-    // Grab the required parameters
-    const accepted_status = req.query.accepted_status;
-    const attendees = req.query.attendees;
-    const description = req.query.description;
-    const given_status = req.query.given_status;
-    const speaker_ids = req.query.speaker_ids.split(',');
-    const submitted_status = req.query.submitted_status;
-    const title = req.query.title;
-
-    const new_talk = {accepted_status: accepted_status,
-        attendees: parseInt(attendees),
-        description: description,
-        given_status: given_status,
-        speaker_ids: speaker_ids,
-        submitted_status: submitted_status,
-        title: title}
-
-    // Push the new rating into the hosts collection within Firestore
-    const writeResult = await admin.firestore().collection('talks').add(new_talk);
-
-    // Send back a message that we've successfully written the message
-    res.json({result: `New rating added to talks collection with ID: ${writeResult.id} added.`});
-});
-
 // Get all documents in the booth collection
 exports.getBoothByEventId = functions.https.onRequest(async (req, res) => {
 
@@ -308,4 +281,28 @@ exports.getSpeaker = functions.https.onRequest(async (req, res) => {
 
     // Send back all the documents from the speakers collection
     res.json({documents: speakerResult});
+});
+
+// Get all documents in the events collection
+exports.getEvent = functions.https.onRequest(async (req, res) => {
+
+    const eventRef = await admin.firestore().collection('events');
+    const snapshot = await eventRef.get();
+
+    const eventResult = snapshot.docs.map(doc => doc.data());
+
+    // Send back all the documents from the events collection
+    res.json({documents: eventResult});
+});
+
+// Get all documents in the talks collection
+exports.getTalk = functions.https.onRequest(async (req, res) => {
+
+    const talkRef = await admin.firestore().collection('talks');
+    const snapshot = await talkRef.get();
+
+    const talkResult = snapshot.docs.map(doc => doc.data());
+
+    // Send back all the documents from the talks collection
+    res.json({documents: talkResult});
 });
