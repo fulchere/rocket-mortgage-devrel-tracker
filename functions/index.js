@@ -78,10 +78,10 @@ exports.addEvent = functions.https.onRequest(async (req, res) => {
         start: start}
 
     // Push the new rating into the hosts collection within Firestore
-    const writeResult = await admin.firestore().collection('events').add(new_event);
+    const writeResult = await admin.firestore().collection('event').add(new_event);
 
     // Send back a message that we've successfully written the message
-    res.json({result: `New rating added to events collection with ID: ${writeResult.id} added.`});
+    res.json({result: `New rating added to event collection with ID: ${writeResult.id} added.`});
 });
 
 // Host Collection
