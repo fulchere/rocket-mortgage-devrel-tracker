@@ -233,5 +233,5 @@ exports.getBooths = functions.https.onRequest(async (req, res) => {
     const boothResult = snapshot.docs.map(doc => doc.data());
 
     // Send back all the documents from the booth collection
-    res.json({data: boothResult});
+    res.json({documents: boothResult});
 });
