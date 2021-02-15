@@ -197,11 +197,40 @@ exports.addTalk = functions.https.onRequest(async (req, res) => {
     res.json({result: `New rating added to talks collection with ID: ${writeResult.id} added.`});
 });
 
-// Get all documents in the booths collection
-exports.getBooths = functions.https.onRequest(async (req, res) => {
-    
+// Talk Collection
+exports.addTalk = functions.https.onRequest(async (req, res) => {
+
+    // Grab the required parameters
+    const accepted_status = req.query.accepted_status;
+    const attendees = req.query.attendees;
+    const description = req.query.description;
+    const given_status = req.query.given_status;
+    const speaker_ids = req.query.speaker_ids.split(',');
+    const submitted_status = req.query.submitted_status;
+    const title = req.query.title;
+
+    const new_talk = {accepted_status: accepted_status,
+        attendees: parseInt(attendees),
+        description: description,
+        given_status: given_status,
+        speaker_ids: speaker_ids,
+        submitted_status: submitted_status,
+        title: title}
+
+    // Push the new rating into the hosts collection within Firestore
+    const writeResult = await admin.firestore().collection('talks').add(new_talk);
+
+    // Send back a message that we've successfully written the message
+    res.json({result: `New rating added to talks collection with ID: ${writeResult.id} added.`});
+});
+
+// Get all documents in the booth collection
+exports.getBoothByEventId = functions.https.onRequest(async (req, res) => {
+
+    const event_id = req.query.event_id;
+
     const boothRef = await admin.firestore().collection('booths');
-    const snapshot = await boothRef.get();
+    const snapshot = await boothRef.where('event_id', '==', event_id).get();
 
     const boothResult = snapshot.docs.map(doc => doc.data());
 
