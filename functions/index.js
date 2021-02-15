@@ -7,7 +7,7 @@ const admin = require('firebase-admin');
 const { firebaseConfig } = require('firebase-functions');
 admin.initializeApp();
 
-// Booth Collection
+// Booths Collection
 exports.addBooth = functions.https.onRequest(async (req, res) => {
 
     // Grab the required parameters
@@ -49,7 +49,7 @@ exports.addCallforpapers = functions.https.onRequest(async (req, res) => {
     res.json({result: `New rating added to callforpapers collection with ID: ${writeResult.id} added.`});
 });
 
-// Event Collection
+// Events Collection
 exports.addEvent = functions.https.onRequest(async (req, res) => {
 
     // Grab the required parameters
@@ -84,7 +84,7 @@ exports.addEvent = functions.https.onRequest(async (req, res) => {
     res.json({result: `New rating added to events collection with ID: ${writeResult.id} added.`});
 });
 
-// Host Collection
+// Hosts Collection
 exports.addHost = functions.https.onRequest(async (req, res) => {
 
     // Grab the required parameters
@@ -124,7 +124,7 @@ exports.addMedia = functions.https.onRequest(async (req, res) => {
     res.json({result: `New rating added to media collection with ID: ${writeResult.id} added.`});
 });
 
-// Rating Collection
+// Ratings Collection
 exports.addRating = functions.https.onRequest(async (req, res) => {
 
   // Grab the required parameters
@@ -145,7 +145,7 @@ exports.addRating = functions.https.onRequest(async (req, res) => {
   res.json({result: `New rating added to ratings collection with ID: ${writeResult.id} added.`});
 });
 
-// Speaker Collection
+// Speakers Collection
 exports.addSpeaker = functions.https.onRequest(async (req, res) => {
 
     // Grab the required parameters
@@ -170,34 +170,7 @@ exports.addSpeaker = functions.https.onRequest(async (req, res) => {
     res.json({result: `New rating added to speakers collection with ID: ${writeResult.id} added.`});
 });
 
-// Talk Collection
-exports.addTalk = functions.https.onRequest(async (req, res) => {
-
-    // Grab the required parameters
-    const accepted_status = req.query.accepted_status;
-    const attendees = req.query.attendees;
-    const description = req.query.description;
-    const given_status = req.query.given_status;
-    const speaker_ids = req.query.speaker_ids.split(',');
-    const submitted_status = req.query.submitted_status;
-    const title = req.query.title;
-
-    const new_talk = {accepted_status: accepted_status,
-        attendees: parseInt(attendees),
-        description: description,
-        given_status: given_status,
-        speaker_ids: speaker_ids,
-        submitted_status: submitted_status,
-        title: title}
-
-    // Push the new rating into the hosts collection within Firestore
-    const writeResult = await admin.firestore().collection('talks').add(new_talk);
-
-    // Send back a message that we've successfully written the message
-    res.json({result: `New rating added to talks collection with ID: ${writeResult.id} added.`});
-});
-
-// Talk Collection
+// Talks Collection
 exports.addTalk = functions.https.onRequest(async (req, res) => {
 
     // Grab the required parameters
@@ -260,3 +233,14 @@ exports.getEvent = functions.https.onRequest(async (req, res) => {
     res.json({documents: eventResult});
 });
 
+// Get all documents in the hosts collection
+exports.getHost = functions.https.onRequest(async (req, res) => {
+
+    const hostRef = await admin.firestore().collection('hosts');
+    const snapshot = await hostRef.get();
+
+    const hostResult = snapshot.docs.map(doc => doc.data());
+
+    // Send back all the documents from the hosts collection
+    res.json({documents: hostResult});
+});
