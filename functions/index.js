@@ -244,3 +244,15 @@ exports.getHost = functions.https.onRequest(async (req, res) => {
     // Send back all the documents from the hosts collection
     res.json({documents: hostResult});
 });
+
+// Get all documents in the media collection
+exports.getMedia = functions.https.onRequest(async (req, res) => {
+
+    const mediaRef = await admin.firestore().collection('media');
+    const snapshot = await mediaRef.get();
+
+    const mediaResult = snapshot.docs.map(doc => doc.data());
+
+    // Send back all the documents from the events collection
+    res.json({documents: mediaResult});
+});
