@@ -225,10 +225,12 @@ exports.addTalk = functions.https.onRequest(async (req, res) => {
 });
 
 // Get all documents in the booth collection
-exports.getBooths = functions.https.onRequest(async (req, res) => {
-    
+exports.getBoothByEventId = functions.https.onRequest(async (req, res) => {
+
+    const event_id = req.query.event_id;
+
     const boothRef = await admin.firestore().collection('booths');
-    const snapshot = await boothRef.get();
+    const snapshot = await boothRef.where('event_id', '==', event_id).get();
 
     const boothResult = snapshot.docs.map(doc => doc.data());
 
