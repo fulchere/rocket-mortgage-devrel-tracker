@@ -1,9 +1,11 @@
 import React from 'react'
 
+import CEventBrowser from './CEventBrowser'
+
 export default function CMedia() {
     return (
         <div>
-            You've reached Other Media.
+            <CEventBrowser type='Media'/>
         </div>
     )
 }

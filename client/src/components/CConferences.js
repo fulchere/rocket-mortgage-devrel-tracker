@@ -1,9 +1,11 @@
 import React from 'react'
 
+import CEventBrowser from './CEventBrowser'
+
 export default function CConferences() {
     return (
         <div>
-            You've reached the Conferences Viewer.
+            <CEventBrowser type='Conference'/>
         </div>
     )
 }

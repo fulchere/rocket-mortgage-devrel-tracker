@@ -1,9 +1,11 @@
 import React from 'react'
 
+import CEventBrowser from './CEventBrowser'
+
 export default function CTalks() {
     return (
         <div>
-            You've reached the Talks Viewer.
+            <CEventBrowser type="Talk"/>
         </div>
     )
 }
