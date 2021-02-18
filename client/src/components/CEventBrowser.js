@@ -10,10 +10,10 @@ export default function CEventBrowser({type}) {
     return (
         <Container fluid={true}>
             <Row noGutters={true}>
-                <Col>
+                <Col sm="12" md="4" lg="3">
             <CEventList type={type}/>
             </Col>
-            <Col>
+            <Col sm="12" md="4" lg="6">
             <CEvent type={type}/>
             </Col>
             </Row>

@@ -5,11 +5,13 @@ export default function CEventList({type}) {
     return (
         <Container>
             <Row noGutters={true}>
-                    <Col sm='9'>
+                    <Col sm='10'>
                         <h5>Your {type}s</h5>
                     </Col>
                     <Col>
+                    <div align="right">
                         <Button theme="primary">+</Button>
+                        </div>
                     </Col>
             </Row>
 
