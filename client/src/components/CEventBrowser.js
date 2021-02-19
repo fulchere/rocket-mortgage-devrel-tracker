@@ -8,6 +8,7 @@ import CEvent from './CEvent'
 
 export default function CEventBrowser({type}) {
     return (
+        <div style={{padding: "20px"}}>
         <Container fluid={true}>
             <Row noGutters={true}>
                 <Col sm="12" md="4" lg="3">
@@ -18,5 +19,6 @@ export default function CEventBrowser({type}) {
             </Col>
             </Row>
         </Container>
+        </div>
     )
 }
