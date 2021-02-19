@@ -31,6 +31,19 @@ export default function CEventTalk() {
                         </Container>
                     </Row>
                 </Col>
+                <Col>
+                <Row>Talks Status</Row>
+                    <Row>
+                    <Container>{/*  */}
+                        <ListGroup>
+                        <ListGroupItem>Status:Given</ListGroupItem>
+                        <ListGroupItem>Status:Submitted</ListGroupItem>
+                        <ListGroupItem>Status:Given</ListGroupItem>
+                        <ListGroupItem>Status:Accepted</ListGroupItem>
+                        </ListGroup>
+                        </Container>
+                    </Row>
+                </Col>
 
             </Row>
         </Container>
