@@ -211,6 +211,20 @@ exports.getBoothByEventId = functions.https.onRequest(async (req, res) => {
     res.json({documents: boothResult});
 });
 
+// Get all documents in the booth collection
+exports.getEventByEventId = functions.https.onRequest(async (req, res) => {
+
+    const event_id = req.query.event_id;
+
+    const boothRef = await admin.firestore().collection('events');
+    const snapshot = await boothRef.where('event_id', '==', event_id).get();
+
+    const boothResult = snapshot.docs.map(doc => doc.data());
+
+    // Send back all the matching events by event_id from the events collection
+    res.json({documents: boothResult});
+});
+
 // Get all documents in the callforpapers collection
 exports.getCallforpapers = functions.https.onRequest(async (req, res) => {
 
