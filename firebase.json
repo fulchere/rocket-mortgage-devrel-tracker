@@ -13,7 +13,7 @@
     "source": "functions"
   },
   "hosting": {
-    "public": "client\\webclient\\build",
+    "public": "client\\build",
     "ignore": [
       "firebase.json",
       "**/.*",

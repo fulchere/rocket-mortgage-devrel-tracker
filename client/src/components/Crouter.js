@@ -7,6 +7,9 @@ import CHomepage from './CHomepage'
 import CConferences from './CConferences'
 import CTalks from './CTalks'
 import CMedia from './CMedia'
+import CLogin from './CLogin'
+
+import CAddConference from './CAddConference'
 
 export default function Crouter() {
     return (
@@ -25,6 +28,12 @@ export default function Crouter() {
             </Route>
             <Route path="/media" exact>
             <CMedia />
+            </Route>
+            <Route path="/addconference" exact>
+            <CAddConference />
+            </Route>
+            <Route path="/login" exact>
+            <CLogin />
             </Route>
             </Switch>
         </Router>

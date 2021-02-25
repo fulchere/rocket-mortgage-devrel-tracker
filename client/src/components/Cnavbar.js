@@ -45,7 +45,7 @@ export default function Cnavbar({loggedIn, user, logout}) {
           </Nav>
 
           <Nav navbar className="ml-auto">
-          <Button theme="light">Logout</Button>
+          <Button theme="light" href="login">Login</Button>
           </Nav>
       </Navbar>
     )
