@@ -14,10 +14,12 @@ exports.addBooth = functions.https.onRequest(async (req, res) => {
     const event_id = req.query.event_id;
     const name = req.query.name;
     const speaker_ids = req.query.speaker_ids.split(',');
+    const booth_id = req.query.booth_id;
 
     const new_booth = {event_id: parseInt(event_id),
         name: name,
-        speaker_ids: speaker_ids}
+        speaker_ids: speaker_ids,
+        booth_id: booth_id}
 
     // Push the new rating into the hosts collection within Firestore
     const writeResult = await admin.firestore().collection('booths').add(new_booth);
@@ -35,12 +37,14 @@ exports.addCallforpapers = functions.https.onRequest(async (req, res) => {
     const event_id = req.query.event_id;
     const speaker_id = req.query.speaker_id;
     const submitted = req.query.submitted;
+    const callforpapers_id = req.query.callforpapers_id;
 
     const new_callforpapers = {accepted: accepted,
         deadline: deadline,
         event_id: parseInt(event_id),
         speaker_id: parseInt(speaker_id),
-        submitted: submitted}
+        submitted: submitted,
+        callforpapers_id: callforpapers_id}
 
     // Push the new rating into the hosts collection within Firestore
     const writeResult = await admin.firestore().collection('callforpapers').add(new_callforpapers);
@@ -64,6 +68,7 @@ exports.addEvent = functions.https.onRequest(async (req, res) => {
     const recruiting_partner = req.query.recruiting_partner;
     const seasonality = req.query.seasonality;
     const start = req.query.start;
+    const event_id = req.query.event_id;
 
     const new_event = {address: address,
         attendees: parseInt(attendees),
@@ -75,7 +80,8 @@ exports.addEvent = functions.https.onRequest(async (req, res) => {
         name: name,
         recruiting_partner: recruiting_partner,
         seasonality: seasonality,
-        start: start}
+        start: start,
+        event_id: event_id}
 
     // Push the new rating into the hosts collection within Firestore
     const writeResult = await admin.firestore().collection('events').add(new_event);
@@ -92,11 +98,13 @@ exports.addHost = functions.https.onRequest(async (req, res) => {
     const event_ids = req.query.event_ids.split(',');
     const name = req.query.name;
     const phone_number = req.query.phone_number;
+    const host_id = req.query.host_id;
 
     const new_host = {email: email,
         event_ids: event_ids,
         name: name,
-        phone_number: phone_number}
+        phone_number: phone_number,
+        host_id: host_id}
 
     // Push the new rating into the hosts collection within Firestore
     const writeResult = await admin.firestore().collection('hosts').add(new_host);
@@ -112,10 +120,12 @@ exports.addMedia = functions.https.onRequest(async (req, res) => {
     const name = req.query.name;
     const speaker_ids = req.query.speaker_ids.split(',');
     const type = req.query.type;
+    const media_id = req.query.media_id;
 
     const new_media = {name: name,
         speaker_ids: speaker_ids,
-        type: type}
+        type: type,
+        media_id: media_id}
 
     // Push the new rating into the hosts collection within Firestore
     const writeResult = await admin.firestore().collection('media').add(new_media);
@@ -128,15 +138,17 @@ exports.addMedia = functions.https.onRequest(async (req, res) => {
 exports.addRating = functions.https.onRequest(async (req, res) => {
 
   // Grab the required parameters
-  const event_id = req.query.event_id;
-  const rating = req.query.rating;
-  const speaker_id = req.query.speaker_id;
-  const timestamp = req.query.timestamp;
-  
-  const new_rating = {event_id: parseInt(event_id),
-                      rating: parseInt(rating),
-                      speaker_id: parseInt(speaker_id),
-                      timestamp: timestamp}
+    const event_id = req.query.event_id;
+    const rating = req.query.rating;
+    const speaker_id = req.query.speaker_id;
+    const timestamp = req.query.timestamp;
+    const rating_id = req.query.rating_id;
+
+    const new_rating = {event_id: parseInt(event_id),
+        rating: parseInt(rating),
+        speaker_id: parseInt(speaker_id),
+        timestamp: timestamp,
+        rating_id: rating_id}
 
   // Push the new rating into the ratings collection within Firestore
   const writeResult = await admin.firestore().collection('ratings').add(new_rating);
@@ -155,13 +167,15 @@ exports.addSpeaker = functions.https.onRequest(async (req, res) => {
     const name = req.query.name;
     const role = req.query.role;
     const talk_ids = req.query.talk_ids.split(',');
+    const speaker_id = req.query.speaker_id;
 
     const new_speaker = {booth_ids: booth_ids,
         email: email,
         media_ids: media_ids,
         name: name,
         role: role,
-        talk_ids: talk_ids}
+        talk_ids: talk_ids,
+        speaker_id: speaker_id}
 
     // Push the new rating into the hosts collection within Firestore
     const writeResult = await admin.firestore().collection('speakers').add(new_speaker);
@@ -181,6 +195,7 @@ exports.addTalk = functions.https.onRequest(async (req, res) => {
     const speaker_ids = req.query.speaker_ids.split(',');
     const submitted_status = req.query.submitted_status;
     const title = req.query.title;
+    const talk_id = req.query.talk_id;
 
     const new_talk = {accepted_status: accepted_status,
         attendees: parseInt(attendees),
@@ -188,7 +203,8 @@ exports.addTalk = functions.https.onRequest(async (req, res) => {
         given_status: given_status,
         speaker_ids: speaker_ids,
         submitted_status: submitted_status,
-        title: title}
+        title: title,
+        talk_id: talk_id}
 
     // Push the new rating into the hosts collection within Firestore
     const writeResult = await admin.firestore().collection('talks').add(new_talk);
