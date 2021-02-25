@@ -20,6 +20,12 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
+<<<<<<< HEAD
+    "firebase": "^8.2.7",
+    "firebase-admin": "^9.5.0",
+    "firebase-functions": "^3.13.1"
+=======
     "firebase": "^8.2.7"
+>>>>>>> 04ac65afcd02d75170db9e4cc332bb2178b15019
   }
 }
