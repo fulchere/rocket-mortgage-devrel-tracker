@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  /* text-align: center; */
 }
 
 .App-logo {
@@ -35,4 +35,15 @@
   to {
     transform: rotate(360deg);
   }
+}
+.title{
+  padding-top: 15px;
+  text-align: center;
+}
+.list-group-item{
+  border-radius: 0!important;
+  border: 1px solid rgba(0,0,0,.125)!important;
+}
+.modal-dialog{
+  max-width: 1000px!important;
 }
