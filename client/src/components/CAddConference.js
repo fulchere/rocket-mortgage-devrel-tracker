@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-import { Form, FormInput, FormGroup, Container, Row, Col, Button } from "shards-react";
+import { Form, FormInput, FormTextarea, ModalBody, FormGroup, Container, Row, Col, Button } from "shards-react";
 import DatePicker from "react-datepicker";
 
 export default function CAddConference() {
@@ -8,7 +8,9 @@ export default function CAddConference() {
 
 
     return (
-        <Form>
+
+      <ModalBody>
+      <Form>
           <Container>
             <Row><h4 style={{margin: 'auto', paddingTop:'20px'}}>Add a conference</h4></Row>
             <Row style={{paddingBottom: '20px'}}><FormInput id="#conference_name" placeholder="Conference name or search for existing conference"/></Row>
@@ -39,12 +41,13 @@ export default function CAddConference() {
               <div style={{float:'right'}}><label htmlFor="#contact">Date: </label><DatePicker onChange={date => setStartDate(date)} style={{float:'right'}}/></div>
               <FormGroup>
                 <label htmlFor="#description_label">Description</label>
-                <FormInput id="#description" placeholder="Brief description here..." style={{height:'157px', verticalAlign:'text-top'}}/>
+                <FormTextarea id="#description" placeholder="Brief description here..." style={{height:'157px', verticalAlign:'text-top'}}/>
               </FormGroup>
               </Col>
             </Row>
             <Button squared style={{width:'130px', height:'50px'}}>Submit</Button>
         </Container>
       </Form>
+  </ModalBody>
     )
 }

@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 import { ListGroup, ListGroupItem, Button, Container, Row, Col, Modal, ModalBody, FormInput,FormTextarea    } from "shards-react";
+
+import CAddConference from './CAddConference'
+
 export default function CEventList({ type, event_data }) {
     console.log(event_data)
     console.log(type)
@@ -35,41 +38,16 @@ export default function CEventList({ type, event_data }) {
             </Row>
 
 
-            <ListGroup flush={ false } >
-                {
-                    event_data.map(event => <ListGroupItem>{ event }</ListGroupItem>)
-                }
+            <ListGroup flush={false} >
+                {event_data.map(event => {
+                    return(
+                        isSelected(event) ? <Button squared theme='light' key = {event}> {event}</Button> : <Button squared outline theme='light' key = {event} onClick={() => {selectEvent(event)}}> {event}</Button>
+                    )
+                })}
             </ListGroup>
             <Modal open={ open } toggle={ ()=>setOpen(!open)} style={{width:'1000px'}}>
-                <ModalBody>
-                    <h3 className='title'>Add a conference</h3>
-                    <FormInput  placeholder="MSU Engineering"/>
-                    <Row>
-                        <Col>
-                            <h4 className='title'>Location Info</h4>
-                            <FormInput  placeholder="MSU Engineering"/>
-                            <FormInput  placeholder="MSU Engineering"/>
-                            <FormInput  placeholder="MSU Engineering"/>
-                            <h4 className='title'>Contact Info</h4>
-                            <FormInput  placeholder="MSU Engineering"/>
-                            <FormInput  placeholder="MSU Engineering"/>
-                            <FormInput  placeholder="MSU Engineering"/>
-                        </Col>
-                        <Col>
-                            <h4 className='title'>Time</h4>
-                            <FormInput  placeholder="MSU Engineering"/>
-                            <FormInput  placeholder="MSU Engineering"/>
-                            <h4 className='title'>
-                                Description
-                                <input type="date" style={{width:160,marginLeft:30,border: '1px solid rgba(0,0,0,.125)'}}/>
-                            </h4>
-                            <FormTextarea value='conference for MSU enggering'/>
-                        </Col>
-                    </Row>
-                    <div className='title'>
-                        <Button>Submit</Button>
-                    </div>
-                </ModalBody>
+                
+                <CAddConference />
             </Modal>
         </Container>
 
