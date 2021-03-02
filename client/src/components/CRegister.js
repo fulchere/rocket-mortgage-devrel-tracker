@@ -4,10 +4,10 @@ import { Form, FormInput, FormGroup, Container, Row, Col, Button, Alert } from "
 
 import { useAuth } from '../contexts/AuthContext'
 
-export default function CLogin() {
+export default function CRegister() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-    const { login, currentUser, logout } = useAuth()
+    const { signup, currentUser } = useAuth()
 
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
@@ -18,10 +18,10 @@ export default function CLogin() {
       try{
         setError('')
         setLoading(true)
-        await login(email, password)
+        await signup(email, password)
       }
       catch{
-        setError('Failed to sign in.')
+        setError('Failed to sign up.')
       }
 
       setLoading(false)
@@ -36,13 +36,10 @@ export default function CLogin() {
       setPassword(event.target.value)
     }
 
-    function logoutPlease(e){
-      logout()
-    }
-
 
     return (
         <Container style={{width:'100%'}}>
+          {JSON.stringify(currentUser)}
         <Row>
         <Col sm="12" md="4" lg="6">
           {error && <Alert theme="danger">{error}</Alert>}

@@ -1,35 +1,9 @@
-import firebase from 'firebase/app'
-import "firebase/auth"
+import React from 'react'
 
-
-
-const register = (email, password) => {
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-        // Signed in
-        var user = userCredential.user;
-        console.log('e')
-      })
-      .catch((error) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.log('f')
-      });
+export default function CAPIService() {
+  return (
+    <div>
+      
+    </div>
+  )
 }
-
-const login = (email, password) => {
-    firebase.auth().signInWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      // Signed in
-      console.log('e')
-      var user = userCredential.user;
-    })
-    .catch((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log('f')
-    });
-    console.log('g')
-}
-
-export default { register, login }
