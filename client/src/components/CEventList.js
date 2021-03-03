@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { ListGroup, ListGroupItem, Button, Container, Row, Col, Modal, ModalBody, FormInput,FormTextarea    } from "shards-react";
 
 import CAddConference from './CAddConference'
+import CAddTalks from './CAddTalk'
 
 export default function CEventList({ type, event_data }) {
     console.log(event_data)
