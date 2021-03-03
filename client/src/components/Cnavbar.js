@@ -1,8 +1,10 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "shards-ui/dist/css/shards.min.css"
 import { useAuth } from '../contexts/AuthContext'
+
+import { useHistory } from "react-router-dom"
 
 import {
   Button,
@@ -25,9 +27,19 @@ import {
 
 export default function Cnavbar() {
   const { logout } = useAuth()
+  const [error, setError] = useState('')
+  const history = useHistory()
 
-  function Logout(e){
-    logout()
+  async function Logout(e){
+    setError('')
+
+    try{
+      await logout()
+      history.push("/login")
+    }
+    catch{
+      setError('Failed to log out')
+    }
   }
 
     return ( 
@@ -53,7 +65,7 @@ export default function Cnavbar() {
           </Nav>
 
           <Nav navbar className="ml-auto">
-          <Button theme="light" onClick={Logout()}>Logout</Button>
+          <Button theme="light" onClick={() => {logout()}}>Logout</Button>
           </Nav>
       </Navbar>
     )

@@ -4,6 +4,8 @@ import { Form, FormInput, FormGroup, Container, Row, Col, Button, Alert } from "
 
 import { useAuth } from '../contexts/AuthContext'
 
+import { useHistory } from "react-router-dom"
+
 export default function CLogin() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -12,6 +14,8 @@ export default function CLogin() {
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
 
+    const history = useHistory()
+
     async function handleSubmit(e){
       e.preventDefault()
 
@@ -19,6 +23,7 @@ export default function CLogin() {
         setError('')
         setLoading(true)
         await login(email, password)
+        history.push("/")
       }
       catch{
         setError('Failed to sign in.')

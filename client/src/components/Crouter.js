@@ -1,6 +1,8 @@
 import React from 'react'
 import {BrowserRouter as Router, Switch, Route} from  'react-router-dom'
 
+import {AuthProvider} from '../contexts/AuthContext'
+
 
 import Cnavbar from './Cnavbar'
 import CHomepage from './CHomepage'
@@ -8,34 +10,26 @@ import CConferences from './CConferences'
 import CTalks from './CTalks'
 import CMedia from './CMedia'
 import CLogin from './CLogin'
-
-import CAddConference from './CAddConference'
+import CPrivateRoute from './CPrivateRoute'
 
 export default function Crouter() {
     return (
         <Router>
-            <Cnavbar />
 
+            <AuthProvider>
+
+            <Cnavbar />
             <Switch>
-            <Route path="/" exact>
-            <CHomepage />
-            </Route>
-            <Route path="/conferences" exact>
-            <CConferences />
-            </Route>
-            <Route path="/talks" exact>
-            <CTalks />
-            </Route>
-            <Route path="/media" exact>
-            <CMedia />
-            </Route>
-            <Route path="/addconference" exact>
-            <CAddConference />
-            </Route>
-            <Route path="/login" exact>
-            <CLogin />
+
+            <CPrivateRoute path="/" exact component={CHomepage} />
+            <CPrivateRoute path="/conferences" exact component={CConferences} />
+            <CPrivateRoute path="/talks" exact component={CTalks} />
+            <CPrivateRoute path="/media" exact component={CMedia} />
+
+            <Route path="/login" exact component={CLogin}>
             </Route>
             </Switch>
+            </AuthProvider>
         </Router>
     )
 }
