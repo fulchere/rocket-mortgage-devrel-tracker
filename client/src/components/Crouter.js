@@ -8,7 +8,6 @@ import CConferences from './CConferences'
 import CTalks from './CTalks'
 import CMedia from './CMedia'
 import CLogin from './CLogin'
-import CRegister from './CRegister'
 
 import CAddConference from './CAddConference'
 
@@ -35,9 +34,6 @@ export default function Crouter() {
             </Route>
             <Route path="/login" exact>
             <CLogin />
-            </Route>
-            <Route path="/register" exact>
-            <CRegister />
             </Route>
             </Switch>
         </Router>

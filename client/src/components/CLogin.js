@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react'
+import React, {useState} from 'react'
 
 import { Form, FormInput, FormGroup, Container, Row, Col, Button, Alert } from "shards-react";
 
@@ -7,7 +7,7 @@ import { useAuth } from '../contexts/AuthContext'
 export default function CLogin() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-    const { login, currentUser, logout } = useAuth()
+    const { login } = useAuth()
 
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
@@ -35,11 +35,6 @@ export default function CLogin() {
     const handlePasswordChange = (event) => {
       setPassword(event.target.value)
     }
-
-    function logoutPlease(e){
-      logout()
-    }
-
 
     return (
         <Container style={{width:'100%'}}>

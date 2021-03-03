@@ -2,6 +2,8 @@ import React from 'react'
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "shards-ui/dist/css/shards.min.css"
+import { useAuth } from '../contexts/AuthContext'
+
 import {
   Button,
   Navbar,
@@ -21,7 +23,13 @@ import {
   Collapse
 } from "shards-react";
 
-export default function Cnavbar({loggedIn, user, logout}) {
+export default function Cnavbar() {
+  const { logout } = useAuth()
+
+  function Logout(e){
+    logout()
+  }
+
     return ( 
 <Navbar type="dark" theme="primary" expand="md">
         <NavbarBrand href="/">DevRel Tracker</NavbarBrand>
@@ -45,7 +53,7 @@ export default function Cnavbar({loggedIn, user, logout}) {
           </Nav>
 
           <Nav navbar className="ml-auto">
-          <Button theme="light" href="login">Login</Button>
+          <Button theme="light" onClick={Logout()}>Logout</Button>
           </Nav>
       </Navbar>
     )
