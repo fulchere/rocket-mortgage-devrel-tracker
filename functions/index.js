@@ -337,9 +337,8 @@ exports.getSpeakerEvents = functions.https.onRequest(async (req, res) => {
 
     const email = req.query.email;
 
-    const speakerRef = await admin.firestore().collection('speakers')
-    const eventsRef = speakerRef.doc("event_ids");
-    const snapshot = await eventsRef.where('email', '==', email).get();
+    const speakerRef = await admin.firestore().collection('speakers');
+    const snapshot = await speakerRef.where('email', '==', email).get("event_ids");
 
     const speakerResult = snapshot.docs.map(doc => doc.data());
 
