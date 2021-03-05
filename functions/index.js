@@ -346,7 +346,7 @@ exports.getSpeakerEvents = functions.https.onRequest(async (req, res) => {
     const speakerResult = snapshot.docs.map(doc => doc.data());
 
     // Send back the specific user from the speakers collection
-    res.json({documents: speakerResult});
+    res.json({documents: speakerResult.event_ids});
 });
 
 // Get all documents in the talks collection
