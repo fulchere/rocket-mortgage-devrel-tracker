@@ -254,12 +254,12 @@ exports.getCallforpapers = functions.https.onRequest(async (req, res) => {
 });
 
 // Get all documents in the events collection
-exports.getEvent = functions.https.onRequest(async (req, res) => {
+exports.getEventNames = functions.https.onRequest(async (req, res) => {
 
     const eventRef = await admin.firestore().collection('events');
     const snapshot = await eventRef.get();
 
-    const eventResult = snapshot.docs.map(doc => doc.data());
+    const eventResult = snapshot.docs.map(doc => {doc.data().event_id, doc.data().name, doc.data().description});
 
     // Send back all the documents from the events collection
     res.json({documents: eventResult});
