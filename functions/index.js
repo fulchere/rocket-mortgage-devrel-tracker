@@ -5,6 +5,7 @@ const functions = require('firebase-functions');
 // The Firebase Admin SDK to access Firestore.
 const admin = require('firebase-admin');
 const { firebaseConfig } = require('firebase-functions');
+const { json } = require('express');
 admin.initializeApp();
 
 // Booths Collection
@@ -263,7 +264,7 @@ exports.getEventNames = functions.https.onRequest(async (req, res) => {
     const eventRef = await admin.firestore().collection('events');
     const snapshot = await eventRef.get();
 
-    const eventResult = snapshot.docs.map(doc => {doc.data().event_id, doc.data().name, doc.data().description});
+    const eventResult = snapshot.docs.map(doc => doc.data());
 
     // Send back all the documents from the events collection
     res.json({documents: eventResult});
