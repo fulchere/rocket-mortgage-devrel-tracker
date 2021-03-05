@@ -69,6 +69,7 @@ exports.addEvent = functions.https.onRequest(async (req, res) => {
     const seasonality = req.query.seasonality;
     const start = req.query.start;
     const event_id = req.query.event_id;
+    const speaker_ids = req.query.speaker_ids.split(',');
 
     const new_event = {address: address,
         attendees: parseInt(attendees),
@@ -81,7 +82,8 @@ exports.addEvent = functions.https.onRequest(async (req, res) => {
         recruiting_partner: recruiting_partner,
         seasonality: seasonality,
         start: start,
-        event_id: event_id}
+        event_id: event_id,
+        speaker_ids: speaker_ids}
 
     // Push the new rating into the hosts collection within Firestore
     const writeResult = await admin.firestore().collection('events').add(new_event);
@@ -168,6 +170,7 @@ exports.addSpeaker = functions.https.onRequest(async (req, res) => {
     const role = req.query.role;
     const talk_ids = req.query.talk_ids.split(',');
     const speaker_id = req.query.speaker_id;
+    const event_ids = req.query.event_ids.split(',');
 
     const new_speaker = {booth_ids: booth_ids,
         email: email,
@@ -175,7 +178,8 @@ exports.addSpeaker = functions.https.onRequest(async (req, res) => {
         name: name,
         role: role,
         talk_ids: talk_ids,
-        speaker_id: speaker_id}
+        speaker_id: speaker_id,
+        event_ids: event_ids}
 
     // Push the new rating into the hosts collection within Firestore
     const writeResult = await admin.firestore().collection('speakers').add(new_speaker);
@@ -327,6 +331,20 @@ exports.getSpeakerByEmail = functions.https.onRequest(async (req, res) => {
     res.json({documents: speakerResult});
 });
 
+// Get event ids in the speakers collection
+exports.getSpeakerEvents = functions.https.onRequest(async (req, res) => {
+
+    const email = req.query.email;
+
+    const speakerRef = await admin.firestore().collection('speakers').doc("event_ids");
+    const snapshot = await speakerRef.where('email', '==', email).get();
+
+    const speakerResult = snapshot.docs.map(doc => doc.data());
+
+    // Send back the specific user from the speakers collection
+    res.json({documents: speakerResult});
+});
+
 // Get all documents in the talks collection
 exports.getTalk = functions.https.onRequest(async (req, res) => {
 
@@ -346,12 +364,13 @@ exports.getTalk = functions.https.onRequest(async (req, res) => {
 // - change the getEvent function to that it only returns the name field, description field, and event_id field of each event document
 // 
 // TYLER
-// - create association between speakers and events
-// - this can be done by adding an array called event_ids within speakers
-// - as well as creating an array called speaker_ids within events
-// - basically to do this, add array parameters with above mentioned names to addSpeaker and addEvent
-// - create new function named: getSpeakerEvents, a function that returns the array of event_ids within the specific speaker document. the query param for this function would be speaker_id (the email)
-// - this would be similar to the getSpeakerByEmail function, but you will extend the functionality so that it returns only the event_ids: something like speakerResult.event_ids
+// - create new function named: getSpeakerEvents,
+// a function that returns the array of event_ids
+// within the specific speaker document. the query param for
+// this function would be speaker_id (the email)
+// - this would be similar to the getSpeakerByEmail function, but
+// you will extend the functionality so that it returns only the event_ids:
+// something like speakerResult.event_ids
 //
 //
 // - IN ADDITION: any collection that has documents with arrays, we need to create functions to add elements to that array, so that we don't have to delete and create an entirely new document
