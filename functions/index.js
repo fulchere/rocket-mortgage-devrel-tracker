@@ -343,7 +343,7 @@ exports.getSpeakerEvents = functions.https.onRequest(async (req, res) => {
 
 
 
-    const speakerResult = snapshot.docs.map(doc => doc.data());
+    const speakerResult = snapshot.docs.map(doc => doc.data().event_ids);
 
     // Send back the specific user from the speakers collection
     res.json({documents: speakerResult});
