@@ -362,15 +362,6 @@ exports.getTalk = functions.https.onRequest(async (req, res) => {
 // ETHAN
 // - rename getEvent function to getEventNames
 // - change the getEvent function to that it only returns the name field, description field, and event_id field of each event document
-// 
-// TYLER
-// - create new function named: getSpeakerEvents,
-// a function that returns the array of event_ids
-// within the specific speaker document. the query param for
-// this function would be speaker_id (the email)
-// - this would be similar to the getSpeakerByEmail function, but
-// you will extend the functionality so that it returns only the event_ids:
-// something like speakerResult.event_ids
 //
 //
 // - IN ADDITION: any collection that has documents with arrays, we need to create functions to add elements to that array, so that we don't have to delete and create an entirely new document
