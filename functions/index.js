@@ -260,7 +260,7 @@ exports.getEventNames = functions.https.onRequest(async (req, res) => {
     const eventRef = await admin.firestore().collection('events');
     const snapshot = await eventRef.get();
 
-    const eventResult = snapshot.docs.map(doc => json({event_id: doc.data().event_id, name: doc.data().name, description: doc.data().description}));
+    const eventResult = snapshot.docs.map(doc => doc.data());
 
     // Send back all the documents from the events collection
     res.json({documents: eventResult});
