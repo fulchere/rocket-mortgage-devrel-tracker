@@ -339,14 +339,14 @@ exports.getSpeakerEvents = functions.https.onRequest(async (req, res) => {
 
 
     const speakerRef = await admin.firestore().collection('speakers');
-    const snapshot = await speakerRef.where('email', '==', email).get();
+    const snapshot = await speakerRef.where('email', '==', email).get('event_ids');
 
 
 
     const speakerResult = snapshot.docs.map(doc => doc.data());
 
     // Send back the specific user from the speakers collection
-    res.json({documents: speakerResult.role});
+    res.json({documents: speakerResult});
 });
 
 // Get all documents in the talks collection
