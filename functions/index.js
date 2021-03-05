@@ -338,3 +338,23 @@ exports.getTalk = functions.https.onRequest(async (req, res) => {
     // Send back all the documents from the talks collection
     res.json({documents: talkResult});
 });
+
+// TODO
+//
+// ETHAN
+// - rename getEvent function to getEventNames
+// - change the getEvent function to that it only returns the name field, description field, and event_id field of each event document
+// 
+// TYLER
+// - create association between speakers and events
+// - this can be done by adding an array called event_ids within speakers
+// - as well as creating an array called speaker_ids within events
+// - basically to do this, add array parameters with above mentioned names to addSpeaker and addEvent
+// - create new function named: getSpeakerEvents, a function that returns the array of event_ids within the specific speaker document. the query param for this function would be speaker_id (the email)
+// - this would be similar to the getSpeakerByEmail function, but you will extend the functionality so that it returns only the event_ids: something like speakerResult.event_ids
+//
+//
+// - IN ADDITION: any collection that has documents with arrays, we need to create functions to add elements to that array, so that we don't have to delete and create an entirely new document
+// - - we will have to figure out how to do this later
+// 
+// - find way to set default (null?) parameters so if they dont pass all the query params it doesnt throw an error
