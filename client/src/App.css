@@ -45,5 +45,8 @@
   border: 1px solid rgba(0,0,0,.125)!important;
 }
 .modal-dialog{
-  max-width: 1000px!important;
+  max-width: 800px!important;
+}
+.nav-item a:hover{
+  text-decoration: none;
 }

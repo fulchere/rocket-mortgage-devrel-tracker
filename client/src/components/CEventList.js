@@ -46,9 +46,11 @@ export default function CEventList({ type, event_data }) {
                     )
                 })}
             </ListGroup>
-            <Modal open={ open } toggle={ ()=>setOpen(!open)} style={{width:'1000px'}}>
+            <Modal open={ open } toggle={ ()=>setOpen(!open)} >
+                {
+                    type=='Talk'?<CAddTalks />:<CAddConference />
+                }
                 
-                <CAddConference />
             </Modal>
         </Container>
 
