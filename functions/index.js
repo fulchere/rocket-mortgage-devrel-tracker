@@ -243,6 +243,7 @@ exports.getEventByEventId = functions.https.onRequest(async (req, res) => {
     const boothResult = snapshot.docs.map(doc => doc.data());
 
     // Send back all the matching events by event_id from the events collection
+    res.set('Access-Control-Allow-Origin', '*');
     res.json({documents: boothResult});
 });
 
@@ -352,6 +353,20 @@ exports.getTalk = functions.https.onRequest(async (req, res) => {
     const snapshot = await talkRef.get();
 
     const talkResult = snapshot.docs.map(doc => doc.data());
+
+    // Send back all the documents from the talks collection
+    res.json({documents: talkResult});
+});
+
+// Get all documents in the talks collection
+exports.addEventToSpeakerBySpeakerId = functions.https.onRequest(async (req, res) => {
+
+    const speaker_id = req.query.speaker_id;
+
+    const speakerRef = await admin.firestore().collection('speakers').where('speaker_id', '==', speaker_id);
+    const snapshot = await speakerRef.update();
+
+    const talResult = snapshot.docs.map(doc => doc.data());
 
     // Send back all the documents from the talks collection
     res.json({documents: talkResult});
