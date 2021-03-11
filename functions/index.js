@@ -364,9 +364,11 @@ exports.addEventToSpeakerBySpeakerId = functions.https.onRequest(async (req, res
     const event_id = req.query.event_id;
 
     const speakerRef = await admin.firestore().collection('speakers').where('speaker_id', '==', speaker_id);
-    const unionRes = await speakerRef.update({
+    const snapshot = await speakerRef.get();
+    
+    const unionRes = snapshot.docs.map(doc => doc.update({
         event_ids: admin.firestore.FieldValue.arrayUnion(event_id)
-      });
+      }));
 
     // Send back all the documents from the talks collection
     res.json({SUCCESS: 'event_id added to speaker', unionRes: unionRes});
