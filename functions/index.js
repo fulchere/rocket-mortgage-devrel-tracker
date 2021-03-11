@@ -264,7 +264,7 @@ exports.getEventNames = functions.https.onRequest(async (req, res) => {
     const eventRef = await admin.firestore().collection('events');
     const snapshot = await eventRef.get();
 
-    const eventResult = snapshot.docs.map(doc => {name: doc.data().name} );
+    const eventResult = snapshot.docs.map(doc => doc.data().name );
 
     // Send back all the documents from the events collection
     res.json({documents: eventResult});
@@ -357,18 +357,19 @@ exports.getTalk = functions.https.onRequest(async (req, res) => {
     res.json({documents: talkResult});
 });
 
-// Get all documents in the talks collection
+// Mark a speaker attending an event by adding an event_id to the event_ids array in our speaker collection
 exports.addEventToSpeakerBySpeakerId = functions.https.onRequest(async (req, res) => {
 
     const speaker_id = req.query.speaker_id;
+    const event_id = req.query.event_id;
 
     const speakerRef = await admin.firestore().collection('speakers').where('speaker_id', '==', speaker_id);
-    const snapshot = await speakerRef.update();
-
-    const talResult = snapshot.docs.map(doc => doc.data());
+    const unionRes = await speakerRef.update({
+        event_ids: admin.firestore.FieldValue.arrayUnion(event_id)
+      });
 
     // Send back all the documents from the talks collection
-    res.json({documents: talkResult});
+    res.json({SUCCESS: 'event_id added to speaker', unionRes: unionRes});
 });
 
 // TODO
