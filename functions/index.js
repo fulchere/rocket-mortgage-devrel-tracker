@@ -243,7 +243,6 @@ exports.getEventByEventId = functions.https.onRequest(async (req, res) => {
     const boothResult = snapshot.docs.map(doc => doc.data());
 
     // Send back all the matching events by event_id from the events collection
-    res.set('Access-Control-Allow-Origin', '*');
     res.json({documents: boothResult});
 });
 
@@ -265,7 +264,7 @@ exports.getEventNames = functions.https.onRequest(async (req, res) => {
     const eventRef = await admin.firestore().collection('events');
     const snapshot = await eventRef.get();
 
-    const eventResult = snapshot.docs.map(doc => doc.data());
+    const eventResult = snapshot.docs.map(doc => doc.data().name);
 
     // Send back all the documents from the events collection
     res.json({documents: eventResult});
