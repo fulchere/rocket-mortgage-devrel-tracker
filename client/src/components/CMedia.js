@@ -4,7 +4,7 @@ import CEventBrowser from './CEventBrowser'
 
 export default function CMedia() {
 
-    const [event_data, setEvent_data] = useState(['Podcast', 'Video', 'Blog Post', 'Another Podcast'])
+    const [event_data, setEvent_data] = useState([{name: 'Podcast', event_id:"0"}, {name: 'Video', event_id:"1"}, {name: 'Livestream', event_id:"2"}])
 
     return (
         <div>

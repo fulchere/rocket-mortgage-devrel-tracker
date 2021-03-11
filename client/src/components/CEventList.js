@@ -4,9 +4,7 @@ import { ListGroup, ListGroupItem, Button, Container, Row, Col, Modal, ModalBody
 import CAddConference from './CAddConference'
 import CAddTalks from './CAddTalk'
 
-export default function CEventList({ type, event_data }) {
-    console.log(event_data)
-    console.log(type)
+export default function CEventList({ type, event_data, select_Event }) {
 
 
     const [selectedEvent, setSelectedEvent] = useState('')
@@ -15,7 +13,7 @@ export default function CEventList({ type, event_data }) {
     const selectEvent = (event) => {
         setSelectedEvent(event)
 
-        //more logic will be added here
+        select_Event(event)
     }
 
     const isSelected = (event) => {
@@ -42,13 +40,13 @@ export default function CEventList({ type, event_data }) {
             <ListGroup flush={false} >
                 {event_data.map(event => {
                     return(
-                        isSelected(event) ? <Button squared theme='light' key = {event}> {event}</Button> : <Button squared outline theme='light' key = {event} onClick={() => {selectEvent(event)}}> {event}</Button>
+                        isSelected(event) ? <Button squared theme='light' key = {event.id}> {event.name}</Button> : <Button squared outline theme='light' key = {event.id} onClick={() => {selectEvent(event)}}> {event.name}</Button>
                     )
                 })}
             </ListGroup>
             <Modal open={ open } toggle={ ()=>setOpen(!open)} >
                 {
-                    type=='Talk'?<CAddTalks />:<CAddConference />
+                    type==='Talk'?<CAddTalks />:<CAddConference />
                 }
                 
             </Modal>
