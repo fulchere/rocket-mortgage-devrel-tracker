@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { ListGroup, ListGroupItem, Button, Container, Row, Col, Modal, ModalBody, FormInput,FormTextarea    } from "shards-react";
 
 import CAddConference from './CAddConference'
+import CAddMedia from './CAddMedia';
 import CAddTalks from './CAddTalk'
 
 export default function CEventList({ type, event_data, select_Event }) {
@@ -12,10 +13,8 @@ export default function CEventList({ type, event_data, select_Event }) {
 
     const selectEvent = (event) => {
         setSelectedEvent(event)
-
         select_Event(event)
     }
-
     const isSelected = (event) => {
         if (event === selectedEvent) { return (true) }
         else { return (false) }
@@ -25,8 +24,7 @@ export default function CEventList({ type, event_data, select_Event }) {
         setOpen(!open)
 
     }
-
-
+    
     return (
         <Container >
             <Row noGutters={ true } style={ { height: '70px', border: '1px solid rgba(0,0,0,.125)' } }>
@@ -46,7 +44,7 @@ export default function CEventList({ type, event_data, select_Event }) {
             </ListGroup>
             <Modal open={ open } toggle={ ()=>setOpen(!open)} >
                 {
-                    type==='Talk'?<CAddTalks />:<CAddConference />
+                    type==='Talk'?<CAddTalks />:type==='Media'?<CAddMedia/>:<CAddConference />
                 }
                 
             </Modal>
