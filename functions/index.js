@@ -332,7 +332,10 @@ exports.getSpeakerEvents = functions.https.onRequest(async (req, res) => {
     //     event_names.add(eventName);
     // }
 
-    const event_pairs = event_ids.map((id, i) => JSON({id: id, event_name: event_names[i]}));
+    const event_pairs = event_ids.map( function(id, i) {
+        var pair = {id: id, event_name: event_names[i]};
+        return pair;}
+        );
 
     // Send back the specific user from the speakers collection
     res.json({email: email, event_ids: event_ids, event_names: event_names, pairs: event_pairs});
