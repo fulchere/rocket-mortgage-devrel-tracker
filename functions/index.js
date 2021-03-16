@@ -326,10 +326,10 @@ exports.getSpeakerByEmail = functions.https.onRequest(async (req, res) => {
     const speakerRef = await admin.firestore().collection('speakers');
     const snapshot = await speakerRef.where('email', '==', email).get();
 
-    const speakerResult = snapshot.docs.map(doc => doc.id);
+    const speakerResult = snapshot.docs.map(doc => doc.json({id: doc.id, ...doc.data()}));
 
     // Send back the specific user from the speakers collection
-    res.json({email: email, speaker_id: speakerResult[0]});
+    res.json({email: email, speaker: speakerResult[0]});
 });
 
 // Get event ids in the speakers collection
