@@ -325,17 +325,17 @@ exports.getSpeakerEvents = functions.https.onRequest(async (req, res) => {
     const snapshot = await speakerRef.where('email', '==', email).get();
     const event_ids = snapshot.docs.map(doc => doc.data().event_ids);
 
-    //var event_names = [];
+    var event_names = ["TESTEVENT1"];
     // for (const event_id of event_ids) {
     //     const eventRef = await admin.firestore().collection('events').doc(event_id);
     //     const eventName = await eventRef.get().name;
     //     event_names.add(eventName);
     // }
 
-    // const event_pairs = (event_ids, event_names) => event_ids.map((id, i) => [id, event_names[i]]) 
+    const event_pairs = (event_ids, event_names) => event_ids.map((id, i) => [id, event_names[i]]) 
 
     // Send back the specific user from the speakers collection
-    res.json({email: email, events_id_name_pairs: event_ids});
+    res.json({email: email, events_id_name_pairs: event_pairs});
 });
 
 // Get talk ids in the speakers collection
