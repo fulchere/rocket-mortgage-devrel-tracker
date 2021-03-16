@@ -358,6 +358,19 @@ exports.getSpeakerTalks = functions.https.onRequest(async (req, res) => {
     res.json({Talk_ids: speakerTalk_ids});
 });
 
+// Get media ids in the speakers collection
+exports.getSpeakerMedia = functions.https.onRequest(async (req, res) => {
+
+    const email = req.query.email;
+
+    const speakerRef = await admin.firestore().collection('speakers');
+    const snapshot = await speakerRef.where('email', '==', email).get();
+    const speakerMedia_ids = snapshot.docs.map(doc => doc.data().media_ids);
+
+    // Send back the specific user from the speakers collection
+    res.json({Media_ids: speakerMedia_ids});
+});
+
 // Get all documents in the talks collection
 exports.getTalk = functions.https.onRequest(async (req, res) => {
 
