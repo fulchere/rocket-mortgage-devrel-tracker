@@ -231,7 +231,7 @@ exports.getEventByEventId = functions.https.onRequest(async (req, res) => {
 });
 
 // Get all documents in the callforpapers collection
-exports.getCallforpapers = functions.https.onRequest(async (req, res) => {
+exports.getAllCallforpapers = functions.https.onRequest(async (req, res) => {
 
     const callforpapersRef = await admin.firestore().collection('callforpapers');
     const snapshot = await callforpapersRef.get();
@@ -255,7 +255,7 @@ exports.getEventNames = functions.https.onRequest(async (req, res) => {
 });
 
 // Get all documents in the hosts collection
-exports.getHost = functions.https.onRequest(async (req, res) => {
+exports.getAllHosts = functions.https.onRequest(async (req, res) => {
 
     const hostRef = await admin.firestore().collection('hosts');
     const snapshot = await hostRef.get();
@@ -267,7 +267,7 @@ exports.getHost = functions.https.onRequest(async (req, res) => {
 });
 
 // Get all documents in the media collection
-exports.getMedia = functions.https.onRequest(async (req, res) => {
+exports.getAllMedia = functions.https.onRequest(async (req, res) => {
 
     const mediaRef = await admin.firestore().collection('media');
     const snapshot = await mediaRef.get();
@@ -279,7 +279,7 @@ exports.getMedia = functions.https.onRequest(async (req, res) => {
 });
 
 // Get all documents in the ratings collection
-exports.getRating = functions.https.onRequest(async (req, res) => {
+exports.getAllRatings = functions.https.onRequest(async (req, res) => {
 
     const ratingRef = await admin.firestore().collection('ratings');
     const snapshot = await ratingRef.get();
@@ -291,7 +291,7 @@ exports.getRating = functions.https.onRequest(async (req, res) => {
 });
 
 // Get all documents in the speakers collection
-exports.getSpeaker = functions.https.onRequest(async (req, res) => {
+exports.getAllSpeakers = functions.https.onRequest(async (req, res) => {
 
     const speakerRef = await admin.firestore().collection('speakers');
     const snapshot = await speakerRef.get();
@@ -310,10 +310,24 @@ exports.getSpeakerByEmail = functions.https.onRequest(async (req, res) => {
     const speakerRef = await admin.firestore().collection('speakers');
     const snapshot = await speakerRef.where('email', '==', email).get();
 
-    const speakerResult = snapshot.docs.map(doc => res.json({speaker_id: doc.id, ...doc.data()}));
+    const speakerResult = snapshot.docs.map(function(doc) { var result = {speaker_id: doc.id, ...doc.data()}; return result; });
 
     // Send back the specific user from the speakers collection
-    //res.json({email: email, speaker: speakerResult[0]});
+    res.json(speakerResult[0]);
+});
+
+// Get all documents in the speakers collection
+exports.getSpeakerByID = functions.https.onRequest(async (req, res) => {
+
+    const id = req.query.ID;
+
+    const speakerRef = await admin.firestore().collection('speakers');
+    const snapshot = await speakerRef.where('__name__', '==', id).get();
+
+    const speakerResult = snapshot.docs.map(function(doc) { var result = {speaker_id: doc.id, ...doc.data()}; return result; });
+
+    // Send back the specific user from the speakers collection
+    res.json(speakerResult[0]);
 });
 
 // Get event ids in the speakers collection
@@ -325,12 +339,12 @@ exports.getSpeakerEvents = functions.https.onRequest(async (req, res) => {
     const snapshot = await speakerRef.where('email', '==', email).get();
     const event_ids = snapshot.docs.map(doc => doc.data().event_ids)[0];
 
-    var event_names = ["TESTEVENT1"];
-    // for (const event_id of event_ids) {
-    //     const eventRef = await admin.firestore().collection('events').doc(event_id);
-    //     const eventName = await eventRef.get().name;
-    //     event_names.add(eventName);
-    // }
+    var event_names = [];
+    for (const event_id of event_ids) {
+        const eventRef = await admin.firestore().collection('events').where('__name__', '==', 'Fio0X41MAfqjX7Y1XluC').get();;
+        const eventName = await eventRef.name;
+        event_names.push(eventName);
+    }
 
     const event_pairs = event_ids.map( function(id, i) {
         var pair = {id: id, event_name: event_names[i]};
@@ -351,11 +365,11 @@ exports.getSpeakerTalks = functions.https.onRequest(async (req, res) => {
     const speakerTalk_ids = snapshot.docs.map(doc => doc.data().talk_ids);
 
     // Send back the specific user from the speakers collection
-    res.json({Talk_ids: speakerTalk_ids});
+    res.json({email: email, talk_ids: speakerTalk_ids});
 });
 
 // Get media ids in the speakers collection
-exports.getSpeakerMedia = functions.https.onRequest(async (req, res) => {
+exports.getSpeakerMediaIDs = functions.https.onRequest(async (req, res) => {
 
     const email = req.query.email;
 
@@ -364,11 +378,11 @@ exports.getSpeakerMedia = functions.https.onRequest(async (req, res) => {
     const speakerMedia_ids = snapshot.docs.map(doc => doc.data().media_ids);
 
     // Send back the specific user from the speakers collection
-    res.json({Media_ids: speakerMedia_ids});
+    res.json({email: email, media_ids: speakerMedia_ids});
 });
 
 // Get all documents in the talks collection
-exports.getTalk = functions.https.onRequest(async (req, res) => {
+exports.getAllTalks = functions.https.onRequest(async (req, res) => {
 
     const talkRef = await admin.firestore().collection('talks');
     const snapshot = await talkRef.get();
