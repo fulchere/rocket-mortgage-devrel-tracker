@@ -321,13 +321,11 @@ exports.getSpeakerByID = functions.https.onRequest(async (req, res) => {
 
     const id = req.query.ID;
 
-    const speakerRef = await admin.firestore().collection('speakers');
-    const snapshot = await speakerRef.where('__name__', '==', id).get();
-
-    const speakerResult = snapshot.docs.map(function(doc) { var result = {speaker_id: doc.id, ...doc.data()}; return result; });
+    const speakerRef = await admin.firestore().collection('speakers').doc(id).get();
+    const data = speakerRef.data();
 
     // Send back the specific user from the speakers collection
-    res.json(speakerResult[0]);
+    res.json(data);
 });
 
 // Get event ids in the speakers collection
