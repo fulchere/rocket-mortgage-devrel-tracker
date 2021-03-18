@@ -412,6 +412,19 @@ exports.addEventToSpeakerBySpeakerId = functions.https.onRequest(async (req, res
     res.json({MESSAGE: `added event_id: ${event_id} to events array in speaker document with speaker_id: ${speaker_id}`});
 });
 
+// Mark a booth attended by a speaker by adding a booth_id to the speaker_ids array in our booth collection
+exports.addSpeakerToBoothByBoothId = functions.https.onRequest(async (req, res) => {
+
+    const booth_id = req.query.booth_id;
+    const speaker_id = req.query.speaker_id
+
+    const boothRef = await admin.firestore().collection('booths').doc(booth_id);
+    boothRef.update({speaker_ids: admin.firestore.FieldValue.arrayUnion(speaker_id)});
+
+    // Send back message saying the speaker id was added
+    res.json({MESSAGE: `added speaker_id: ${speaker_id} to speakers array in speaker document with booth_id: ${booth_id}`});
+});
+
 // TODO
 //
 // TYLER
