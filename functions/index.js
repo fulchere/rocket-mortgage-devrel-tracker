@@ -434,7 +434,7 @@ exports.addSpeakerToBoothByBoothId = functions.https.onRequest(async (req, res) 
     boothRef.update({speaker_ids: admin.firestore.FieldValue.arrayUnion(speaker_id)});
 
     // Send back message saying the speaker id was added
-    res.json({MESSAGE: `added speaker_id: ${speaker_id} to speakers array in speaker document with booth_id: ${booth_id}`});
+    res.json({MESSAGE: `added speaker_id: ${speaker_id} to speakers array in booth document with booth_id: ${booth_id}`});
 });
 
 // TODO
