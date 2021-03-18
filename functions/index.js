@@ -202,6 +202,18 @@ exports.addTalk = functions.https.onRequest(async (req, res) => {
     res.json({result: `New rating added to talks collection with ID: ${writeResult.id} added.`});
 });
 
+// Get all documents in the booths collection
+exports.getAllBooths = functions.https.onRequest(async (req, res) => {
+
+    const boothRef = await admin.firestore().collection('booths');
+    const snapshot = await boothRef.get();
+
+    const boothResult = snapshot.docs.map(function(doc) { var result = {booth_id: doc.id, ...doc.data()}; return result; });
+
+    // Send back all the documents from the booths collection
+    res.json({documents: boothResult});
+});
+
 // Get all documents in the callforpapers collection
 exports.getAllCallforpapers = functions.https.onRequest(async (req, res) => {
 
@@ -272,6 +284,18 @@ exports.getAllSpeakers = functions.https.onRequest(async (req, res) => {
 
     // Send back all the documents from the speakers collection
     res.json({documents: speakerResult});
+});
+
+// Get all documents in the talks collection
+exports.getAllTalks = functions.https.onRequest(async (req, res) => {
+
+    const talkRef = await admin.firestore().collection('talks');
+    const snapshot = await talkRef.get();
+
+    const talkResult = snapshot.docs.map(function(doc) { var result = {talk_id: doc.id, ...doc.data()}; return result; });
+
+    // Send back all the documents from the talks collection
+    res.json({documents: talkResult});
 });
 
 // Get speaker document that matches the passed email
@@ -385,18 +409,6 @@ exports.getSpeakerMediaIDs = functions.https.onRequest(async (req, res) => {
 
     // Send back the specific user from the speakers collection
     res.json({email: email, media_ids: speakerMedia_ids});
-});
-
-// Get all documents in the talks collection
-exports.getAllTalks = functions.https.onRequest(async (req, res) => {
-
-    const talkRef = await admin.firestore().collection('talks');
-    const snapshot = await talkRef.get();
-
-    const talkResult = snapshot.docs.map(function(doc) { var result = {talk_id: doc.id, ...doc.data()}; return result; });
-
-    // Send back all the documents from the talks collection
-    res.json({documents: talkResult});
 });
 
 // Mark a speaker attending an event by adding an event_id to the event_ids array in our speaker collection
