@@ -214,15 +214,15 @@ exports.getAllCallforpapers = functions.https.onRequest(async (req, res) => {
     res.json({documents: callforpapersResult});
 });
 
-// Get all documents in the events collection
-exports.getEventNames = functions.https.onRequest(async (req, res) => {
+// Get (event_id, name) pairs for all events in the event collection
+exports.getAllEventIDsAndNames = functions.https.onRequest(async (req, res) => {
 
     const eventRef = await admin.firestore().collection('events');
     const snapshot = await eventRef.get();
 
-    const eventResult = snapshot.docs.map(doc => doc.data());
+    const eventResult = snapshot.docs.map(function(doc) { var result = {event_id: doc.id, name: doc.data().name}; return result; });
 
-    // Send back all the documents from the events collection
+    // Send back all the id,name pairs from the events collection
     res.json({documents: eventResult});
 });
 
