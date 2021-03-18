@@ -325,7 +325,7 @@ exports.getSpeakerByID = functions.https.onRequest(async (req, res) => {
     const data = speakerRef.data();
 
     // Send back the specific user from the speakers collection
-    res.json(data);
+    res.json({speaker_id: id, ...data});
 });
 
 // Get event ids in the speakers collection
@@ -408,12 +408,16 @@ exports.addEventToSpeakerBySpeakerId = functions.https.onRequest(async (req, res
 
 // TODO
 //
+// TYLER
+// - create getTalkByID function that is exactly like getSpeakerByID but for talks
+//
 // ETHAN
-// - rename getEvent function to getEventNames
-// - change the getEvent function to that it only returns the name field, description field, and event_id field of each event document
+// - change getSpeakerById to returnthe ID tacked onto the front of the return json
+// - get getSpeakerEvents working
+//
+//
 //
 //
 // - IN ADDITION: any collection that has documents with arrays, we need to create functions to add elements to that array, so that we don't have to delete and create an entirely new document
 // - - we will have to figure out how to do this later
-// 
 // - find way to set default (null?) parameters so if they dont pass all the query params it doesnt throw an error
