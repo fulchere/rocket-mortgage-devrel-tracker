@@ -361,8 +361,6 @@ exports.getSpeakerEvents = functions.https.onRequest(async (req, res) => {
     res.json({email: email, event_pairs: event_pairs});
 });
 
-
-
 // Get talk ids in the speakers collection
 exports.getSpeakerTalks = functions.https.onRequest(async (req, res) => {
 
@@ -405,29 +403,36 @@ exports.getAllTalks = functions.https.onRequest(async (req, res) => {
 exports.addEventToSpeakerBySpeakerId = functions.https.onRequest(async (req, res) => {
 
     const speaker_id = req.query.speaker_id;
-    const event_id = req.query.event_id;
+    const event_id = req.query.event_id
 
     const speakerRef = await admin.firestore().collection('speakers').doc(speaker_id);
-    const unionRes = speakerRef.docs.map(doc => doc.update({
-        event_ids: admin.firestore()
-      }));
+    speakerRef.update({event_ids: admin.firestore.FieldValue.arrayUnion(event_id)});
 
-    // Send back all the documents from the talks collection
-    res.json({SUCCESS: 'event_id added to speaker', unionRes: unionRes});
+    // Send back message saying the event id was added
+    res.json({MESSAGE: `added event_id: ${event_id} to events array in speaker document with speaker_id: ${speaker_id}`});
 });
 
 // TODO
 //
 // TYLER
-// - create getTalkByID function that is exactly like getSpeakerByID but for talks
+// - make sure that all collections have getAllX functions, like getAllTalks
+// - make sure all collections have a getXByID function, like getTalkByID
+// - reorganize file so that the ALL functions are grouped and the getXByID functions are grouped
+// - create AddXToXByXID function for all arrays, this may be a lot of work I can do some of them if you want
+//   this will need to be done for the following:
+//   COLLECTION | ARRAY
+//   booths     | speaker_ids
+//   events     | host_ids
+//   hosts      | event_ids
+//   media      | speaker_ids
+//   speakers   | booth_ids
+//   speakers   | event_ids DONE => function name is addEventToSpeakerBySpeakerId
+//   speakers   | media_ids
+//   speakers   | talk_ids
+//   talks      | speaker_ids
 //
 // ETHAN
-// - change getSpeakerById to returnthe ID tacked onto the front of the return json
-// - get getSpeakerEvents working
+// did a bunch, see github for info
 //
-//
-//
-//
-// - IN ADDITION: any collection that has documents with arrays, we need to create functions to add elements to that array, so that we don't have to delete and create an entirely new document
-// - - we will have to figure out how to do this later
+// TODO
 // - find way to set default (null?) parameters so if they dont pass all the query params it doesnt throw an error
