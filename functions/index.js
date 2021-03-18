@@ -316,7 +316,7 @@ exports.getSpeakerByEmail = functions.https.onRequest(async (req, res) => {
     res.json(speakerResult[0]);
 });
 
-// Get all documents in the speakers collection
+// Get get the speaker document that matches the passed ID
 exports.getSpeakerByID = functions.https.onRequest(async (req, res) => {
 
     const id = req.query.ID;
@@ -340,7 +340,7 @@ exports.getSpeakerEvents = functions.https.onRequest(async (req, res) => {
     var event_names = [];
     for (const event_id of event_ids) {
         const eventRef = await admin.firestore().collection('events').where('__name__', '==', 'Fio0X41MAfqjX7Y1XluC').get();;
-        const eventName = await eventRef.name;
+        const eventName = await eventRef.data().name;
         event_names.push(eventName);
     }
 
