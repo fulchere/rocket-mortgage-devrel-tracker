@@ -312,16 +312,28 @@ exports.getSpeakerByEmail = functions.https.onRequest(async (req, res) => {
     res.json(speakerResult[0]);
 });
 
-// Get get the speaker document that matches the passed ID
-exports.getSpeakerByID = functions.https.onRequest(async (req, res) => {
+// Get get the booth document that matches the passed ID
+exports.getBoothByID = functions.https.onRequest(async (req, res) => {
 
     const id = req.query.ID;
 
-    const speakerRef = await admin.firestore().collection('speakers').doc(id).get();
-    const data = speakerRef.data();
+    const boothRef = await admin.firestore().collection('booths').doc(id).get();
+    const data = boothRef.data();
 
-    // Send back the specific user from the speakers collection
-    res.json({speaker_id: id, ...data});
+    // Send back the specific user from the booth collection
+    res.json({booth_id: id, ...data});
+});
+
+// Get get the callforpapers document that matches the passed ID
+exports.getCallforpapersByID = functions.https.onRequest(async (req, res) => {
+
+    const id = req.query.ID;
+
+    const callforpapersRef = await admin.firestore().collection('callforpapers').doc(id).get();
+    const data = callforpapersRef.data();
+
+    // Send back the specific user from the callforpapers collection
+    res.json({callforpapers_id: id, ...data});
 });
 
 // Get get the event document that matches the passed ID
@@ -336,16 +348,16 @@ exports.getEventByID = functions.https.onRequest(async (req, res) => {
     res.json({event_id: id, ...data});
 });
 
-// Get get the talk document that matches the passed ID
-exports.getTalkByID = functions.https.onRequest(async (req, res) => {
+// Get get the host document that matches the passed ID
+exports.getHostByID = functions.https.onRequest(async (req, res) => {
 
     const id = req.query.ID;
 
-    const talkRef = await admin.firestore().collection('talks').doc(id).get();
-    const data = talkRef.data();
+    const hostRef = await admin.firestore().collection('hosts').doc(id).get();
+    const data = hostRef.data();
 
-    // Send back the specific user from the talks collection
-    res.json({talk_id: id, ...data});
+    // Send back the specific user from the host collection
+    res.json({host_id: id, ...data});
 });
 
 // Get get the media document that matches the passed ID
@@ -356,8 +368,44 @@ exports.getMediaByID = functions.https.onRequest(async (req, res) => {
     const mediaRef = await admin.firestore().collection('media').doc(id).get();
     const data = mediaRef.data();
 
-    // Send back the specific user from the media collection
-    res.json({media_id: id, ...data});
+// Send back the specific user from the media collection
+res.json({media_id: id, ...data});
+});
+
+// Get get the rating document that matches the passed ID
+exports.getRatingByID = functions.https.onRequest(async (req, res) => {
+
+    const id = req.query.ID;
+
+    const ratingRef = await admin.firestore().collection('ratings').doc(id).get();
+    const data = ratingRef.data();
+
+    // Send back the specific user from the rating collection
+    res.json({rating_id: id, ...data});
+});
+
+// Get get the speaker document that matches the passed ID
+exports.getSpeakerByID = functions.https.onRequest(async (req, res) => {
+
+    const id = req.query.ID;
+
+    const speakerRef = await admin.firestore().collection('speakers').doc(id).get();
+    const data = speakerRef.data();
+
+    // Send back the specific user from the speakers collection
+    res.json({speaker_id: id, ...data});
+});
+
+// Get get the talk document that matches the passed ID
+exports.getTalkByID = functions.https.onRequest(async (req, res) => {
+
+    const id = req.query.ID;
+
+    const talkRef = await admin.firestore().collection('talks').doc(id).get();
+    const data = talkRef.data();
+
+    // Send back the specific user from the talks collection
+    res.json({talk_id: id, ...data});
 });
 
 // Get event ids in the speakers collection
@@ -411,19 +459,6 @@ exports.getSpeakerMediaIDs = functions.https.onRequest(async (req, res) => {
     res.json({email: email, media_ids: speakerMedia_ids});
 });
 
-// Mark a speaker attending an event by adding an event_id to the event_ids array in our speaker collection
-exports.addEventToSpeakerBySpeakerId = functions.https.onRequest(async (req, res) => {
-
-    const speaker_id = req.query.speaker_id;
-    const event_id = req.query.event_id
-
-    const speakerRef = await admin.firestore().collection('speakers').doc(speaker_id);
-    speakerRef.update({event_ids: admin.firestore.FieldValue.arrayUnion(event_id)});
-
-    // Send back message saying the event id was added
-    res.json({MESSAGE: `added event_id: ${event_id} to events array in speaker document with speaker_id: ${speaker_id}`});
-});
-
 // Mark a booth attended by a speaker by adding a booth_id to the speaker_ids array in our booth collection
 exports.addSpeakerToBoothByBoothId = functions.https.onRequest(async (req, res) => {
 
@@ -437,24 +472,134 @@ exports.addSpeakerToBoothByBoothId = functions.https.onRequest(async (req, res) 
     res.json({MESSAGE: `added speaker_id: ${speaker_id} to speakers array in booth document with booth_id: ${booth_id}`});
 });
 
+// Mark an event attended by a host by adding an event_id to the host_ids array in our event collection
+exports.addHostToEventByEventId = functions.https.onRequest(async (req, res) => {
+
+    const event_id = req.query.event_id;
+    const host_id = req.query.host_id
+
+    const eventRef = await admin.firestore().collection('events').doc(event_id);
+    eventRef.update({host_ids: admin.firestore.FieldValue.arrayUnion(host_id)});
+
+    // Send back message saying the host id was added
+    res.json({MESSAGE: `added host_id: ${host_id} to hosts array in event document with event_id: ${event_id}`});
+});
+
+// Mark a host attending an event by adding a host_id to the event_ids array in our host collection
+exports.addEventToHostByHostId = functions.https.onRequest(async (req, res) => {
+
+    const host_id = req.query.host_id;
+    const event_id = req.query.event_id
+
+    const hostRef = await admin.firestore().collection('hosts').doc(host_id);
+    hostRef.update({event_ids: admin.firestore.FieldValue.arrayUnion(event_id)});
+
+    // Send back message saying the event id was added
+    res.json({MESSAGE: `added event_id: ${event_id} to events array in host document with host_id: ${host_id}`});
+});
+
+// Mark a media by a speaker by adding a media_id to the speaker_ids array in our media collection
+exports.addSpeakerToMediaByMediaId = functions.https.onRequest(async (req, res) => {
+
+    const media_id = req.query.media_id;
+    const speaker_id = req.query.speaker_id
+
+    const mediaRef = await admin.firestore().collection('media').doc(media_id);
+    mediaRef.update({speaker_ids: admin.firestore.FieldValue.arrayUnion(speaker_id)});
+
+    // Send back message saying the speaker id was added
+    res.json({MESSAGE: `added speaker_id: ${speaker_id} to speakers array in media document with media_id: ${media_id}`});
+});
+
+// Mark a speaker attending a booth by adding a speaker_id to the booth_ids array in our speaker collection
+exports.addBoothToSpeakerBySpeakerId = functions.https.onRequest(async (req, res) => {
+
+    const speaker_id = req.query.speaker_id;
+    const booth_id = req.query.booth_id
+
+    const speakerRef = await admin.firestore().collection('speakers').doc(speaker_id);
+    speakerRef.update({booth_ids: admin.firestore.FieldValue.arrayUnion(booth_id)});
+
+    // Send back message saying the booth id was added
+    res.json({MESSAGE: `added booth_id: ${booth_id} to booths array in speaker document with speaker_id: ${speaker_id}`});
+});
+
+// Mark a speaker attending an event by adding an speaker_id to the event_ids array in our speaker collection
+exports.addEventToSpeakerBySpeakerId = functions.https.onRequest(async (req, res) => {
+
+    const speaker_id = req.query.speaker_id;
+    const event_id = req.query.event_id
+
+    const speakerRef = await admin.firestore().collection('speakers').doc(speaker_id);
+    speakerRef.update({event_ids: admin.firestore.FieldValue.arrayUnion(event_id)});
+
+    // Send back message saying the event id was added
+    res.json({MESSAGE: `added event_id: ${event_id} to events array in speaker document with speaker_id: ${speaker_id}`});
+});
+
+// Mark a speaker part of media by adding a speaker_id to the media_ids array in our speaker collection
+exports.addMediaToSpeakerBySpeakerId = functions.https.onRequest(async (req, res) => {
+
+    const speaker_id = req.query.speaker_id;
+    const media_id = req.query.media_id
+
+    const speakerRef = await admin.firestore().collection('speakers').doc(speaker_id);
+    speakerRef.update({media_ids: admin.firestore.FieldValue.arrayUnion(media_id)});
+
+    // Send back message saying the media id was added
+    res.json({MESSAGE: `added media_id: ${media_id} to media array in speaker document with speaker_id: ${speaker_id}`});
+});
+
+// Mark a speaker attending a talk by adding a speaker_id to the talk_ids array in our speaker collection
+exports.addTalkToSpeakerBySpeakerId = functions.https.onRequest(async (req, res) => {
+
+    const speaker_id = req.query.speaker_id;
+    const talk_id = req.query.talk_id
+
+    const speakerRef = await admin.firestore().collection('speakers').doc(speaker_id);
+    speakerRef.update({talk_ids: admin.firestore.FieldValue.arrayUnion(talk_id)});
+
+    // Send back message saying the talk id was added
+    res.json({MESSAGE: `added talk_id: ${talk_id} to talks array in speaker document with speaker_id: ${speaker_id}`});
+});
+
+// Mark a talk attended by a speaker by adding a talk_id to the speaker_ids array in our talk collection
+exports.addSpeakerToTalkByTalkId = functions.https.onRequest(async (req, res) => {
+
+    const talk_id = req.query.talk_id;
+    const speaker_id = req.query.speaker_id
+
+    const talkRef = await admin.firestore().collection('talks').doc(talk_id);
+    talkRef.update({speaker_ids: admin.firestore.FieldValue.arrayUnion(speaker_id)});
+
+    // Send back message saying the speaker id was added
+    res.json({MESSAGE: `added speaker_id: ${speaker_id} to speakers array in talk document with talk_id: ${talk_id}`});
+});
+
 // TODO
 //
 // TYLER
-// - make sure that all collections have getAllX functions, like getAllTalks
-// - make sure all collections have a getXByID function, like getTalkByID
-// - reorganize file so that the ALL functions are grouped and the getXByID functions are grouped
+// - make sure that all collections have getAllX functions (DONE)
+// - GetAllBooths DONE
+// - GetAllTalks DONE
+// - make sure all collections have a getXByID function (DONE)
+// - GetBoothById DONE
+// - GetCallforpapersById DONE
+// - GetHostById DONE
+// - GetRatingById DONE
+// - reorganize file so that the ALL functions are grouped and the getXByID functions are grouped (DONE)
 // - create AddXToXByXID function for all arrays, this may be a lot of work I can do some of them if you want
 //   this will need to be done for the following:
 //   COLLECTION | ARRAY
-//   booths     | speaker_ids
-//   events     | host_ids
-//   hosts      | event_ids
-//   media      | speaker_ids
-//   speakers   | booth_ids
+//   booths     | speaker_ids DONE
+//   events     | host_ids DONE
+//   hosts      | event_ids DONE
+//   media      | speaker_ids DONE
+//   speakers   | booth_ids DONE
 //   speakers   | event_ids DONE => function name is addEventToSpeakerBySpeakerId
-//   speakers   | media_ids
-//   speakers   | talk_ids
-//   talks      | speaker_ids
+//   speakers   | media_ids DONE
+//   speakers   | talk_ids DONE
+//   talks      | speaker_ids DONE
 //
 // ETHAN
 // did a bunch, see github for info
