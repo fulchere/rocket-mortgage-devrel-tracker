@@ -38,7 +38,11 @@ export default function CEventList({ type, event_data, select_Event }) {
             <ListGroup flush={false} >
                 {event_data.map(event => {
                     return(
-                        isSelected(event) ? <Button squared theme='light' key = {event.id}> {event.name}</Button> : <Button squared outline theme='light' key = {event.id} onClick={() => {selectEvent(event)}}> {event.name}</Button>
+                        isSelected(event) ? 
+                        <Button squared theme='light' key = {event.id}> {event.name}</Button> 
+                        : 
+                        <Button squared outline theme='light' 
+                        key = {event.id} onClick={() => {selectEvent(event)}}> {event.name}</Button>
                     )
                 })}
             </ListGroup>
