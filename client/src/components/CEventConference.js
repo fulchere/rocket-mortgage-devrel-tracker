@@ -14,7 +14,7 @@ export default function CEventConference({event_id}) {
         facility: "",
         description: "" 
     })
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [rating, setRating] = useState(-1)
 
     useEffect(() => {

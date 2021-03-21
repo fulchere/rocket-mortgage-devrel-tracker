@@ -19,8 +19,7 @@ export default function CConferences() {
             }
     
             var temp_array = []
-            console.log(1,response);
-            for (var i = 0; i < response.documents.length; i++){
+            for (var i = 0; i < response.event_pairs.length; i++){
               temp_array.push({
                 name : response.event_pairs[i].event_name,
                 id : response.event_pairs[i].id      
