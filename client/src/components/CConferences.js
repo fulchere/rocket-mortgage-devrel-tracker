@@ -2,23 +2,27 @@ import React, {useState, useEffect} from 'react'
 import CAPIService from './CAPIService'
 import CEventBrowser from './CEventBrowser'
 
+import { useAuth } from '../contexts/AuthContext'
+
 export default function CConferences() {
     const [event_data, setEvent_data] = useState([])
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
+
+    const { currentUser } = useAuth()
 
     useEffect(() => {
         let mounted = true
-        CAPIService.getAllEvents()
+        CAPIService.getAllUserEvents(currentUser.email)
           .then(response => {
             if (mounted) {
               setLoading(false)
             }
     
             var temp_array = []
-            for (var i = 0; i < response.documents.length; i++){
+            for (var i = 0; i < response.event_pairs.length; i++){
               temp_array.push({
-                name : response.documents[i].name,
-                id : response.documents[i].event_id
+                name : response.event_pairs[i].event_name,
+                id : response.event_pairs[i].id      
               })
             }
             setEvent_data(temp_array)

@@ -14,7 +14,7 @@ export default function CEventConference({event_id}) {
         facility: "",
         description: "" 
     })
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         let mounted = true
@@ -25,19 +25,19 @@ export default function CEventConference({event_id}) {
             }
     
             var temp_data = {
-                name : response.documents[0].name,
-                id : response.documents[0].event_id,
-                start: response.documents[0].start,
-                end: response.documents[0].end,
-                address: response.documents[0].address,
-                facility: response.documents[0].facility,
-                description: response.documents[0].description
+                name : response.name,
+                id : response.event_id,
+                start: response.start,
+                end: response.end,
+                address: response.address,
+                facility: response.facility,
+                description: response.description
 
               }
 
             setFormData(temp_data)
 
-            console.log(response.documents[0])
+            console.log(temp_data.start)
 
 
 
@@ -88,7 +88,6 @@ export default function CEventConference({event_id}) {
                         </Container>
                         </div>
                     </Row>
-                    <Row><div style = {{width:'100%'}} align='right'> <CEventList type={'Talk'} event_data={[{name: 'Coding in React', event_id:"0"}, {name: 'Intro to C', event_id:"1"}]}/> </div></Row>
                 </Col>
 
             </Row>

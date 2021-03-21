@@ -27,7 +27,7 @@ export default function CEventBrowser({ type, event_data }) {
                         <CEventList type={ type } event_data={ event_data } select_Event={select_Event}/>
                     </Col>
                     <Col sm="12" md="8" lg="8">
-                        {isSelected ? <CEvent type={ type } event_id={selectedEvent} /> : <div></div> }
+                        {isSelected ? <CEvent type={ type } event_id={selectedEvent} key={JSON.stringify(selectedEvent)} /> : <div></div> }
                     </Col>
                 </Row>
             </Container>
