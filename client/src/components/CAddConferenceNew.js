@@ -18,7 +18,7 @@ export default function CAddConferenceNew() {
     return (
       <Form>
           <Container>
-            <Row><h4 style={{margin: 'auto', paddingTop:'20px'}}>Add a conference</h4></Row>
+            <Row><h4 style={{margin: 'auto', paddingTop:'20px'}}>New Conference</h4></Row>
             <Row style={{paddingBottom: '20px'}}><FormInput id="#conference_name" placeholder="Conference name or search for existing conference"/></Row>
             <Row>
               <Col>
