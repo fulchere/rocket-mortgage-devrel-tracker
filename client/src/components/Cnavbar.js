@@ -26,7 +26,7 @@ import {
 } from "shards-react";
 
 export default function Cnavbar() {
-  const { logout } = useAuth()
+  const { currentUser, logout } = useAuth()
   const [error, setError] = useState('')
   const history = useHistory()
 
@@ -65,7 +65,7 @@ export default function Cnavbar() {
           </Nav>
 
           <Nav navbar className="ml-auto">
-          <Button theme="light" onClick={() => {logout()}}>Logout</Button>
+          { currentUser ? <div><Button theme="light" onClick={() => {logout()}}>Logout</Button></div> : <div></div>}
           </Nav>
       </Navbar>
     )

@@ -1,39 +1,39 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import CAPIService from './CAPIService'
 import CEventBrowser from './CEventBrowser'
 
 export default function CTalks() {
-    const [event_data, setEvent_data] = useState([])
-    const [loading, setLoading] = useState(false)
+  const [event_data, setEvent_data] = useState([])
+  const [loading, setLoading] = useState(false)
 
-    useEffect(() => {
-        let mounted = true
-        CAPIService.getTalk()
-          .then(response => {
-            if (mounted) {
-              setLoading(false)
-            }
-    
-            var temp_array = []
-            for (var i = 0; i < response.documents.length; i++){
-              temp_array.push({
-                name : response.documents[i].title,
-                id : response.documents[i].talk_id
-              })
-            }
-            setEvent_data(temp_array)
+  useEffect(() => {
+    let mounted = true
+    CAPIService.getTalk()
+      .then(response => {
+        if (mounted) {
+          setLoading(false)
+        }
+
+        var temp_array = []
+        for (var i = 0; i < response.documents.length; i++) {
+          temp_array.push({
+            name: response.documents[i].title,
+            id: response.documents[i].talk_id
           })
-    
-          return function cleanup() {
-            mounted = false
-          }
-      }, [])
+        }
+        setEvent_data(temp_array)
+      })
 
-    return (
-        <div> {loading ? <p>loading...</p> :
-        <div>
-            <CEventBrowser type='Talk' event_data={event_data} />
-        </div>}
-        </div>
-    )
+    return function cleanup() {
+      mounted = false
+    }
+  }, [])
+
+  return (
+    <div> {loading ? <p>loading...</p> :
+      <div>
+        <CEventBrowser type='Talk' event_data={ event_data } />
+      </div> }
+    </div>
+  )
 }
