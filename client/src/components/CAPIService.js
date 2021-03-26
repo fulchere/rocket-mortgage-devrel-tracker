@@ -23,19 +23,29 @@ const getEvent = (event_id) => {
 }
 
 const getTalk = () => {
-  const request = axios.get('https://cors-anywhere.herokuapp.com/' + baseUrl + 'getAllTalks')
+  const request = axios.get(cors_hack + baseUrl + 'getAllTalks')
   return request.then(response => response.data)
 }
 const addRating = (data) => {
-  const request = axios.get('https://cors-anywhere.herokuapp.com/' + baseUrl + 'addRating' + {params:data})
+  const request = axios.get(cors_hack + baseUrl + 'addRating' + {params:data})
   return request.then(response => response.data)
 }
 const getRatingByID = (id) => {
-  const request = axios.get('https://cors-anywhere.herokuapp.com/' + baseUrl + 'getRatingByID?ID='+id)
+  const request = axios.get(cors_hack + baseUrl + 'getRatingByID?ID='+id)
   return request.then(response => response.data)
 }
 const addTalk = (data) => {
-  const request = axios.get('https://cors-anywhere.herokuapp.com/' + baseUrl + 'addTalk' + {params:data})
+  const request = axios.get(cors_hack + baseUrl + 'addTalk' + {params:data})
+  return request.then(response => response.data)
+}
+
+const addNewEventToSpeaker = (speaker_id, event_id) => {
+  const request = axios.get(cors_hack + baseUrl + 'addEventToSpeakerBySpeakerId?speaker_id=')
+  return request.then(response => response.data)
+}
+
+const addExistingEventToSpeaker = (speaker_id, event_id) => {
+  const request = axios.get(cors_hack + baseUrl + 'addEventToSpeakerBySpeakerId?speaker_id=' + speaker_id + '&event_id=' + event_id)
   return request.then(response => response.data)
 }
 
@@ -47,4 +57,4 @@ const getSpecifiedURL = (url) => {
       .catch(res => {}))
   }
 
-export default { getAllEvents, getAllUserEvents, getEvent, getTalk, addRating, getSpecifiedURL, getRatingByID,addTalk}
+export default { getAllEvents, getAllUserEvents, getEvent, getTalk, addRating, getSpecifiedURL, getRatingByID,addTalk, addNewEventToSpeaker, addExistingEventToSpeaker}
