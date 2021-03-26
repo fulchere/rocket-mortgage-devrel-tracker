@@ -1,9 +1,6 @@
 import axios from 'axios'
-
 const baseUrl = 'https://us-central1-rocket-mortgage-devrel-tracker.cloudfunctions.net/'
-
 const cors_hack = 'https://cors-anywhere.herokuapp.com/'
-
 const getAllEvents = () => {
   const request = axios.get(cors_hack + baseUrl + 'getAllEventIDsAndNames')
   return request.then(response => response.data)
@@ -22,6 +19,7 @@ const getEvent = (event_id) => {
     .catch(res => {}))
 }
 
+
 const getTalk = () => {
   const request = axios.get(cors_hack + baseUrl + 'getAllTalks')
   return request.then(response => response.data)
@@ -32,6 +30,30 @@ const addRating = (data) => {
 }
 const getRatingByID = (id) => {
   const request = axios.get(cors_hack + baseUrl + 'getRatingByID?ID='+id)
+  return request.then(response => response.data)
+}
+const getAllMedia = () => {
+  const request = axios.get('https://cors-anywhere.herokuapp.com/' + baseUrl + 'getAllMedia')
+  return request.then(response => response.data)
+}
+const getTalkByID = (id) => {
+  const request = axios.get('https://cors-anywhere.herokuapp.com/' + baseUrl + 'getTalkByID?ID='+id)
+  return request.then(response => response.data)
+}
+const getMediaByID = (id) => {
+  const request = axios.get('https://cors-anywhere.herokuapp.com/' + baseUrl + 'getMediaByID?ID='+id)
+  return request.then(response => response.data)
+}
+const addMedia = (data) => {
+  const request = axios.get('https://cors-anywhere.herokuapp.com/' + baseUrl + 'addMedia',{params:data})
+  return request.then(response => response.data)
+}
+const getRatingByEventByID = (id) => {
+  const request = axios.get('https://cors-anywhere.herokuapp.com/' + baseUrl + 'getRatingByEventByID?ID='+id)
+  return request.then(response => response.data)
+}
+const getAllRatings = () => {
+  const request = axios.get('https://cors-anywhere.herokuapp.com/' + baseUrl + 'getAllRatings')
   return request.then(response => response.data)
 }
 const addTalk = (data) => {
@@ -57,4 +79,4 @@ const getSpecifiedURL = (url) => {
       .catch(res => {}))
   }
 
-export default { getAllEvents, getAllUserEvents, getEvent, getTalk, addRating, getSpecifiedURL, getRatingByID,addTalk, addNewEventToSpeaker, addExistingEventToSpeaker}
+export default {getAllUserEvents,getRatingByID,getTalkByID,addMedia,getMediaByID, getAllMedia,getAllEvents, getEvent, getTalk, getSpecifiedURL,addRating,getRatingByEventByID,addTalk,getAllRatings}

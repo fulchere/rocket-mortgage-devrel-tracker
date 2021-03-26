@@ -12,13 +12,13 @@ export default function CAddTalks() {
     console.log(data);
     CAPIService.addTalk({
       ...data,
-      accepted_status: true,
+      accepted_status: false,
       // attendees: 1,
       // description: 1,
       // title: 1,
-      given_status: true,
-      speaker_ids: [1,2],
-      submitted_status: true,
+      given_status: false,
+      speaker_ids: '[1,2]',
+      submitted_status: false,
 
     })
       .then(res => {

@@ -47,7 +47,7 @@ exports.addCallforpapers = functions.https.onRequest(async (req, res) => {
     const writeResult = await admin.firestore().collection('callforpapers').add(new_callforpapers);
 
     // Send back a message that we've successfully written the message
-    res.json({result: `New rating added to callforpapers collection with ID: ${writeResult.id} added.`});
+    res.json({result: `New callforpapers document added to callforpapers collection with ID: ${writeResult.id} added.`});
 });
 
 // Events Collection
@@ -84,7 +84,7 @@ exports.addEvent = functions.https.onRequest(async (req, res) => {
     const writeResult = await admin.firestore().collection('events').add(new_event);
 
     // Send back a message that we've successfully written the message
-    res.json({result: `New rating added to events collection with ID: ${writeResult.id} added.`});
+    res.json({result: `New event document added to events collection with ID: ${writeResult.id} added.`});
 });
 
 // Hosts Collection
@@ -105,7 +105,7 @@ exports.addHost = functions.https.onRequest(async (req, res) => {
     const writeResult = await admin.firestore().collection('hosts').add(new_host);
 
     // Send back a message that we've successfully written the message
-    res.json({result: `New rating added to hosts collection with ID: ${writeResult.id} added.`});
+    res.json({result: `New host document added to hosts collection with ID: ${writeResult.id} added.`});
 });
 
 // Media Collection
@@ -124,7 +124,7 @@ exports.addMedia = functions.https.onRequest(async (req, res) => {
     const writeResult = await admin.firestore().collection('media').add(new_media);
 
     // Send back a message that we've successfully written the message
-    res.json({result: `New rating added to media collection with ID: ${writeResult.id} added.`});
+    res.json({result: `New media document added to media collection with ID: ${writeResult.id} added.`});
 });
 
 // Ratings Collection
@@ -172,7 +172,7 @@ exports.addSpeaker = functions.https.onRequest(async (req, res) => {
     const writeResult = await admin.firestore().collection('speakers').add(new_speaker);
 
     // Send back a message that we've successfully written the message
-    res.json({result: `New rating added to speakers collection with ID: ${writeResult.id} added.`});
+    res.json({result: `New speaker document added to speakers collection with ID: ${writeResult.id} added.`});
 });
 
 // Talks Collection
@@ -199,7 +199,7 @@ exports.addTalk = functions.https.onRequest(async (req, res) => {
     const writeResult = await admin.firestore().collection('talks').add(new_talk);
 
     // Send back a message that we've successfully written the message
-    res.json({result: `New rating added to talks collection with ID: ${writeResult.id} added.`});
+    res.json({result: `New talk document added to talks collection with ID: ${writeResult.id} added.`});
 });
 
 // Get all documents in the booths collection
@@ -312,6 +312,48 @@ exports.getSpeakerByEmail = functions.https.onRequest(async (req, res) => {
     res.json(speakerResult[0]);
 });
 
+// Get rating documents that match the passed event id
+exports.getRatingsByEventID = functions.https.onRequest(async (req, res) => {
+
+    const id = req.query.ID;
+
+    const ratingRef = await admin.firestore().collection('ratings');
+    const snapshot = await ratingRef.where('event_id', '==', id).get();
+
+    const ratingResult = snapshot.docs.map(function(doc) { var result = {rating_id: doc.id, ...doc.data()}; return result; });
+
+    // Send back the specific user from the speakers collection
+    res.json(ratingResult);
+});
+
+// Return the user rating of an event (if exists) and the average rating of an event
+exports.getUserRatingAndAverageRatingOfEvent = functions.https.onRequest(async (req, res) => {
+
+    const event_id = req.query.event_id;
+    const email = req.query.email;
+
+    const speakerRef = await admin.firestore().collection('speakers');
+    const snapshotSpk = await speakerRef.where('email', '==', email).get();
+    const speakerResult = snapshotSpk.docs.map(function(doc) { var result = {speaker_id: doc.id}; return result; });
+    const speaker_id = speakerResult[0].speaker_id;
+
+    const ratingRef = await admin.firestore().collection('ratings');
+    const snapshot = await ratingRef.where('event_id', '==', event_id).get();
+    const allRatings = snapshot.docs.map(function(doc) { var result = {rating_id: doc.id, ...doc.data()}; return result; });
+
+    var user_rating = 0;
+    var total_rating = 0;
+    for(var i = 0; i< allRatings.length; i++) {
+        total_rating += parseInt(allRatings[i].rating);
+        if (allRatings[i].speaker_id == speaker_id) {
+            user_rating = parseInt(allRatings[i].rating);
+        }
+    }
+
+    // Send back the specific user's rating as well as the average rating for the event
+    res.json({user_rating: user_rating, total_rating_average: total_rating/allRatings.length});
+});
+
 // Get get the booth document that matches the passed ID
 exports.getBoothByID = functions.https.onRequest(async (req, res) => {
 
@@ -320,7 +362,7 @@ exports.getBoothByID = functions.https.onRequest(async (req, res) => {
     const boothRef = await admin.firestore().collection('booths').doc(id).get();
     const data = boothRef.data();
 
-    // Send back the specific user from the booth collection
+    // Send back the specific booth document from the booth collection
     res.json({booth_id: id, ...data});
 });
 
@@ -332,7 +374,7 @@ exports.getCallforpapersByID = functions.https.onRequest(async (req, res) => {
     const callforpapersRef = await admin.firestore().collection('callforpapers').doc(id).get();
     const data = callforpapersRef.data();
 
-    // Send back the specific user from the callforpapers collection
+    // Send back the specific callforpapers document from the callforpapers collection
     res.json({callforpapers_id: id, ...data});
 });
 
@@ -344,7 +386,7 @@ exports.getEventByID = functions.https.onRequest(async (req, res) => {
     const eventRef = await admin.firestore().collection('events').doc(id).get();
     const data = eventRef.data();
 
-    // Send back the specific user from the events collection
+    // Send back the specific event document from the events collection
     res.json({event_id: id, ...data});
 });
 
@@ -356,7 +398,7 @@ exports.getHostByID = functions.https.onRequest(async (req, res) => {
     const hostRef = await admin.firestore().collection('hosts').doc(id).get();
     const data = hostRef.data();
 
-    // Send back the specific user from the host collection
+    // Send back the specific host document from the host collection
     res.json({host_id: id, ...data});
 });
 
@@ -368,7 +410,7 @@ exports.getMediaByID = functions.https.onRequest(async (req, res) => {
     const mediaRef = await admin.firestore().collection('media').doc(id).get();
     const data = mediaRef.data();
 
-// Send back the specific user from the media collection
+// Send back the specific media document from the media collection
 res.json({media_id: id, ...data});
 });
 
@@ -380,7 +422,7 @@ exports.getRatingByID = functions.https.onRequest(async (req, res) => {
     const ratingRef = await admin.firestore().collection('ratings').doc(id).get();
     const data = ratingRef.data();
 
-    // Send back the specific user from the rating collection
+    // Send back the specific rating document from the rating collection
     res.json({rating_id: id, ...data});
 });
 
@@ -392,7 +434,7 @@ exports.getSpeakerByID = functions.https.onRequest(async (req, res) => {
     const speakerRef = await admin.firestore().collection('speakers').doc(id).get();
     const data = speakerRef.data();
 
-    // Send back the specific user from the speakers collection
+    // Send back the specific speaker document from the speakers collection
     res.json({speaker_id: id, ...data});
 });
 
@@ -404,7 +446,7 @@ exports.getTalkByID = functions.https.onRequest(async (req, res) => {
     const talkRef = await admin.firestore().collection('talks').doc(id).get();
     const data = talkRef.data();
 
-    // Send back the specific user from the talks collection
+    // Send back the specific talk document from the talks collection
     res.json({talk_id: id, ...data});
 });
 
