@@ -71,6 +71,11 @@ const addExistingEventToSpeaker = (speaker_id, event_id) => {
   return request.then(response => response.data)
 }
 
+const getSpeaker = (speaker_email) => {
+  const request = axios.get(cors_hack + baseUrl + 'getSpeakerByEmail?email=' + speaker_email)
+  return request.then(response => response.data)
+}
+
 
 const getSpecifiedURL = (url) => {
     const request = axios.get(url)
@@ -79,4 +84,4 @@ const getSpecifiedURL = (url) => {
       .catch(res => {}))
   }
 
-export default {getAllUserEvents,getRatingByID,getTalkByID,addMedia,getMediaByID, getAllMedia,getAllEvents, getEvent, getTalk, getSpecifiedURL,addRating,getRatingByEventByID,addTalk,getAllRatings}
+export default {getAllUserEvents,getRatingByID,getTalkByID,addMedia,getMediaByID, getAllMedia,getAllEvents, getEvent, getTalk, getSpecifiedURL,addRating,getRatingByEventByID,addTalk,getAllRatings, addNewEventToSpeaker, addExistingEventToSpeaker, getSpeaker}

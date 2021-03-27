@@ -15,6 +15,8 @@ export default function CAddConferenceExisting({user_event_data}) {
     const [event_data, setEvent_data] = useState([])
     const [loading, setLoading] = useState(true)
 
+    const [userID, setUserID] = useState('')
+
     const { currentUser } = useAuth()
 
     useEffect(() => {
@@ -42,7 +44,13 @@ export default function CAddConferenceExisting({user_event_data}) {
               })
             }
             }
+
+
             setEvent_data(temp_array)
+            CAPIService.getSpeaker(currentUser.email).then(response => {
+              setUserID(response.speaker_id)
+            })
+
           })
     
           return function cleanup() {
@@ -57,12 +65,12 @@ export default function CAddConferenceExisting({user_event_data}) {
     }
 
         const handleSubmit = (e) => {
+            console.log('adding yet?')
             //call api to add selectedEvent to speaker's connections
-            //CAPIService.addExistingEventToSpeaker(currentUser.id, selectedEvent)
-          //.then(response => {
-
-          //})
-          console.log(currentUser.email)
+            CAPIService.addExistingEventToSpeaker(userID, selectedEvent)
+          .then(response => {
+            console.log('adding now')
+          })
         }
 
 
