@@ -14,7 +14,7 @@ export default function CEventConference({event_id}) {
         facility: "",
         description: "" 
     })
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [rating, setRating] = useState(-1)
 
     useEffect(() => {
@@ -117,7 +117,7 @@ export default function CEventConference({event_id}) {
                         </Container>
                         </div>
                     </Row>
-                    <Row><div style = {{width:'100%'}} align='right'> <CEventList type={'Talk'} event_data={[{name: 'Coding in React', event_id:"0"}, {name: 'Intro to C', event_id:"1"}]}/> </div></Row>
+                    <Row><div style = {{width:'100%'}} align='right'> </div></Row>
                 </Col>
 
             </Row>

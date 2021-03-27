@@ -65,11 +65,10 @@ export default function CAddConferenceExisting({user_event_data}) {
     }
 
         const handleSubmit = (e) => {
-            console.log('adding yet?')
             //call api to add selectedEvent to speaker's connections
             CAPIService.addExistingEventToSpeaker(userID, selectedEvent)
           .then(response => {
-            console.log('adding now')
+
           })
         }
 
