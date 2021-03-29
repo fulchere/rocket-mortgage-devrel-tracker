@@ -3,24 +3,21 @@ import React, { useState } from 'react'
 import { Form, FormInput, FormTextarea, ModalBody, FormGroup, Container, Row, Col, Button } from "shards-react";
 import DatePicker from "react-datepicker";
 import CAPIService from './CAPIService'
-import { useAuth } from '../contexts/AuthContext'
+
 
 export default function CAddTalks() {
-  const { currentUser } = useAuth()
   const [startDate, setStartDate] = useState(new Date());
   const [data, setData] = useState({});
-  const addTalk = async () => {
-
-    const {speaker_id} = await CAPIService.getSpeaker(currentUser.email)
-    console.log(speaker_id)
-    await CAPIService.addTalk({
+  const addTalk = () => {
+    console.log(data);
+    CAPIService.addTalk({
       ...data,
       accepted_status: false,
       // attendees: 1,
       // description: 1,
       // title: 1,
       given_status: false,
-      speaker_ids: speaker_id,
+      speaker_ids: '[1,2]',
       submitted_status: false,
 
     })
@@ -57,5 +54,6 @@ export default function CAddTalks() {
         </Container>
       </Form>
     </ModalBody>
+    //...
   )
 }
