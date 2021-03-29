@@ -11,13 +11,6 @@ export default function CAddConference({event_data}) {
   const [newActive, setNewActive] = useState(true);
 
 
-  function handleSubmit(e){
-    e.preventDefault()
-
-    //call to submit data
-  }
-
-
     return (
       <ModalBody>
 

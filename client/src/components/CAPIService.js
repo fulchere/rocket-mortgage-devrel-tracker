@@ -61,13 +61,15 @@ const addTalk = (data) => {
   return request.then(response => response.data)
 }
 
-const addNewEventToSpeaker = (speaker_id, event_id) => {
-  const request = axios.get(cors_hack + baseUrl + 'addEventToSpeakerBySpeakerId?speaker_id=')
-  return request.then(response => response.data)
-}
+
 
 const addExistingEventToSpeaker = (speaker_id, event_id) => {
   const request = axios.get(cors_hack + baseUrl + 'addEventToSpeakerBySpeakerId?speaker_id=' + speaker_id + '&event_id=' + event_id)
+  return request.then(response => response.data)
+}
+
+const addNewEventToSpeaker = (speaker_id, name, address, facility, attendees, dei_affiliation, description, start, end, host, recruiting_partner, seasonality) => {
+  const request = axios.get(cors_hack + baseUrl + 'addEvent?address=' + address + "&attendees=" + attendees + "&facility=" + facility + "&dei_affiliation=" + dei_affiliation + "&description=" + description + "&name=" + name + "&start=" + start + "&end=" + end + "&host_ids=" + host + "&recruiting_partner=" + recruiting_partner + "&seasonality=" + seasonality + "&speaker_ids=" + speaker_id)
   return request.then(response => response.data)
 }
 

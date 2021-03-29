@@ -80,8 +80,8 @@ export default function CAddConferenceExisting({user_event_data}) {
 
                     <CAddConferenceExistingList event_data={event_data} select_Event={select_Event}/>
 
-                    <Form onSubmit={handleSubmit}>
-                    <Button squared style={{width:'130px', height:'50px', align:'right'}}>Add to My Conferences</Button>
+                    <Form onSubmit={handleSubmit}style={{paddingTop:'20px'}} >
+                    <Button squared style={{width:'130px', height:'50px', float:'right'}}>Add to My Conferences</Button>
                     </Form>
                 </Container>
         }</div>
