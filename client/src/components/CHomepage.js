@@ -5,6 +5,7 @@ import { ListGroup, ListGroupItem, Button, Container, Row, Col, Modal, ModalBody
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
 import CAPIService from './CAPIService'
+import CHomepageFeed from './CHomepageFeed'
 
 import { useAuth } from '../contexts/AuthContext'
 
@@ -53,9 +54,18 @@ export default function CHomepage() {
 
     return (
         <div> {loading ? <p>loading...</p> :
-            <Container>       
-                <Calendar localizer={localizer} defaultDate={new Date()} defaultView="month" events={event_data} style={{ height: "100vh" }} />
+          <div>
+            <Container  style = {{paddingTop: "20px", maxWidth: "90%"}}>    
+              <Row>
+            <Col sm="12" md="4" lg="3">
+            <CHomepageFeed event_data={event_data}/>
+            </Col>
+            <Col>
+                <Calendar localizer={localizer} defaultDate={new Date()} defaultView="month" events={event_data} style={{ height: "100vh" }} />  
+                </Col>
+                </Row>
             </Container>
+            </div>
             }
             </div>
     )
