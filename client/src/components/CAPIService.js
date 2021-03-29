@@ -25,7 +25,7 @@ const getTalk = () => {
   return request.then(response => response.data)
 }
 const addRating = (data) => {
-  const request = axios.get(cors_hack + baseUrl + 'addRating' + {params:data})
+  const request = axios.get(cors_hack + baseUrl + 'addRating' , {params:data})
   return request.then(response => response.data)
 }
 const getRatingByID = (id) => {
@@ -57,7 +57,7 @@ const getAllRatings = () => {
   return request.then(response => response.data)
 }
 const addTalk = (data) => {
-  const request = axios.get(cors_hack + baseUrl + 'addTalk' + {params:data})
+  const request = axios.get(cors_hack + baseUrl + 'addTalk',{params:data})
   return request.then(response => response.data)
 }
 

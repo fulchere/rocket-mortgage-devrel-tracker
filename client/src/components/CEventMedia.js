@@ -6,7 +6,7 @@ import CAPIService from './CAPIService'
 
 export default function CEventMedia({event_id}) {
     const [value, onChange] = useState(new Date());
-    const [media, setMedia] = useState(new Date());
+    const [media, setMedia] = useState({});
     useEffect(() => {
         CAPIService.getMediaByID(event_id)
           .then(res => {
@@ -20,8 +20,7 @@ export default function CEventMedia({event_id}) {
             <Row>
                 <Col sm="12" md="12" lg="6">
                     <div style={ { border: '1px solid rgba(0,0,0,.125)', width: '80%', height: 300, padding: 15 } }>
-                        <p>id:{media['media_id']}</p>
-                        <p>speaker_ids:{media['speaker_ids']}</p>
+                        <p>description: {media['description']}</p>
                     </div>
                 </Col>
 
