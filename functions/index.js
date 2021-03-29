@@ -115,10 +115,14 @@ exports.addMedia = functions.https.onRequest(async (req, res) => {
     const name = req.query.name;
     const speaker_ids = req.query.speaker_ids.split(',');
     const type = req.query.type;
+    const time = req.query.time;
+    const description = req.query.description;
 
     const new_media = {name: name,
         speaker_ids: speaker_ids,
-        type: type}
+        type: type,
+        time: time,
+        description: description}
 
     // Push the new rating into the hosts collection within Firestore
     const writeResult = await admin.firestore().collection('media').add(new_media);
@@ -460,14 +464,20 @@ exports.getSpeakerEvents = functions.https.onRequest(async (req, res) => {
     const event_ids = snapshot.docs.map(doc => doc.data().event_ids)[0];
 
     var event_names = [];
+    var event_start_times = [];
+    var event_end_times = [];
     for (const event_id of event_ids) {
         const eventRef = await admin.firestore().collection('events').doc(event_id).get();
         const eventName = eventRef.data().name;
+        const eventStartTime = eventRef.data().start;
+        const eventEndTime = eventRef.data().end;
         event_names.push(eventName);
+        event_start_times.push(eventStartTime);
+        event_end_times.push(eventEndTime);
     }
 
     const event_pairs = event_ids.map( function(id, i) {
-        var pair = {id: id, event_name: event_names[i]};
+        var pair = {id: id, event_name: event_names[i], event_start_time: event_start_times[i], event_end_time: event_end_times[i]};
         return pair;}
         );
 

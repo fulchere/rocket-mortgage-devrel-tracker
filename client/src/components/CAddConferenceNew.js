@@ -110,6 +110,8 @@ export default function CAddConferenceNew() {
                 <div style={{float:'right', paddingTop:'5px', paddingBottom:'20px'}}><label htmlFor="#enddate">End Date: </label><DatePicker selected={endDate} onChange={date => setEndDate(date)} style={{float:'right'}}/></div>
                   </div>
               </FormGroup>
+              <div style={{float:'right'}}><label htmlFor="#startdate">Start Date: </label><DatePicker selected={startDate} onChange={date => setStartDate(date)} style={{float:'right'}}/></div>
+              <div style={{float:'right'}}><label htmlFor="#enddate">End Date: </label><DatePicker selected={endDate} onChange={date => setEndDate(date)} style={{float:'right'}}/></div>
               <FormGroup>
                 <FormTextarea id="#description" placeholder="Brief description here..." style={{height:'165px'}} onChange={(e) => {setDescription(e.target.value)}}/>
               </FormGroup>
