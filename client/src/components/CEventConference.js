@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import {Container, Row, Col,Button} from 'shards-react'
 
+import moment from 'moment'
+
 import CAPIService from './CAPIService'
 import CEventList from './CEventList'
 
@@ -69,21 +71,11 @@ export default function CEventConference({event_id}) {
                         <Container>
                         <Row><div>{formData.facility}</div></Row>
                         <Row><div>{formData.address}</div></Row>
-                        <Row><div>East Lansing/MI/48824</div></Row> 
                         </Container>
                         </div>
                     </Row>
                     <Row>
-                    <div style = {{paddingBottom:'20px'}}>
-                    <Container>
-                        <Row><div>Robert Shaw</div></Row>
-                        <Row><div>rshaw@msu.edu</div></Row>
-                        <Row><div>(248)877-3626</div></Row> 
-                        </Container>
-                    </div>
-                    </Row>
-                    <Row>
-                        <div style = {{paddingBottom:'20px', height:'80px', width:'200px', outline:'2px black solid', textAlign:'left'}}>{formData.description}</div>
+                        <div style = {{paddingBottom:'20px', height:'120px', width:'200px', outline:'2px black solid', textAlign:'left'}}>{formData.description}</div>
                     </Row>
                     <Row>
                     <div style = {{padding:'5px',marginTop:20, height:'100px', width:'200px', outline:'2px black solid', textAlign:'left'}}>
@@ -107,13 +99,12 @@ export default function CEventConference({event_id}) {
                     </Row>
                 </Col>
                 <Col>
-                    <Row><div style = {{paddingBottom:'20px',width:'100%'}} align='right'>Date: 2/19/2021</div></Row>
                     <Row >
 
                     <div style = {{paddingBottom:'20px', width:'100%'}}>
                     <Container>
-                        <Row><div style = {{width:'100%'}} align='right'>Start time: {formData.start}</div></Row>
-                        <Row><div style = {{width:'100%'}} align='right'>End time: {formData.end}</div></Row>
+                        <Row><div style = {{width:'100%'}} align='right'>Start: {moment(formData.start).format('lll')}</div></Row>
+                        <Row><div style = {{width:'100%'}} align='right'>End: {moment(formData.end).format('lll')}</div></Row>
                         </Container>
                         </div>
                     </Row>
