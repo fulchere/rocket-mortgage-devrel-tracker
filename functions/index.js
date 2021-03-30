@@ -632,6 +632,32 @@ exports.addSpeakerToTalkByTalkId = functions.https.onRequest(async (req, res) =>
     res.json({MESSAGE: `added speaker_id: ${speaker_id} to speakers array in talk document with talk_id: ${talk_id}`});
 });
 
+// Mark a talk performed at an event by adding a talk_id to the event_ids array in our talk collection
+exports.addEventToTalkByTalkId = functions.https.onRequest(async (req, res) => {
+
+    const talk_id = req.query.talk_id;
+    const event_id = req.query.event_id
+
+    const talkRef = await admin.firestore().collection('talks').doc(talk_id);
+    talkRef.update({event_ids: admin.firestore.FieldValue.arrayUnion(event_id)});
+
+    // Send back message saying the event id was added
+    res.json({MESSAGE: `added event_id: ${event_id} to event array in talk document with talk_id: ${talk_id}`});
+});
+
+// Mark an event a talk was presented by adding an event_id to the talk_ids array in our event collection
+exports.addTalkToEventByEventId = functions.https.onRequest(async (req, res) => {
+
+    const event_id = req.query.event_id;
+    const talk_id = req.query.talk_id
+
+    const eventRef = await admin.firestore().collection('events').doc(event_id);
+    eventRef.update({talk_ids: admin.firestore.FieldValue.arrayUnion(talk_id)});
+
+    // Send back message saying the talk id was added
+    res.json({MESSAGE: `added talk_id: ${talk_id} to talk array in event document with event_id: ${event_id}`});
+});
+
 // TODO
 //
 // TYLER
@@ -656,6 +682,8 @@ exports.addSpeakerToTalkByTalkId = functions.https.onRequest(async (req, res) =>
 //   speakers   | media_ids DONE
 //   speakers   | talk_ids DONE
 //   talks      | speaker_ids DONE
+//   talks      | event_ids DONE
+//   events      | talk_ids DONE
 //
 // ETHAN
 // did a bunch, see github for info
