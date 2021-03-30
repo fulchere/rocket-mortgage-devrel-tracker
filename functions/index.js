@@ -66,6 +66,7 @@ exports.addEvent = functions.https.onRequest(async (req, res) => {
     const seasonality = req.query.seasonality;
     const start = req.query.start;
     const speaker_ids = req.query.speaker_ids.split(',');
+    const talk_ids = req.query.talk_ids.split(',');
 
     const new_event = {address: address,
         attendees: parseInt(attendees),
@@ -78,7 +79,8 @@ exports.addEvent = functions.https.onRequest(async (req, res) => {
         recruiting_partner: recruiting_partner,
         seasonality: seasonality,
         start: start,
-        speaker_ids: speaker_ids}
+        speaker_ids: speaker_ids,
+        talk_ids: talk_ids}
 
     // Push the new rating into the hosts collection within Firestore
     const writeResult = await admin.firestore().collection('events').add(new_event);
@@ -190,6 +192,7 @@ exports.addTalk = functions.https.onRequest(async (req, res) => {
     const speaker_ids = req.query.speaker_ids.split(',');
     const submitted_status = req.query.submitted_status;
     const title = req.query.title;
+    const event_ids = req.query.event_ids.split(',');
 
     const new_talk = {accepted_status: accepted_status,
         attendees: parseInt(attendees),
@@ -197,7 +200,8 @@ exports.addTalk = functions.https.onRequest(async (req, res) => {
         given_status: given_status,
         speaker_ids: speaker_ids,
         submitted_status: submitted_status,
-        title: title}
+        title: title,
+        event_ids: event_ids}
 
     // Push the new rating into the hosts collection within Firestore
     const writeResult = await admin.firestore().collection('talks').add(new_talk);
