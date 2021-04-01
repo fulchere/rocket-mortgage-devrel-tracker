@@ -673,17 +673,19 @@ exports.addTalkToEventByEventId = functions.https.onRequest(async (req, res) => 
 // - create AddXToXByXID function for all arrays, this may be a lot of work I can do some of them if you want
 //   this will need to be done for the following:
 //   COLLECTION | ARRAY
-//   booths     | speaker_ids DONE
-//   events     | host_ids DONE
-//   hosts      | event_ids DONE
-//   media      | speaker_ids DONE
-//   speakers   | booth_ids DONE
-//   speakers   | event_ids DONE => function name is addEventToSpeakerBySpeakerId
-//   speakers   | media_ids DONE
-//   speakers   | talk_ids DONE
-//   talks      | speaker_ids DONE
-//   talks      | event_ids DONE
-//   events      | talk_ids DONE
+//   booths     | speaker_ids
+//   events     | host_ids
+//   hosts      | event_ids MATCH
+//   media      | speaker_ids
+//   speakers   | booth_ids
+//   speakers   | event_ids MATCH => function name is addEventToSpeakerBySpeakerId
+//   speakers   | media_ids
+//   speakers   | talk_ids
+//   talks      | speaker_ids
+//   talks      | event_ids MATCH
+//   events      | talk_ids MATCH
+//
+//   Why is there not a matching one for every one? (Ask tyler to explain more)
 //
 // ETHAN
 // did a bunch, see github for info
