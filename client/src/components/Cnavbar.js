@@ -30,6 +30,8 @@ export default function Cnavbar() {
   const [error, setError] = useState('')
   const history = useHistory()
 
+  const { currentUser } = useAuth()
+
   async function Logout(e){
     setError('')
 
@@ -65,7 +67,7 @@ export default function Cnavbar() {
           </Nav>
 
           <Nav navbar className="ml-auto">
-          <Button theme="light" onClick={() => {logout()}}>Logout</Button>
+            {currentUser ? <Button theme="light" onClick={() => {logout()}}>Logout</Button> : <div></div>}
           </Nav>
       </Navbar>
     )

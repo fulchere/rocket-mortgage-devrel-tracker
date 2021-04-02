@@ -7,7 +7,7 @@ import { useAuth } from '../contexts/AuthContext'
 
 import { Form, FormInput, FormTextarea, FormGroup, Container, Row, Col, Button } from "shards-react";
 
-export default function CAddConferenceExisting({user_event_data}) {
+export default function CAddContactExisting({event_id}) {
 
     const [selectedEvent, setSelectedEvent] = useState()
     const [isSelected, setIsSelected] = useState(false)
@@ -21,32 +21,13 @@ export default function CAddConferenceExisting({user_event_data}) {
 
     useEffect(() => {
         let mounted = true
-        CAPIService.getAllEvents()
+        CAPIService.getAllHosts()
           .then(response => {
             if (mounted) {
               setLoading(false)
             }
-    
-            var temp_array = []
-            var matching = false
 
-            for (var i = 0; i < response.documents.length; i++){
-              matching = false
-              for (var j = 0; j < user_event_data.length; j++){
-                  if (user_event_data[j].id === response.documents[i].event_id){
-                    matching = true
-                  }
-              }
-              if (matching === false){
-              temp_array.push({
-                name : response.documents[i].name,
-                id : response.documents[i].event_id      
-              })
-            }
-            }
-
-
-            setEvent_data(temp_array)
+            setEvent_data(response.hosts)
             CAPIService.getSpeaker(currentUser.email).then(response => {
               setUserID(response.speaker_id)
             })
@@ -81,7 +62,7 @@ export default function CAddConferenceExisting({user_event_data}) {
                     <CAddConferenceExistingList event_data={event_data} select_Event={select_Event}/>
 
                     <Form onSubmit={handleSubmit}style={{paddingTop:'20px'}} >
-                    <Button squared style={{width:'130px', height:'50px', float:'right'}}>Add to My Conferences</Button>
+                    <Button squared style={{width:'130px', height:'50px', float:'right'}}>Add Contact</Button>
                     </Form>
                 </Container>
         }</div>

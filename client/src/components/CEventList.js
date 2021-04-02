@@ -48,7 +48,7 @@ export default function CEventList({ type, event_data, select_Event }) {
             </ListGroup>
             <Modal open={ open } toggle={ ()=>setOpen(!open)} >
                 {
-                    type==='Talk'?<CAddTalks />:type==='Media'?<CAddMedia/>:<CAddConference event_data={event_data}/>
+                    type==='Talk'?<CAddTalks />:type==='Media'?<CAddMedia/>:<CAddConference event_data={event_data} setOpen={setOpen}/>
                 }
                 
             </Modal>

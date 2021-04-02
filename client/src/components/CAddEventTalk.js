@@ -7,7 +7,7 @@ import { useAuth } from '../contexts/AuthContext'
 
 import { Form, FormInput, FormTextarea, FormGroup, Container, Row, Col, Button } from "shards-react";
 
-export default function CAddConferenceExisting({user_event_data}) {
+export default function CAddEventTalk({event_talks, setOpen}) {
 
     const [selectedEvent, setSelectedEvent] = useState()
     const [isSelected, setIsSelected] = useState(false)
@@ -21,7 +21,7 @@ export default function CAddConferenceExisting({user_event_data}) {
 
     useEffect(() => {
         let mounted = true
-        CAPIService.getAllEvents()
+        CAPIService.getAllUserTalks(currentUser.email)
           .then(response => {
             if (mounted) {
               setLoading(false)
@@ -30,17 +30,17 @@ export default function CAddConferenceExisting({user_event_data}) {
             var temp_array = []
             var matching = false
 
-            for (var i = 0; i < response.documents.length; i++){
+            for (var i = 0; i < response.talk_ids.length; i++){
               matching = false
-              for (var j = 0; j < user_event_data.length; j++){
-                  if (user_event_data[j].id === response.documents[i].event_id){
+              for (var j = 0; j < event_talks.length; j++){
+                  if (event_talks[j].id === response.talk_ids[i].talk_id){
                     matching = true
                   }
               }
-              if (matching === false){
+              if (matching === true){
               temp_array.push({
-                name : response.documents[i].name,
-                id : response.documents[i].event_id      
+                name : response.talk_ids[i].name,
+                id : response.talk_ids[i].talk_id      
               })
             }
             }
@@ -56,7 +56,7 @@ export default function CAddConferenceExisting({user_event_data}) {
           return function cleanup() {
             mounted = false
           }
-      }, [])
+      }, [currentUser.email, event_talks])
 
       const select_Event = (event) => {
         setSelectedEvent(event.id)

@@ -1,12 +1,10 @@
-import React, { useState } from 'react'
-import { ListGroup, ListGroupItem, Button, Container, Row, Col, Modal, ModalBody, FormInput,FormTextarea    } from "shards-react";
+import React from 'react'
+import { ListGroup, ListGroupItem, Container, Row} from "shards-react";
 import moment from 'moment'
-import CAddConference from './CAddConference'
-import CAddMedia from './CAddMedia';
-import CAddTalks from './CAddTalk'
 
 export default function CHomepageFeed({event_data}) {
 
+    let event_data_sorted = event_data.sort((a, b) => a.start.valueOf() - b.start.valueOf())
     
     return (
         <Container>
@@ -18,7 +16,7 @@ export default function CHomepageFeed({event_data}) {
 
 
             <ListGroup flush={false} >
-                {event_data.map(event => {  if (moment(event.start).isAfter(moment())){
+                {event_data_sorted.map(event => {  if (moment(event.start).isAfter(moment())){
                     return(
 
                         <ListGroupItem squared theme='light' key = {event.id}>

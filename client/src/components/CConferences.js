@@ -31,7 +31,7 @@ export default function CConferences() {
           return function cleanup() {
             mounted = false
           }
-      }, [])
+      }, [currentUser.email])
 
     return (
         <div> {loading ? <p>loading...</p> :

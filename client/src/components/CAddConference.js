@@ -5,9 +5,7 @@ import CAddConferenceExisting from './CAddConferenceExisting'
 
 import { ModalBody, Nav, NavItem, NavLink } from "shards-react";
 
-export default function CAddConference({event_data}) {
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+export default function CAddConference({event_data, setOpen}) {
   const [newActive, setNewActive] = useState(true);
 
 
@@ -20,7 +18,7 @@ export default function CAddConference({event_data}) {
               <NavItem>{newActive ? <NavLink onClick={() => {setNewActive(false)}}>Existing</NavLink> : <NavLink active>Existing</NavLink>}</NavItem>
             </Nav>
 
-            {newActive ? <CAddConferenceNew/> : <CAddConferenceExisting user_event_data={event_data}/> }
+            {newActive ? <CAddConferenceNew setOpen={setOpen}/> : <CAddConferenceExisting user_event_data={event_data} setOpen={setOpen}/> }
   </ModalBody>
     )
 }

@@ -10,7 +10,6 @@ export default function CEventBrowser({ type, event_data }) {
     const [isSelected, setIsSelected] = useState(false)
 
     const select_Event = (event) => {
-        console.log(event)
         setSelectedEvent(event.id)
         setIsSelected(true)
         

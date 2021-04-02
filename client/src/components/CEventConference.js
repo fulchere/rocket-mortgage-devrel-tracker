@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react'
-import {Container, Row, Col,Button} from 'shards-react'
+import {Container, Row, Col,Button, Badge} from 'shards-react'
 
 import moment from 'moment'
 
 import CAPIService from './CAPIService'
-import CEventList from './CEventList'
+import CContactList from './CContactList'
+import CConferenceTalkList from './CConferenceTalkList'
 
 export default function CEventConference({event_id}) {
     const [formData, setFormData] = useState({
@@ -14,7 +15,11 @@ export default function CEventConference({event_id}) {
         end: "",
         address: "",
         facility: "",
-        description: "" 
+        description: "",
+        dei_affiliation: false,
+        attendees: "",
+        recruiting_partner: false,
+        contact_ids: []
     })
     const [loading, setLoading] = useState(true)
     const [rating, setRating] = useState(-1)
@@ -34,7 +39,12 @@ export default function CEventConference({event_id}) {
                 end: response.end,
                 address: response.address,
                 facility: response.facility,
-                description: response.description
+                description: response.description,
+                dei_affiliation: response.dei_affiliation,
+                attendees: response.attendees,
+                recruiting_partner: response.recruiting_partner,
+                contact_ids: response.host_ids,
+                talk_ids: response.talk_ids
 
             }
             setFormData(temp_data)
@@ -98,18 +108,32 @@ export default function CEventConference({event_id}) {
                         <Button onClick={addRating} theme="success" size="sm">confirm</Button>
                     </div>
                     </Row>
+                    <Row>
+                    <div style = {{marginTop:20}}>
+                        <CContactList contact_ids={formData.contact_ids} event_id={event_id} />
+                    </div>
+                    </Row>
                 </Col>
                 <Col>
                     <Row >
 
                     <div style = {{paddingBottom:'20px', width:'100%'}}>
                     <Container>
-                    <Row><div style = {{width:'100%'}} align='right'>Start: {moment(formData.start).format('lll')}</div></Row>
-                        <Row><div style = {{width:'100%'}} align='right'>End: {moment(formData.end).format('lll')}</div></Row>
+                    <Row><div style = {{width:'100%'}} align='right'>Start: {moment(formData.start).format('LL')}</div></Row>
+                        <Row><div style = {{width:'100%'}} align='right'>End: {moment(formData.end).format('LL')}</div></Row>
                         </Container>
                         </div>
                     </Row>
-                    <Row><div style = {{width:'100%'}} align='right'> </div></Row>
+                    <Row>
+                    <div style = {{width:'100%'}} align='right'>
+                        <Container>
+                            {formData.dei_affiliation ? <Row><div style = {{width:'100%'}} align='right'>DEI affiliated</div></Row> : <div style = {{width:'100%'}} align='right'></div>}
+                            {formData.recruiting_partner ? <Row><div style = {{width:'100%'}} align='right'>Recruiting Partner</div></Row> : <div style = {{width:'100%'}} align='right'></div>}
+                            <Row><div style = {{width:'100%'}} align='right'>Attendees: {formData.attendees}</div></Row>
+                            <Row><CConferenceTalkList talk_ids={formData.talk_ids} /></Row>
+                        </Container>
+                    </div>
+                    </Row>
                 </Col>
 
             </Row>

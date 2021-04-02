@@ -9,6 +9,7 @@ import CTalks from './CTalks'
 import CMedia from './CMedia'
 import CLogin from './CLogin'
 import CPrivateRoute from './CPrivateRoute'
+import CTest from './CTest'
 
 export default function Crouter() {
     return (
@@ -23,6 +24,7 @@ export default function Crouter() {
             <CPrivateRoute path="/conferences" exact component={CConferences} />
             <CPrivateRoute path="/talks" exact component={CTalks} />
             <CPrivateRoute path="/media" exact component={CMedia} />
+            <CPrivateRoute path="/test" exact component={CTest} />
 
             <Route path="/login" exact component={CLogin}>
             </Route>

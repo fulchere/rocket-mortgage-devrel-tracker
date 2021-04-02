@@ -7,7 +7,7 @@ import CAPIService from './CAPIService';
 
 import { useAuth } from '../contexts/AuthContext'
 
-export default function CAddConferenceNew() {
+export default function CAddConferenceNew({setOpen}) {
 
   const { currentUser } = useAuth()
 
@@ -25,12 +25,6 @@ export default function CAddConferenceNew() {
   const [recruitingPartner, setRecruitingPartner] = useState(false)
   const [attendees, setAttendees] = useState('')
 
-  const [startTime, setStartTime] = useState('')
-  const [endTime, setEndTime] = useState('')
-
-  const [startAMPM, setStartAMPM] = useState('')
-  const [endAMPM, setEndAMPM] = useState('')
-
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
@@ -44,14 +38,21 @@ export default function CAddConferenceNew() {
       })
   }, [])
 
-  function handleSubmit(e){
-    const start = FormatDate(startDate) + 'T' + startTime + ':00'
-    const end = FormatDate(endDate) + 'T' + endTime + ':00'
+  async function handleSubmit(e){
+    e.preventDefault()
+    const start = FormatDate(startDate) + 'T00:00:00'
+    const end = FormatDate(endDate) + 'T00:00:00'
 
 
 
     //call to submit data
-    CAPIService.addNewEventToSpeaker(userID, name, address, facility, attendees, deiAffiliation, description, start, end, "", recruitingPartner, "")
+    await CAPIService.addNewEventToSpeaker(userID, name, address, facility, attendees, deiAffiliation, description, start, end, "", recruitingPartner, "", "")
+    .then(response => { 
+      console.log(response)
+      CAPIService.addExistingEventToSpeaker(userID, response.doc_id).then(response => {
+        
+      })
+    })
 
   }
 
@@ -91,26 +92,7 @@ export default function CAddConferenceNew() {
               </FormGroup>
               </Col>
               <Col>
-              <FormGroup>
-                <label htmlFor="#time">Time/Date</label>
-                <div>
-                <FormInput id="#starttime" placeholder="Start time, ex. 09:00" style={{width : '270px', display: "inline-block"}} onChange={(e) => {setStartTime(e.target.value)}}/>
-                <FormSelect style={{display: "inline-block", width : "auto", float:"right"}} onChange={(e) => {setStartAMPM(e.target.value)}}>
-                  <option value="AM">AM</option>
-                  <option value="PM">PM</option>
-                </FormSelect>
-                <div style={{float:'right', paddingTop:'5px'}}><label htmlFor="#startdate">Start Date: </label><DatePicker selected={startDate} onChange={date => setStartDate(date)} style={{float:'right'}}/></div>
-                  </div>
-                <div>
-                <FormInput id="#endtime" placeholder="End time" style={{width : '270px', display: "inline-block"}} onChange={(e) => {setEndTime(e.target.value)}} />
-                <FormSelect style={{display: "inline-block", width : "auto", float:"right"}} onChange={(e) => {setEndAMPM(e.target.value)}}>
-                  <option value="AM">AM</option>
-                  <option value="PM">PM</option>
-                </FormSelect>
-                <div style={{float:'right', paddingTop:'5px', paddingBottom:'20px'}}><label htmlFor="#enddate">End Date: </label><DatePicker selected={endDate} onChange={date => setEndDate(date)} style={{float:'right'}}/></div>
-                  </div>
-              </FormGroup>
-              <div style={{float:'right'}}><label htmlFor="#startdate">Start Date: </label><DatePicker selected={startDate} onChange={date => setStartDate(date)} style={{float:'right'}}/></div>
+              <div style={{float:'right', paddingTop: '30px'}}><label htmlFor="#startdate">Start Date: </label><DatePicker selected={startDate} onChange={date => setStartDate(date)} style={{float:'right'}}/></div>
               <div style={{float:'right'}}><label htmlFor="#enddate">End Date: </label><DatePicker selected={endDate} onChange={date => setEndDate(date)} style={{float:'right'}}/></div>
               <FormGroup>
                 <FormTextarea id="#description" placeholder="Brief description here..." style={{height:'165px'}} onChange={(e) => {setDescription(e.target.value)}}/>
