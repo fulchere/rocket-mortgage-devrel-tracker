@@ -24,7 +24,7 @@ exports.addBooth = functions.https.onRequest(async (req, res) => {
     const writeResult = await admin.firestore().collection('booths').add(new_booth);
 
     // Send back a message that we've successfully written the message
-    res.json({result: `New rating added to booths collection with ID: ${writeResult.id} added.`});
+    res.json({doc_id: writeResult.id});
 });
 
 // CallForPapers Collection
@@ -47,7 +47,7 @@ exports.addCallforpapers = functions.https.onRequest(async (req, res) => {
     const writeResult = await admin.firestore().collection('callforpapers').add(new_callforpapers);
 
     // Send back a message that we've successfully written the message
-    res.json({result: `New callforpapers document added to callforpapers collection with ID: ${writeResult.id} added.`});
+    res.json({doc_id: writeResult.id});
 });
 
 // Events Collection
@@ -86,7 +86,7 @@ exports.addEvent = functions.https.onRequest(async (req, res) => {
     const writeResult = await admin.firestore().collection('events').add(new_event);
 
     // Send back a message that we've successfully written the message
-    res.json({result: `New event document added to events collection with ID: ${writeResult.id} added.`});
+    res.json({doc_id: writeResult.id});
 });
 
 // Hosts Collection
@@ -107,7 +107,7 @@ exports.addHost = functions.https.onRequest(async (req, res) => {
     const writeResult = await admin.firestore().collection('hosts').add(new_host);
 
     // Send back a message that we've successfully written the message
-    res.json({result: `New host document added to hosts collection with ID: ${writeResult.id} added.`});
+    res.json({doc_id: writeResult.id});
 });
 
 // Media Collection
@@ -130,7 +130,7 @@ exports.addMedia = functions.https.onRequest(async (req, res) => {
     const writeResult = await admin.firestore().collection('media').add(new_media);
 
     // Send back a message that we've successfully written the message
-    res.json({result: `New media document added to media collection with ID: ${writeResult.id} added.`});
+    res.json({doc_id: writeResult.id});
 });
 
 // Ratings Collection
@@ -151,7 +151,7 @@ exports.addRating = functions.https.onRequest(async (req, res) => {
   const writeResult = await admin.firestore().collection('ratings').add(new_rating);
 
   // Send back a message that we've successfully written the message
-  res.json({result: `New rating added to ratings collection with ID: ${writeResult.id} added.`});
+  res.json({doc_id: writeResult.id});
 });
 
 // Speakers Collection
@@ -178,7 +178,7 @@ exports.addSpeaker = functions.https.onRequest(async (req, res) => {
     const writeResult = await admin.firestore().collection('speakers').add(new_speaker);
 
     // Send back a message that we've successfully written the message
-    res.json({result: `New speaker document added to speakers collection with ID: ${writeResult.id} added.`});
+    res.json({doc_id: writeResult.id});
 });
 
 // Talks Collection
@@ -207,7 +207,7 @@ exports.addTalk = functions.https.onRequest(async (req, res) => {
     const writeResult = await admin.firestore().collection('talks').add(new_talk);
 
     // Send back a message that we've successfully written the message
-    res.json({result: `New talk document added to talks collection with ID: ${writeResult.id} added.`});
+    res.json({doc_id: writeResult.id});
 });
 
 // Get all documents in the booths collection
