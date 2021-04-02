@@ -5,12 +5,12 @@ import DatePicker from "react-datepicker";
 import CAPIService from './CAPIService'
 import { useAuth } from '../contexts/AuthContext'
 
-export default function CAddTalks() {
+export default function CAddTalks(props) {
   const { currentUser } = useAuth()
   const [startDate, setStartDate] = useState(new Date());
   const [data, setData] = useState({});
   const addTalk = async () => {
-
+    
     const {speaker_id} = await CAPIService.getSpeaker(currentUser.email)
     console.log(speaker_id)
     await CAPIService.addTalk({
@@ -20,13 +20,17 @@ export default function CAddTalks() {
       // description: 1,
       // title: 1,
       given_status: false,
+      event_ids:"['5euPqRxuyX86h3b4MVFy']",
       speaker_ids: speaker_id,
       submitted_status: false,
 
     })
       .then(res => {
         console.log(res);
+        props.closeModal()
+        window.location.reload();
       })
+     
   }
 
   return (
