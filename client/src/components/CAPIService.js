@@ -1,6 +1,6 @@
 import axios from 'axios'
 const baseUrl = 'https://us-central1-rocket-mortgage-devrel-tracker.cloudfunctions.net/'
-const cors_hack = 'https://cors-anywhere.herokuapp.com/'
+const cors_hack = 'http://localhost:8080/'
 const getAllEvents = () => {
   const request = axios.get(cors_hack + baseUrl + 'getAllEventIDsAndNames')
   return request.then(response => response.data)

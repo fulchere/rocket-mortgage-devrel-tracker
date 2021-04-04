@@ -30,22 +30,22 @@ export default function CAddEventTalk({event_talks, setOpen}) {
             var temp_array = []
             var matching = false
 
-            for (var i = 0; i < response.talk_ids.length; i++){
+            for (var i = 0; i < response.talk_pairs.length; i++){
               matching = false
               for (var j = 0; j < event_talks.length; j++){
-                  if (event_talks[j].id === response.talk_ids[i].talk_id){
+                  if (event_talks[j].id === response.talk_pairs[i].id){
                     matching = true
                   }
               }
               if (matching === true){
               temp_array.push({
-                name : response.talk_ids[i].name,
-                id : response.talk_ids[i].talk_id      
+                name : response.talk_pairs[i].talk_name,
+                id : response.talk_pairs[i].id      
               })
             }
             }
 
-
+            console.log(temp_array)
             setEvent_data(temp_array)
             CAPIService.getSpeaker(currentUser.email).then(response => {
               setUserID(response.speaker_id)
