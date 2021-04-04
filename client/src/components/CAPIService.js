@@ -64,6 +64,10 @@ const getAllRatings = () => {
   const request = axios.get('https://cors-anywhere.herokuapp.com/' + baseUrl + 'getAllRatings')
   return request.then(response => response.data)
 }
+const getUserRatingOfEvent = (event_id, email) => {
+  const request = axios.get('https://cors-anywhere.herokuapp.com/' + baseUrl + 'getUserRatingAndAverageRatingOfEvent?event_id=' + event_id + '&email=' + email)
+  return request.then(response => response.data)
+}
 const addTalk = (data) => {
   const request = axios.get(cors_hack + baseUrl + 'addTalk',{params:data})
   return request.then(response => response.data)
@@ -113,4 +117,4 @@ const getSpecifiedURL = (url) => {
       .catch(res => {}))
   }
 
-export default {addTalkToEventByEventId,getAllUserEvents,getAllUserTalks,getRatingByID,getTalkByID,addMedia,getMediaByID, getAllMedia,getAllEvents, getEvent, getTalk, getSpecifiedURL,addRating,getRatingByEventByID,addTalk,getAllRatings, addNewEventToSpeaker, addExistingEventToSpeaker, getSpeaker, getHost, addNewContact, addContactToEvent, getAllHosts}
+export default {addTalkToEventByEventId,getAllUserEvents,getAllUserTalks,getRatingByID, getUserRatingOfEvent, getTalkByID,addMedia,getMediaByID, getAllMedia,getAllEvents, getEvent, getTalk, getSpecifiedURL,addRating,getRatingByEventByID,addTalk,getAllRatings, addNewEventToSpeaker, addExistingEventToSpeaker, getSpeaker, getHost, addNewContact, addContactToEvent, getAllHosts}

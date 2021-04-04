@@ -7,6 +7,8 @@ import CAPIService from './CAPIService'
 import CContactList from './CContactList'
 import CConferenceTalkList from './CConferenceTalkList'
 
+import { useAuth } from '../contexts/AuthContext'
+
 export default function CEventConference({event_id}) {
     const [formData, setFormData] = useState({
         name : "",
@@ -23,6 +25,10 @@ export default function CEventConference({event_id}) {
     })
     const [loading, setLoading] = useState(true)
     const [rating, setRating] = useState(-1)
+
+    const [speaker_id, setSpeaker_id] = useState('')
+
+    const { currentUser } = useAuth()
 
     useEffect(() => {
         let mounted = true
@@ -49,15 +55,24 @@ export default function CEventConference({event_id}) {
             }
             setFormData(temp_data)
           })
+        CAPIService.getSpeaker(currentUser.email)
+        .then(response => {
+            setSpeaker_id(response.speaker_id)
+        })
+
+        CAPIService.getUserRatingOfEvent(event_id, currentUser.email).then(response => {
+            changeRating(response.user_rating)
+        })
     
           return function cleanup() {
             mounted = false
           }
-      }, [event_id])
+      }, [currentUser.email, event_id])
+
       const addRating = ()=>{
-        CAPIService.addRating({event_id,rating,speaker_id:0,timestamp:Date.now()})       
+        CAPIService.addRating({event_id:event_id,rating,speaker_id:speaker_id,timestamp:moment()})       
         .then(res=>{
-            console.log(res);
+            
         })
     }
     // const getAllRatings = ()=>{
