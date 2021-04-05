@@ -39,8 +39,8 @@ exports.addCallforpapers = functions.https.onRequest(async (req, res) => {
 
     const new_callforpapers = {accepted: accepted,
         deadline: deadline,
-        event_id: parseInt(event_id),
-        speaker_id: parseInt(speaker_id),
+        event_id: event_id,
+        speaker_id: speaker_id,
         submitted: submitted}
 
     // Push the new rating into the hosts collection within Firestore
@@ -119,12 +119,14 @@ exports.addMedia = functions.https.onRequest(async (req, res) => {
     const type = req.query.type;
     const time = req.query.time;
     const description = req.query.description;
+    const link = req.query.link;
 
     const new_media = {name: name,
         speaker_ids: speaker_ids,
         type: type,
         time: time,
-        description: description}
+        description: description,
+        link: link}
 
     // Push the new rating into the hosts collection within Firestore
     const writeResult = await admin.firestore().collection('media').add(new_media);
@@ -142,9 +144,9 @@ exports.addRating = functions.https.onRequest(async (req, res) => {
     const speaker_id = req.query.speaker_id;
     const timestamp = req.query.timestamp;
 
-    const new_rating = {event_id: parseInt(event_id),
-        rating: parseInt(rating),
-        speaker_id: parseInt(speaker_id),
+    const new_rating = {event_id: event_id,
+        rating: rating,
+        speaker_id: speaker_id,
         timestamp: timestamp}
 
   // Push the new rating into the ratings collection within Firestore
@@ -334,6 +336,18 @@ exports.getRatingsByEventID = functions.https.onRequest(async (req, res) => {
     res.json(ratingResult);
 });
 
+// Get the event name for an event id
+exports.getEventNameByID = functions.https.onRequest(async (req, res) => {
+
+    const event_id = req.query.event_id;
+
+    const eventRef = await admin.firestore().collection('events').doc(event_id).get();
+    const data = eventRef.data();
+
+    // Send back the specific booth document from the booth collection
+    res.json({event_id: event_id, event_name: data.name});
+});
+
 // Return the user rating of an event (if exists) and the average rating of an event
 exports.getUserRatingAndAverageRatingOfEvent = functions.https.onRequest(async (req, res) => {
 
@@ -498,8 +512,19 @@ exports.getSpeakerTalks = functions.https.onRequest(async (req, res) => {
     const snapshot = await speakerRef.where('email', '==', email).get();
     const speakerTalk_ids = snapshot.docs.map(doc => doc.data().talk_ids)[0];
 
-    // Send back the specific user from the speakers collection
-    res.json({email: email, talk_ids: speakerTalk_ids});
+    var talk_titles = [];
+    for (const talk_id of speakerTalk_ids) {
+        const talkRef = await admin.firestore().collection('talks').doc(talk_id).get();
+        const talkTitle = talkRef.data().title;
+        talk_titles.push(talkTitle);
+    }
+
+    const talk_pairs = speakerTalk_ids.map( function(id, i) {
+        var pair = {id: id, talk_name: talk_titles[i]};
+        return pair;}
+        );
+
+    res.json({email: email, talk_pairs: talk_pairs});
 });
 
 // Get media ids in the speakers collection
