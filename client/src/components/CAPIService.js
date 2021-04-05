@@ -1,6 +1,6 @@
 import axios from 'axios'
 const baseUrl = 'https://us-central1-rocket-mortgage-devrel-tracker.cloudfunctions.net/'
-const cors_hack = 'https://cors-anywhere.herokuapp.com/'
+const cors_hack = 'http://localhost:8080/'
 const getAllEvents = () => {
   const request = axios.get(cors_hack + baseUrl + 'getAllEventIDsAndNames')
   return request.then(response => response.data)
@@ -12,7 +12,11 @@ const getAllUserEvents = (email) => {
 }
 
 const getAllUserTalks = (email) => {
-  const request = axios.get(cors_hack + baseUrl + 'getSpeakerTalks?email=' + email)
+  const request = axios.get('https://cors-anywhere.herokuapp.com/' + baseUrl + 'getSpeakerTalks?email=' + email)
+  return request.then(response => response.data)
+}
+const getAllUserMedia = (email) => {
+  const request = axios.get('https://cors-anywhere.herokuapp.com/' + baseUrl + 'getAllUserMedias?email=' + email)
   return request.then(response => response.data)
 }
 
@@ -34,6 +38,10 @@ const addRating = (data) => {
 }
 const addTalkToEventByEventId = (data) => {
   const request = axios.get(cors_hack + baseUrl + 'addTalkToEventByEventId' , {params:data})
+  return request.then(response => response.data)
+}
+const addEventToTalkByTalkId = (data) => {
+  const request = axios.get(cors_hack + baseUrl + 'addEventToTalkByTalkId' , {params:data})
   return request.then(response => response.data)
 }
 const getRatingByID = (id) => {
@@ -117,4 +125,4 @@ const getSpecifiedURL = (url) => {
       .catch(res => {}))
   }
 
-export default {addTalkToEventByEventId,getAllUserEvents,getAllUserTalks,getRatingByID, getUserRatingOfEvent, getTalkByID,addMedia,getMediaByID, getAllMedia,getAllEvents, getEvent, getTalk, getSpecifiedURL,addRating,getRatingByEventByID,addTalk,getAllRatings, addNewEventToSpeaker, addExistingEventToSpeaker, getSpeaker, getHost, addNewContact, addContactToEvent, getAllHosts}
+export default {addTalkToEventByEventId,getAllUserEvents,getAllUserTalks,getRatingByID, addEventToTalkByTalkId, getUserRatingOfEvent, getTalkByID,addMedia,getMediaByID, getAllMedia,getAllEvents, getEvent, getTalk, getSpecifiedURL,addRating,getRatingByEventByID,addTalk,getAllRatings, addNewEventToSpeaker, addExistingEventToSpeaker, getSpeaker, getHost, addNewContact, addContactToEvent, getAllHosts}

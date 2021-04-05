@@ -43,7 +43,7 @@ export default function CEventTalk({ event_id }) {
     }
     return (
         <Container>
-            <Row><Col><h2 style={ { textAlign: 'center' } }>Coding in React</h2></Col></Row>
+            <Row><Col><h2 style={ { textAlign: 'center' } }>{talk.title}</h2></Col></Row>
             <Row>
                 <Col>
                     <Row>

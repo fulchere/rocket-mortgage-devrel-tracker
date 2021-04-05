@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
 
 import { Form, FormInput, FormTextarea, ModalBody, FormGroup, Container, Row, Col, Button } from "shards-react";
-import DatePicker from "react-datepicker";
+import DatePicker from 'react-date-picker';
+
 import CAPIService from './CAPIService'
 import { useAuth } from '../contexts/AuthContext'
 
 export default function CAddMedia() {
     const [startDate, setStartDate] = useState(new Date());
     const [data, setData] = useState({});
+    const [value, onChange] = useState(new Date());
+
     const { currentUser } = useAuth()
 
     const addMedia = async () => {
@@ -29,7 +32,7 @@ export default function CAddMedia() {
         <ModalBody>
             <Form>
                 <Container>
-                    <Row><h4 style={ { margin: 'auto', paddingTop: '20px' } }>Add a Media</h4></Row>
+                    <Row><h4 style={ { margin: 'auto' } }>Add a Media</h4></Row>
                     <FormGroup>
                         <label htmlFor="#type">Type</label>
                         <FormInput id="#type" placeholder="type"  onChange={(e)=>setData({...data,type:e.target.value})}/>
@@ -38,7 +41,14 @@ export default function CAddMedia() {
                         <label htmlFor="#name">name</label>
                         <FormInput id="#name" placeholder="name"  onChange={(e)=>setData({...data,name:e.target.value})} />
                     </FormGroup>
-                    <div style={ { float: 'right' } }><label htmlFor="#time">Date: </label><input id='time' type='datetime-local' value={startDate} onChange={ date => setStartDate(date.target.value) } style={ { float: 'right' } } /></div>
+                    <FormGroup>
+                        <label htmlFor="#link">link</label>
+                        <FormInput id="#link" placeholder="link"  onChange={(e)=>setData({...data,name:e.target.value})} />
+                    </FormGroup>
+                    <div style={ { float: 'right' } }><label htmlFor="#time">Date: </label><DatePicker
+                        onChange={onChange}
+                        value={value}
+                    /></div>
                     <FormGroup>
                         <label htmlFor="#description">Description</label>
                         <FormTextarea id="#description"  onChange={(e)=>setData({...data,description:e.target.value})} placeholder="Brief description here..." style={ { height: '157px', verticalAlign: 'text-top' } } />

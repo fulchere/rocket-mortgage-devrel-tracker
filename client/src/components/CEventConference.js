@@ -145,7 +145,7 @@ export default function CEventConference({event_id}) {
                             {formData.dei_affiliation ? <Row><div style = {{width:'100%'}} align='right'>DEI affiliated</div></Row> : <div style = {{width:'100%'}} align='right'></div>}
                             {formData.recruiting_partner ? <Row><div style = {{width:'100%'}} align='right'>Recruiting Partner</div></Row> : <div style = {{width:'100%'}} align='right'></div>}
                             <Row><div style = {{width:'100%'}} align='right'>Attendees: {formData.attendees}</div></Row>
-                            <Row><CConferenceTalkList talk_ids={formData.talk_ids} /></Row>
+                            <Row><CConferenceTalkList talk_ids={formData.talk_ids} event_id={event_id}/></Row>
                         </Container>
                     </div>
                     </Row>

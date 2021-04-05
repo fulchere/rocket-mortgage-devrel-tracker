@@ -16,11 +16,14 @@ export default function CEventMedia({event_id}) {
       }, [event_id])
     return (
         <Container>
-            <Row><Col><h2>Example Podcast</h2></Col></Row>
+            <Row><Col><h2>{media.name}</h2></Col></Row>
             <Row>
                 <Col sm="12" md="12" lg="6">
-                    <div style={ { border: '1px solid rgba(0,0,0,.125)', width: '80%', height: 300, padding: 15 } }>
+                    <div style={ { border: '1px solid rgba(0,0,0,.125)', width: '80%', height: 200, padding: 15 } }>
                         <p>description: {media['description']}</p>
+                    </div>
+                    <div>
+                        link
                     </div>
                 </Col>
 

@@ -7,7 +7,7 @@ import { useAuth } from '../contexts/AuthContext'
 
 import { Form, FormInput, FormTextarea, FormGroup, Container, Row, Col, Button } from "shards-react";
 
-export default function CAddConferenceExisting({user_event_data}) {
+export default function CAddConferenceExisting({user_event_data, setOpen}) {
 
     const [selectedEvent, setSelectedEvent] = useState()
     const [isSelected, setIsSelected] = useState(false)
@@ -65,10 +65,12 @@ export default function CAddConferenceExisting({user_event_data}) {
     }
 
         const handleSubmit = async (e) => {
+          e.preventDefault()
             //call api to add selectedEvent to speaker's connections
             await CAPIService.addExistingEventToSpeaker(userID, selectedEvent)
           .then(response => {
-
+            console.log(response)
+            setOpen(false)
           })
         }
 
