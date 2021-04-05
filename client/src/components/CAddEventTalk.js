@@ -1,13 +1,13 @@
 import React, {useState, useEffect} from 'react'
 import CAPIService from './CAPIService'
 
-import CAddConferenceExistingList from './CAddConferenceExistingList'
+import CAddEventTalkList from './CAddEventTalkList'
 
 import { useAuth } from '../contexts/AuthContext'
 
 import { Form, FormInput, FormTextarea, FormGroup, Container, Row, Col, Button } from "shards-react";
 
-export default function CAddEventTalk({event_talks, setOpen}) {
+export default function CAddEventTalk({event_talks, event_id, setOpen}) {
 
     const [selectedEvent, setSelectedEvent] = useState()
     const [isSelected, setIsSelected] = useState(false)
@@ -37,7 +37,7 @@ export default function CAddEventTalk({event_talks, setOpen}) {
                     matching = true
                   }
               }
-              if (matching === true){
+              if (matching === false){
               temp_array.push({
                 name : response.talk_pairs[i].talk_name,
                 id : response.talk_pairs[i].id      
@@ -45,7 +45,6 @@ export default function CAddEventTalk({event_talks, setOpen}) {
             }
             }
 
-            console.log(temp_array)
             setEvent_data(temp_array)
             CAPIService.getSpeaker(currentUser.email).then(response => {
               setUserID(response.speaker_id)
@@ -66,10 +65,15 @@ export default function CAddEventTalk({event_talks, setOpen}) {
 
         const handleSubmit = async (e) => {
             //call api to add selectedEvent to speaker's connections
-            await CAPIService.addExistingEventToSpeaker(userID, selectedEvent)
-          .then(response => {
+            e.preventDefault()
 
-          })
+            await CAPIService.addTalkToEventByEventId({talk_id: selectedEvent,event_id: event_id}).then(response => {
+              CAPIService.addEventToTalkByTalkId({talk_id: selectedEvent,event_id: event_id}).then(response2 => { 
+                console.log(selectedEvent)
+                console.log(event_id)
+                setOpen(false)
+              })
+            })
         }
 
 
@@ -78,10 +82,10 @@ export default function CAddEventTalk({event_talks, setOpen}) {
                 <Container>
 
 
-                    <CAddConferenceExistingList event_data={event_data} select_Event={select_Event}/>
+                    <CAddEventTalkList event_data={event_data} select_Event={select_Event}/>
 
                     <Form onSubmit={handleSubmit}style={{paddingTop:'20px'}} >
-                    <Button squared style={{width:'130px', height:'50px', float:'right'}}>Add to My Conferences</Button>
+                    <Button squared style={{width:'130px', height:'50px', float:'right'}}>Add talk to conference</Button>
                     </Form>
                 </Container>
         }</div>

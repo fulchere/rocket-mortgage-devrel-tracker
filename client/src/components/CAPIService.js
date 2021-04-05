@@ -36,6 +36,10 @@ const addTalkToEventByEventId = (data) => {
   const request = axios.get(cors_hack + baseUrl + 'addTalkToEventByEventId' , {params:data})
   return request.then(response => response.data)
 }
+const addEventToTalkByTalkId = (data) => {
+  const request = axios.get(cors_hack + baseUrl + 'addEventToTalkByTalkId' , {params:data})
+  return request.then(response => response.data)
+}
 const getRatingByID = (id) => {
   const request = axios.get(cors_hack + baseUrl + 'getRatingByID?ID='+id)
   return request.then(response => response.data)
@@ -117,4 +121,4 @@ const getSpecifiedURL = (url) => {
       .catch(res => {}))
   }
 
-export default {addTalkToEventByEventId,getAllUserEvents,getAllUserTalks,getRatingByID, getUserRatingOfEvent, getTalkByID,addMedia,getMediaByID, getAllMedia,getAllEvents, getEvent, getTalk, getSpecifiedURL,addRating,getRatingByEventByID,addTalk,getAllRatings, addNewEventToSpeaker, addExistingEventToSpeaker, getSpeaker, getHost, addNewContact, addContactToEvent, getAllHosts}
+export default {addTalkToEventByEventId,getAllUserEvents,getAllUserTalks,getRatingByID, addEventToTalkByTalkId, getUserRatingOfEvent, getTalkByID,addMedia,getMediaByID, getAllMedia,getAllEvents, getEvent, getTalk, getSpecifiedURL,addRating,getRatingByEventByID,addTalk,getAllRatings, addNewEventToSpeaker, addExistingEventToSpeaker, getSpeaker, getHost, addNewContact, addContactToEvent, getAllHosts}
