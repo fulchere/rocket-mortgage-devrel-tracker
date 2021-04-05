@@ -84,7 +84,7 @@ export default function CAddEventTalk({event_talks, event_id, setOpen}) {
 
                     <CAddEventTalkList event_data={event_data} select_Event={select_Event}/>
 
-                    <Form onSubmit={handleSubmit}style={{paddingTop:'20px'}} >
+                    <Form onSubmit={handleSubmit}style={{paddingTop:'20px', paddingBottom: '20px'}} >
                     <Button squared style={{width:'130px', height:'50px', float:'right'}}>Add talk to conference</Button>
                     </Form>
                 </Container>
