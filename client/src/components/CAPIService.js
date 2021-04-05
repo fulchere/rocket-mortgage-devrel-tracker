@@ -125,4 +125,8 @@ const getSpecifiedURL = (url) => {
       .catch(res => {}))
   }
 
+<<<<<<< HEAD
 export default {addTalkToEventByEventId,getAllUserMedia,getAllUserEvents,getAllUserTalks,getRatingByID, addEventToTalkByTalkId, getUserRatingOfEvent, getTalkByID,addMedia,getMediaByID, getAllMedia,getAllEvents, getEvent, getTalk, getSpecifiedURL,addRating,getRatingByEventByID,addTalk,getAllRatings, addNewEventToSpeaker, addExistingEventToSpeaker, getSpeaker, getHost, addNewContact, addContactToEvent, getAllHosts}
+=======
+export default {addTalkToEventByEventId,getAllUserEvents,getAllUserTalks,getRatingByID, addEventToTalkByTalkId, getUserRatingOfEvent, getTalkByID,addMedia,getMediaByID, getAllMedia,getAllEvents, getEvent, getTalk, getSpecifiedURL,addRating,getRatingByEventByID,addTalk,getAllRatings, addNewEventToSpeaker, addExistingEventToSpeaker, getSpeaker, getHost, addNewContact, addContactToEvent, getAllHosts}
+>>>>>>> 7c55ebe551ed60796446b5361609c3bf54801638
