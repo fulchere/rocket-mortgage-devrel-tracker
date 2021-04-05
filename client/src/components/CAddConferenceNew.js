@@ -48,9 +48,8 @@ export default function CAddConferenceNew({setOpen}) {
     //call to submit data
     await CAPIService.addNewEventToSpeaker(userID, name, address, facility, attendees, deiAffiliation, description, start, end, "", recruitingPartner, "", "")
     .then(response => { 
-      console.log(response)
       CAPIService.addExistingEventToSpeaker(userID, response.doc_id).then(response => {
-        
+        setOpen(false)
       })
     })
 

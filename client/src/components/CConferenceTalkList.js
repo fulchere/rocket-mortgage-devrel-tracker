@@ -4,7 +4,7 @@ import { ListGroup, ListGroupItem, Button, Container, Row, Col, Modal, ModalBody
 import CAPIService from './CAPIService'
 import CAddEventTalk from './CAddEventTalk'
 
-export default function CConferenceTalkList({talk_ids}) {
+export default function CConferenceTalkList({talk_ids, event_id}) {
     const [talks, setTalks] = useState([])
     const [loading, setLoading] = useState(true)
 
@@ -76,7 +76,7 @@ export default function CConferenceTalkList({talk_ids}) {
 
             <Modal open={ open } toggle={ ()=>setOpen(!open)} >
                 {
-                    < CAddEventTalk event_talks={talks} setOpen={setOpen}/>
+                    < CAddEventTalk event_talks={talks} setOpen={setOpen} event_id={event_id}/>
                 }
                 
             </Modal>

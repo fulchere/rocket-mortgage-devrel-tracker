@@ -1,24 +1,26 @@
 import React, { useState, useEffect } from 'react'
 import CAPIService from './CAPIService'
 import CEventBrowser from './CEventBrowser'
+import { useAuth } from '../contexts/AuthContext'
 
 export default function CTalks() {
   const [event_data, setEvent_data] = useState([])
   const [loading, setLoading] = useState(false)
+  const { currentUser } = useAuth()
 
   useEffect(() => {
     let mounted = true
-    CAPIService.getTalk()
+    CAPIService.getAllUserTalks(currentUser.email)
       .then(response => {
         if (mounted) {
           setLoading(false)
         }
 
         var temp_array = []
-        for (var i = 0; i < response.documents.length; i++) {
+        for (var i = 0; i < response.talk_pairs.length; i++) {
           temp_array.push({
-            name: response.documents[i].title,
-            id: response.documents[i].talk_id
+            name: response.talk_pairs[i].talk_name,
+            id: response.talk_pairs[i].id
           })
         }
         setEvent_data(temp_array)
