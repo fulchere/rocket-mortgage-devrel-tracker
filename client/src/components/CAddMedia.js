@@ -32,18 +32,18 @@ export default function CAddMedia() {
         <ModalBody>
             <Form>
                 <Container>
-                    <Row><h4 style={ { margin: 'auto' } }>Add a Media</h4></Row>
+                    <Row><h4 style={ { margin: 'auto' } }>Add new Media</h4></Row>
+                    <FormGroup>
+                        <label htmlFor="#name">Name</label>
+                        <FormInput id="#name" placeholder="Name"  onChange={(e)=>setData({...data,name:e.target.value})} />
+                    </FormGroup>
                     <FormGroup>
                         <label htmlFor="#type">Type</label>
-                        <FormInput id="#type" placeholder="type"  onChange={(e)=>setData({...data,type:e.target.value})}/>
+                        <FormInput id="#type" placeholder="Type"  onChange={(e)=>setData({...data,type:e.target.value})}/>
                     </FormGroup>
                     <FormGroup>
-                        <label htmlFor="#name">name</label>
-                        <FormInput id="#name" placeholder="name"  onChange={(e)=>setData({...data,name:e.target.value})} />
-                    </FormGroup>
-                    <FormGroup>
-                        <label htmlFor="#link">link</label>
-                        <FormInput id="#link" placeholder="link"  onChange={(e)=>setData({...data,link:e.target.value})} />
+                        <label htmlFor="#link">Content link</label>
+                        <FormInput id="#link" placeholder="Link"  onChange={(e)=>setData({...data,link:e.target.value})} />
                     </FormGroup>
                     <div style={ { float: 'right' } }><label htmlFor="#time">Date: </label><DatePicker
                         onChange={onChange}

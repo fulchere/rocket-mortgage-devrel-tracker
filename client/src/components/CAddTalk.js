@@ -41,12 +41,12 @@ export default function CAddTalks(props) {
           <Row><h4 style={ { margin: 'auto', paddingTop: '20px' } }>Add a Talk</h4></Row>
           <FormGroup>
             <label htmlFor="#time">Title</label>
-            <FormInput id="#title" placeholder="title" onChange={(e)=>setData({...data,title:e.target.value})}/>
+            <FormInput id="#title" placeholder="Title" onChange={(e)=>setData({...data,title:e.target.value})}/>
           </FormGroup>
-          <FormGroup>
+          {/*<FormGroup>
             <label htmlFor="#attendees">Attendees</label>
             <FormInput id="#attendees" placeholder="attendees"  onChange={(e)=>setData({...data,attendees:e.target.value})}/>
-          </FormGroup>
+          </FormGroup>*/}
           {/* <FormGroup>
             <label htmlFor="#time">Time</label>
             <FormInput id="#starttime" placeholder="Start time" />
