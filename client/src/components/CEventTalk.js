@@ -14,23 +14,27 @@ export default function CEventTalk({ event_id }) {
     const [newActive, setNewActive] = useState(true);
     const [eventId, setEventid] = useState('');
     const [eventTalks, setEventTalks] = useState([])
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
+        let mounted = true
         CAPIService.getTalkByID(event_id)
-            .then(res => {
-                setTalk(res);
-            })
-    }, [event_id])
-    useEffect(() => {
+        .then(res => {
+            if (mounted) {
+                setLoading(false)
+              }
+            setTalk(res);
+        console.log(res)
+        console.log(talk)
         CAPIService.getAllUserEvents(currentUser.email)
-            .then(res => {
-                setEvent(res['event_pairs']);
+            .then(res2 => {
+                setEvent(res2['event_pairs']);
 
                 var temp_array = []
 
                 for (var i = 0; i < event.length; i++){
-                    for (var j = 0; j < talk['event_ids'].length; j++){
-                        if (event[i].id === talk['event_ids'][j]){
+                    for (var j = 0; j < res['event_ids'].length; j++){
+                        if (event[i].id === res['event_ids'][j]){
                           temp_array.push(
                               event[i].event_name
                             )
@@ -40,16 +44,28 @@ export default function CEventTalk({ event_id }) {
                 }
                 setEventTalks(temp_array)
             })
-    }, [currentUser.email, event, talk])
+
+        })
+            return function cleanup() {
+                mounted = false
+              }
+    }, [currentUser.email, event_id])
+
+
+
+
+
+    
     const add = async () => {
         await CAPIService.addTalkToEventByEventId({ event_id: eventId, talk_id: event_id })
         await CAPIService.addEventToTalkByTalkId({ event_id: eventId, talk_id: event_id })
         await CAPIService.addTalkToSpeakerBySpeakerId({ speaker_id: currentUser.uid, talk_id: event_id })
         await CAPIService.addSpeakerToTalkByTalkId ({ speaker_id: currentUser.uid, talk_id: event_id })
-        await setOpen(false);
+        setOpen(false);
     }
     return (
-        <Container>
+        <div>
+            {loading ? <div></div> : <Container>
             <Row><Col><h2 style={ { textAlign: 'center' } }>{talk.title}</h2></Col></Row>
             <Row>
                 <Col>
@@ -102,6 +118,6 @@ export default function CEventTalk({ event_id }) {
                 </ModalBody>
 
             </Modal>
-        </Container>
+        </Container>}</div>
     )
 }

@@ -12,7 +12,6 @@ export default function CEventMedia({event_id}) {
     useEffect(() => {
         CAPIService.getMediaByID(event_id)
           .then(res => {
-              console.log(res);
               setMedia(res);
           })        
       }, [event_id])

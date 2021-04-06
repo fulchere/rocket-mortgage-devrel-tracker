@@ -12,7 +12,6 @@ export default function CAddTalks(props) {
   const addTalk = async () => {
     
     const {speaker_id} = await CAPIService.getSpeaker(currentUser.email)
-    console.log(speaker_id)
     await CAPIService.addTalk({
       ...data,
       accepted_status: false,
@@ -27,9 +26,17 @@ export default function CAddTalks(props) {
     })
       .then(res => {
         console.log(res);
-        props.closeModal()
-        window.location.reload();
+
+        CAPIService.addTalkToSpeakerBySpeakerId({speaker_id:speaker_id, talk_id:res.doc_id}).then(res => {
+          console.log(res)
+
+          props.closeModal()
+          window.location.reload();
+        })
       })
+
+
+
      
   }
 
