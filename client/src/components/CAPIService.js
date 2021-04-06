@@ -12,11 +12,11 @@ const getAllUserEvents = (email) => {
 }
 
 const getAllUserTalks = (email) => {
-  const request = axios.get('https://cors-anywhere.herokuapp.com/' + baseUrl + 'getSpeakerTalks?email=' + email)
+  const request = axios.get(cors_hack + baseUrl + 'getSpeakerTalks?email=' + email)
   return request.then(response => response.data)
 }
 const getAllUserMedia = (email) => {
-  const request = axios.get('https://cors-anywhere.herokuapp.com/' + baseUrl + 'getAllUserMedias?email=' + email)
+  const request = axios.get(cors_hack + baseUrl + 'getSpeakerMediaIDs?email=' + email)
   return request.then(response => response.data)
 }
 
@@ -44,36 +44,44 @@ const addEventToTalkByTalkId = (data) => {
   const request = axios.get(cors_hack + baseUrl + 'addEventToTalkByTalkId' , {params:data})
   return request.then(response => response.data)
 }
+const addTalkToSpeakerBySpeakerId = (data) => {
+  const request = axios.get(cors_hack + baseUrl + 'addTalkToSpeakerBySpeakerId' , {params:data})
+  return request.then(response => response.data)
+}
+const addSpeakerToTalkByTalkId  = (data) => {
+  const request = axios.get(cors_hack + baseUrl + 'addSpeakerToTalkByTalkId ' , {params:data})
+  return request.then(response => response.data)
+}
 const getRatingByID = (id) => {
   const request = axios.get(cors_hack + baseUrl + 'getRatingByID?ID='+id)
   return request.then(response => response.data)
 }
 const getAllMedia = () => {
-  const request = axios.get('https://cors-anywhere.herokuapp.com/' + baseUrl + 'getAllMedia')
+  const request = axios.get(cors_hack + baseUrl + 'getAllMedia')
   return request.then(response => response.data)
 }
 const getTalkByID = (id) => {
-  const request = axios.get('https://cors-anywhere.herokuapp.com/' + baseUrl + 'getTalkByID?ID='+id)
+  const request = axios.get(cors_hack + baseUrl + 'getTalkByID?ID='+id)
   return request.then(response => response.data)
 }
 const getMediaByID = (id) => {
-  const request = axios.get('https://cors-anywhere.herokuapp.com/' + baseUrl + 'getMediaByID?ID='+id)
+  const request = axios.get(cors_hack + baseUrl + 'getMediaByID?ID='+id)
   return request.then(response => response.data)
 }
 const addMedia = (data) => {
-  const request = axios.get('https://cors-anywhere.herokuapp.com/' + baseUrl + 'addMedia',{params:data})
+  const request = axios.get(cors_hack + baseUrl + 'addMedia',{params:data})
   return request.then(response => response.data)
 }
 const getRatingByEventByID = (id) => {
-  const request = axios.get('https://cors-anywhere.herokuapp.com/' + baseUrl + 'getRatingByEventByID?ID='+id)
+  const request = axios.get(cors_hack + baseUrl + 'getRatingByEventByID?ID='+id)
   return request.then(response => response.data)
 }
 const getAllRatings = () => {
-  const request = axios.get('https://cors-anywhere.herokuapp.com/' + baseUrl + 'getAllRatings')
+  const request = axios.get(cors_hack + baseUrl + 'getAllRatings')
   return request.then(response => response.data)
 }
 const getUserRatingOfEvent = (event_id, email) => {
-  const request = axios.get('https://cors-anywhere.herokuapp.com/' + baseUrl + 'getUserRatingAndAverageRatingOfEvent?event_id=' + event_id + '&email=' + email)
+  const request = axios.get(cors_hack + baseUrl + 'getUserRatingAndAverageRatingOfEvent?event_id=' + event_id + '&email=' + email)
   return request.then(response => response.data)
 }
 const addTalk = (data) => {
@@ -125,4 +133,4 @@ const getSpecifiedURL = (url) => {
       .catch(res => {}))
   }
 
-export default {addTalkToEventByEventId,getAllUserEvents,getAllUserTalks,getRatingByID, addEventToTalkByTalkId, getUserRatingOfEvent, getTalkByID,addMedia,getMediaByID, getAllMedia,getAllEvents, getEvent, getTalk, getSpecifiedURL,addRating,getRatingByEventByID,addTalk,getAllRatings, addNewEventToSpeaker, addExistingEventToSpeaker, getSpeaker, getHost, addNewContact, addContactToEvent, getAllHosts}
+export default {addSpeakerToTalkByTalkId,addTalkToSpeakerBySpeakerId,addTalkToEventByEventId,getAllUserMedia,getAllUserEvents,getAllUserTalks,getRatingByID, addEventToTalkByTalkId, getUserRatingOfEvent, getTalkByID,addMedia,getMediaByID, getAllMedia,getAllEvents, getEvent, getTalk, getSpecifiedURL,addRating,getRatingByEventByID,addTalk,getAllRatings, addNewEventToSpeaker, addExistingEventToSpeaker, getSpeaker, getHost, addNewContact, addContactToEvent, getAllHosts}

@@ -7,16 +7,16 @@ import { useAuth } from '../contexts/AuthContext'
 export default function CMedia() {
   const { currentUser } = useAuth()
     useEffect(() => {
-        // CAPIService.getAllUserMedia(currentUser.email)
-        CAPIService.getAllMedia()
+      // CAPIService.getAllMedia()
+        CAPIService.getAllUserMedia(currentUser.email)
           .then(response => {
            
-    
+            console.log(response);
             var temp_array = []
-            for (var i = 0; i < response.documents.length; i++) {
+            for (var i = 0; i < response.media_pairs.length; i++) {
               temp_array.push({
-                name: response.documents[i].name,
-                id: response.documents[i].media_id
+                name: response.media_pairs[i].media_name,
+                id: response.media_pairs[i].id
               })
             }
             setEvent_data(temp_array)

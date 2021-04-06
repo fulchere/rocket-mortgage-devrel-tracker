@@ -19,7 +19,7 @@ export default function CAddMedia() {
         CAPIService.addMedia({
           ...data,
           speaker_ids: speaker_id, 
-          time:  startDate
+          time: value
         })
           .then(res => {
             console.log(res);
@@ -43,7 +43,7 @@ export default function CAddMedia() {
                     </FormGroup>
                     <FormGroup>
                         <label htmlFor="#link">link</label>
-                        <FormInput id="#link" placeholder="link"  onChange={(e)=>setData({...data,name:e.target.value})} />
+                        <FormInput id="#link" placeholder="link"  onChange={(e)=>setData({...data,link:e.target.value})} />
                     </FormGroup>
                     <div style={ { float: 'right' } }><label htmlFor="#time">Date: </label><DatePicker
                         onChange={onChange}

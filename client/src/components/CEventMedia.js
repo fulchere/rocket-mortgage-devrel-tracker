@@ -23,17 +23,16 @@ export default function CEventMedia({event_id}) {
                         <p>description: {media['description']}</p>
                     </div>
                     <div>
-                        link
+                        link：{media['link']}
                     </div>
                 </Col>
 
                 <Col sm="12" md="12" lg="6">
-                    <DatePicker
-                        onChange={onChange}
-                        value={value}
-                    />
                     <div>
-                    Type: Podcast
+                        date：{media['time']}
+                    </div>
+                    <div>
+                    Type: {media['type']}
                     </div>
                 </Col>
             </Row>

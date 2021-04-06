@@ -20,26 +20,21 @@ export default function CEventTalk({ event_id }) {
                 console.log(res);
                 setTalk(res);
             })
-        // CAPIService.getEvent(event_id)
-        //     .then(res => {
-        //         console.log(res);
-        //         setEvent(res);
-        //     })
     }, [event_id])
     useEffect(() => {
+        console.log(currentUser);
         CAPIService.getAllUserEvents(currentUser.email)
             .then(res => {
                 console.log(res);
                 setEvent(res['event_pairs']);
             })
     }, [])
-    const add = () => {
-        CAPIService.addTalkToEventByEventId({ event_id: event_id, talk_id: eventId })
-            .then(res => {
-                console.log(res);
-                setOpen(false);
-            })
-
+    const add = async () => {
+        await CAPIService.addTalkToEventByEventId({ event_id: eventId, talk_id: event_id })
+        await CAPIService.addEventToTalkByTalkId({ event_id: eventId, talk_id: event_id })
+        await CAPIService.addTalkToSpeakerBySpeakerId({ speaker_id: currentUser.uid, talk_id: event_id })
+        await CAPIService.addSpeakerToTalkByTalkId ({ speaker_id: currentUser.uid, talk_id: event_id })
+        await setOpen(false);
     }
     return (
         <Container>
