@@ -18,23 +18,23 @@ export default function CEventTalk({ event_id }) {
 
     useEffect(() => {
         let mounted = true
-        CAPIService.getTalkByID(event_id)
-        .then(res => {
-            if (mounted) {
-                setLoading(false)
-              }
-            setTalk(res);
-        console.log(res)
+
+
+        get_talk()
         console.log(talk)
         CAPIService.getAllUserEvents(currentUser.email)
             .then(res2 => {
+                if (mounted) {
+                    setLoading(false)
+                  }
+                  
                 setEvent(res2['event_pairs']);
 
                 var temp_array = []
 
                 for (var i = 0; i < event.length; i++){
-                    for (var j = 0; j < res['event_ids'].length; j++){
-                        if (event[i].id === res['event_ids'][j]){
+                    for (var j = 0; j < talk['event_ids'].length; j++){
+                        if (event[i].id === talk['event_ids'][j]){
                           temp_array.push(
                               event[i].event_name
                             )
@@ -45,15 +45,19 @@ export default function CEventTalk({ event_id }) {
                 setEventTalks(temp_array)
             })
 
-        })
+        
             return function cleanup() {
                 mounted = false
               }
-    }, [currentUser.email, event_id])
+    }, [currentUser.email, event, event_id])
 
 
-
-
+    const get_talk = async () => {
+        CAPIService.getTalkByID(event_id)
+        .then(res => {
+        setTalk(res);
+    })
+    }
 
     
     const add = async () => {
