@@ -16,11 +16,7 @@ const getAllUserTalks = (email) => {
   return request.then(response => response.data)
 }
 const getAllUserMedia = (email) => {
-<<<<<<< HEAD
   const request = axios.get(cors_hack + baseUrl + 'getSpeakerMediaIDs?email=' + email)
-=======
-  const request = axios.get(cors_hack + baseUrl + 'getAllUserMedias?email=' + email)
->>>>>>> 37641cac1312d8132ef1bdc5eea50d21a354598e
   return request.then(response => response.data)
 }
 

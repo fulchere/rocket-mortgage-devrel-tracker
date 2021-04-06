@@ -13,22 +13,34 @@ export default function CEventTalk({ event_id }) {
     const [open, setOpen] = useState(false)
     const [newActive, setNewActive] = useState(true);
     const [eventId, setEventid] = useState('');
+    const [eventTalks, setEventTalks] = useState([])
 
     useEffect(() => {
         CAPIService.getTalkByID(event_id)
             .then(res => {
-                console.log(res);
                 setTalk(res);
             })
     }, [event_id])
     useEffect(() => {
-        console.log(currentUser);
         CAPIService.getAllUserEvents(currentUser.email)
             .then(res => {
-                console.log(res);
                 setEvent(res['event_pairs']);
+
+                var temp_array = []
+
+                for (var i = 0; i < event.length; i++){
+                    for (var j = 0; j < talk['event_ids'].length; j++){
+                        if (event[i].id === talk['event_ids'][j]){
+                          temp_array.push(
+                              event[i].event_name
+                            )
+                          break
+                        }
+                    }
+                }
+                setEventTalks(temp_array)
             })
-    }, [])
+    }, [currentUser.email, event, talk])
     const add = async () => {
         await CAPIService.addTalkToEventByEventId({ event_id: eventId, talk_id: event_id })
         await CAPIService.addEventToTalkByTalkId({ event_id: eventId, talk_id: event_id })
@@ -56,13 +68,14 @@ export default function CEventTalk({ event_id }) {
                     <Row>
                         <Container>
                             <div style={ { display: 'flex', justifyContent: 'space-around', alignItems: 'center', padding: '15px 0', border: '1px solid rgba(0,0,0,.125)' } }>
-                                <h5>Example Talk given at</h5>
+                                <h5>Talk given at</h5>
                                 <Button onClick={ () => setOpen(!open) } outline size='sm' theme="light" href="">+</Button>
                             </div>
                             <ListGroup>
                                 {
-                                    talk['event_ids']?.map(id => (
-                                        <Button squared theme='light' outline style={ { display: 'flex', justifyContent: 'space-around' } }><span>{ id }</span></Button>
+                                    
+                                    eventTalks.map(id => (
+                                        <ListGroupItem squared theme='light' outline style={ { display: 'flex', justifyContent: 'space-around' } }><span>{ id }</span></ListGroupItem>
                                     ))
                                 }
                             </ListGroup>
@@ -74,7 +87,7 @@ export default function CEventTalk({ event_id }) {
             <Modal open={ open } toggle={ () => setOpen(!open) } >
                 <ModalBody>
 
-                    <h4 style={ { paddingTop: '20px', textAlign: 'center' } }>Add a Event</h4>
+                    <h4 style={ { paddingTop: '20px', textAlign: 'center' } }>Add an Event</h4>
                     <ListGroup style={ { width: '60%', margin: '10px auto' } }>
                         {
                             event.map(ev => (
