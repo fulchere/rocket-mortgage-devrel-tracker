@@ -3,6 +3,8 @@ import DatePicker from 'react-date-picker';
 import {Container, Row, Col} from 'shards-react'
 import CAPIService from './CAPIService'
 
+import moment from 'moment'
+
 
 export default function CEventMedia({event_id}) {
     const [value, onChange] = useState(new Date());
@@ -20,16 +22,16 @@ export default function CEventMedia({event_id}) {
             <Row>
                 <Col sm="12" md="12" lg="6">
                     <div style={ { border: '1px solid rgba(0,0,0,.125)', width: '80%', height: 200, padding: 15 } }>
-                        <p>description: {media['description']}</p>
+                        <p>{media['description']}</p>
                     </div>
-                    <div>
-                        link：{media['link']}
+                    <div style = {{border: '1px solid rgba(0,0,0,.125)', marginTop:'20px', width: '80%'}}>
+                        {media['link']}
                     </div>
                 </Col>
 
                 <Col sm="12" md="12" lg="6">
                     <div>
-                        date：{media['time']}
+                        Entered {moment(media['time']).format('LL')}
                     </div>
                     <div>
                     Type: {media['type']}
