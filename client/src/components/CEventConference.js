@@ -123,10 +123,10 @@ export default function CEventConference({event_id}) {
                         <Button onClick={addRating} theme="success" size="sm">confirm</Button>
                     </div>
                     </Row>
-                    <Row>
-                    <div style = {{marginTop:20}}>
+                    <Row style= {{padding:0}}>
+                    <Col sm={{ size: 8, order: 2, offset: 0 }} style = {{marginTop:20, width:'200px', padding:0}}>
                         <CContactList contact_ids={formData.contact_ids} event_id={event_id} />
-                    </div>
+                    </Col>
                     </Row>
                 </Col>
                 <Col>
@@ -145,7 +145,7 @@ export default function CEventConference({event_id}) {
                             {formData.dei_affiliation ? <Row><div style = {{width:'100%'}} align='right'>DEI affiliated</div></Row> : <div style = {{width:'100%'}} align='right'></div>}
                             {formData.recruiting_partner ? <Row><div style = {{width:'100%'}} align='right'>Recruiting Partner</div></Row> : <div style = {{width:'100%'}} align='right'></div>}
                             <Row><div style = {{width:'100%'}} align='right'>Attendees: {formData.attendees}</div></Row>
-                            <Row><CConferenceTalkList talk_ids={formData.talk_ids} event_id={event_id}/></Row>
+                            <Row><Col sm={{ size: 8, order: 2, offset: 5 }}><CConferenceTalkList talk_ids={formData.talk_ids} event_id={event_id}/></Col></Row>
                         </Container>
                     </div>
                     </Row>

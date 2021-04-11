@@ -52,7 +52,7 @@ export default function CConferenceTalkList({talk_ids, event_id}) {
     return (
         <div>
         {loading ? <div></div>  :
-        <Container style = {{width:'100%', float:'right'}} >
+        <Container style = {{width:'250px', float:'right', marginTop:'20px'}} >
             <Row noGutters={ true } style={ { height: '70px', border: '1px solid rgba(0,0,0,.125)' } }>
                 <h5 style={ { margin: "auto" } }>Talks</h5>
                 <div style={ { margin: "auto" } }>
@@ -60,7 +60,7 @@ export default function CConferenceTalkList({talk_ids, event_id}) {
                 </div>
             </Row>
 
-
+            {(talks.length === 0) ? <div>no talks</div> :
             <ListGroup flush={false}>
                 {talks.map(talk => {
                     
@@ -72,7 +72,7 @@ export default function CConferenceTalkList({talk_ids, event_id}) {
                         </ListGroupItem>
                     )
                 })}
-            </ListGroup>
+            </ListGroup>}
 
             <Modal open={ open } toggle={ ()=>setOpen(!open)} >
                 {

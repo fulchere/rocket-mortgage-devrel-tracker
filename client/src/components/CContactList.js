@@ -48,7 +48,7 @@ export default function CContactList({contact_ids, event_id}) {
     }
 
     return (
-        <div>
+        <div style = {{width:'250px', padding:0}} >
         {loading ? <div></div>  :
         <Container style = {{width:'100%'}} >
             <Row noGutters={ true } style={ { height: '70px', border: '1px solid rgba(0,0,0,.125)' } }>

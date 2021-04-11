@@ -27,29 +27,28 @@ export default function CEventTalk({ event_id }) {
                 if (mounted) {
                     setLoading(false)
                   }
-                  
                 setEvent(res2['event_pairs']);
+            })
 
-                var temp_array = []
+            var temp_array = []
 
-                for (var i = 0; i < event.length; i++){
-                    for (var j = 0; j < talk['event_ids'].length; j++){
-                        if (event[i].id === talk['event_ids'][j]){
-                          temp_array.push(
-                              event[i].event_name
-                            )
-                          break
-                        }
+            for (var i = 0; i < event.length; i++){
+                for (var j = 0; j < talk['event_ids'].length; j++){
+                    if (event[i].id === talk['event_ids'][j]){
+                      temp_array.push(
+                          event[i].event_name
+                        )
+                      break
                     }
                 }
-                setEventTalks(temp_array)
-            })
+            }
+            setEventTalks(temp_array)
 
         
             return function cleanup() {
                 mounted = false
               }
-    }, [currentUser.email, event, event_id])
+    }, [currentUser.email, event])
 
 
     const get_talk = async () => {
@@ -63,8 +62,6 @@ export default function CEventTalk({ event_id }) {
     const add = async () => {
         await CAPIService.addTalkToEventByEventId({ event_id: eventId, talk_id: event_id })
         await CAPIService.addEventToTalkByTalkId({ event_id: eventId, talk_id: event_id })
-        await CAPIService.addTalkToSpeakerBySpeakerId({ speaker_id: currentUser.uid, talk_id: event_id })
-        await CAPIService.addSpeakerToTalkByTalkId ({ speaker_id: currentUser.uid, talk_id: event_id })
         setOpen(false);
     }
     return (

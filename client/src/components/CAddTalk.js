@@ -19,7 +19,7 @@ export default function CAddTalks(props) {
       // description: 1,
       // title: 1,
       given_status: false,
-      event_ids:"['5euPqRxuyX86h3b4MVFy']",
+      event_ids:"",
       speaker_ids: speaker_id,
       submitted_status: false,
 
