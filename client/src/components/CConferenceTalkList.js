@@ -20,17 +20,18 @@ export default function CConferenceTalkList({talk_ids, event_id}) {
     
             var temp_array = []
             
+            console.log(response)
+            console.log(talk_ids)
+
             if (talk_ids) {
             for (var i = 0; i < talk_ids.length; i++){
               for (var j = 0; j < response.documents.length; j++){
                   if (talk_ids[i] === response.documents[j].talk_id){
                     temp_array.push({
-                        talk_id : response.documents[i].talk_id,
-                        title : response.documents[i].title,
-                        speaker_ids : response.documents[i].speaker_ids
-
+                        talk_id : response.documents[j].talk_id,
+                        title : response.documents[j].title,
+                        speaker_ids : response.documents[j].speaker_ids
                       })
-                    break
                   }
               }
 
