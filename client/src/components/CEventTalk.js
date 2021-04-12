@@ -85,7 +85,7 @@ export default function CEventTalk({ event_id }) {
                     <Row>
                         <Container>
                             <div style={ { display: 'flex', justifyContent: 'space-around', alignItems: 'center', padding: '15px 0', border: '1px solid rgba(0,0,0,.125)' } }>
-                                <h5>Talk given at</h5>
+                                <h5 style={{marginBottom:0}}>Talk given at</h5>
                                 <Button onClick={ () => setOpen(!open) } outline size='sm' theme="light" href="">+</Button>
                             </div>
                             <ListGroup>
