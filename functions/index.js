@@ -529,15 +529,25 @@ exports.getSpeakerTalks = functions.https.onRequest(async (req, res) => {
 
 // Get media ids in the speakers collection
 exports.getSpeakerMediaIDs = functions.https.onRequest(async (req, res) => {
-
     const email = req.query.email;
 
     const speakerRef = await admin.firestore().collection('speakers');
     const snapshot = await speakerRef.where('email', '==', email).get();
     const speakerMedia_ids = snapshot.docs.map(doc => doc.data().media_ids)[0];
 
-    // Send back the specific user from the speakers collection
-    res.json({email: email, media_ids: speakerMedia_ids});
+    var media_names = [];
+    for (const media_id of speakerMedia_ids) {
+        const mediaRef = await admin.firestore().collection('media').doc(media_id).get();
+        const mediaName = mediaRef.data().name;
+        media_names.push(mediaName);
+    }
+
+    const media_pairs = speakerMedia_ids.map( function(id, i) {
+        var pair = {id: id, media_name: media_names[i]};
+        return pair;}
+        );
+
+    res.json({email: email, media_pairs: media_pairs});
 });
 
 // Mark a booth attended by a speaker by adding a booth_id to the speaker_ids array in our booth collection
