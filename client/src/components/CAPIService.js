@@ -2,7 +2,7 @@ import axios from 'axios'
 const baseUrl = 'https://us-central1-rocket-mortgage-devrel-tracker.cloudfunctions.net/'
 const cors_hack = 'http://localhost:8080/'
 const getAllEvents = () => {
-  const request = axios.get(cors_hack + baseUrl + 'getAllEventIDsAndNames')
+  const request = axios.get(baseUrl + 'getAllEventIDsAndNames')
   return request.then(response => response.data)
 }
 
@@ -92,37 +92,37 @@ const addTalk = (data) => {
 
 
 const addExistingEventToSpeaker = (speaker_id, event_id) => {
-  const request = axios.get(cors_hack + baseUrl + 'addEventToSpeakerBySpeakerId?speaker_id=' + speaker_id + '&event_id=' + event_id)
+  const request = axios.get(baseUrl + 'addEventToSpeakerBySpeakerId?speaker_id=' + speaker_id + '&event_id=' + event_id)
   return request.then(response => response.data)
 }
 
 const addNewEventToSpeaker = (speaker_id, name, address, facility, attendees, dei_affiliation, description, start, end, host, recruiting_partner, seasonality, talk_ids) => {
-  const request = axios.get(cors_hack + baseUrl + 'addEvent?address=' + address + "&attendees=" + attendees + "&facility=" + facility + "&dei_affiliation=" + dei_affiliation + "&description=" + description + "&name=" + name + "&start=" + start + "&end=" + end + "&host_ids=" + host + "&recruiting_partner=" + recruiting_partner + "&seasonality=" + seasonality + "&speaker_ids=" + speaker_id + "&talk_ids=" + talk_ids)
+  const request = axios.get(baseUrl + 'addEvent?address=' + address + "&attendees=" + attendees + "&facility=" + facility + "&dei_affiliation=" + dei_affiliation + "&description=" + description + "&name=" + name + "&start=" + start + "&end=" + end + "&host_ids=" + host + "&recruiting_partner=" + recruiting_partner + "&seasonality=" + seasonality + "&speaker_ids=" + speaker_id + "&talk_ids=" + talk_ids)
   return request.then(response => response.data)
 }
 
 const getSpeaker = (speaker_email) => {
-  const request = axios.get(cors_hack + baseUrl + 'getSpeakerByEmail?email=' + speaker_email)
+  const request = axios.get(baseUrl + 'getSpeakerByEmail?email=' + speaker_email)
   return request.then(response => response.data)
 }
 
 const getAllHosts = () => {
-  const request = axios.get(cors_hack + baseUrl + 'getAllHosts')
+  const request = axios.get(baseUrl + 'getAllHosts')
   return request.then(response => response.data)
 }
 
 const getHost = (host_id) => {
-  const request = axios.get(cors_hack + baseUrl + 'getHostByID?ID=' + host_id)
+  const request = axios.get(baseUrl + 'getHostByID?ID=' + host_id)
   return request.then(response => response.data)
 }
 
 const addNewContact = (name, email, phone, event_id) => {
-  const request = axios.get(cors_hack + baseUrl + 'addHost?event_ids=' + event_id + "&email=" + email + "&name=" + name + "&phone_number=" + phone)
+  const request = axios.get(baseUrl + 'addHost?event_ids=' + event_id + "&email=" + email + "&name=" + name + "&phone_number=" + phone)
   return request.then(response => response.data)
 }
 
 const addContactToEvent = (contact_id,event_id) => {
-  const request = axios.get(cors_hack + baseUrl + 'addHostToEventByEventId?event_id=' + event_id + "&host_id=" + contact_id)
+  const request = axios.get(baseUrl + 'addHostToEventByEventId?event_id=' + event_id + "&host_id=" + contact_id)
   return request.then(response => response.data)
 }
 
