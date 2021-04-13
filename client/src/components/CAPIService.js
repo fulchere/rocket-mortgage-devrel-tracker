@@ -7,21 +7,21 @@ const getAllEvents = () => {
 }
 
 const getAllUserEvents = (email) => {
-  const request = axios.get(cors_hack + baseUrl + 'getSpeakerEvents?email=' + email)
+  const request = axios.get(baseUrl + 'getSpeakerEvents?email=' + email)
   return request.then(response => response.data)
 }
 
 const getAllUserTalks = (email) => {
-  const request = axios.get(cors_hack + baseUrl + 'getSpeakerTalks?email=' + email)
+  const request = axios.get(baseUrl + 'getSpeakerTalks?email=' + email)
   return request.then(response => response.data)
 }
 const getAllUserMedia = (email) => {
-  const request = axios.get(cors_hack + baseUrl + 'getSpeakerMediaIDs?email=' + email)
+  const request = axios.get(baseUrl + 'getSpeakerMediaIDs?email=' + email)
   return request.then(response => response.data)
 }
 
 const getEvent = (event_id) => {
-  const request = axios.get(cors_hack + baseUrl + 'getEventByID?ID=' + event_id)
+  const request = axios.get(baseUrl + 'getEventByID?ID=' + event_id)
   return (
     request.then(response => response.data)
     .catch(res => {}))
@@ -29,63 +29,63 @@ const getEvent = (event_id) => {
 
 
 const getTalk = () => {
-  const request = axios.get(cors_hack + baseUrl + 'getAllTalks')
+  const request = axios.get(baseUrl + 'getAllTalks')
   return request.then(response => response.data)
 }
 const addRating = (data) => {
-  const request = axios.get(cors_hack + baseUrl + 'addRating' , {params:data})
+  const request = axios.get(baseUrl + 'addRating' , {params:data})
   return request.then(response => response.data)
 }
 const addTalkToEventByEventId = (data) => {
-  const request = axios.get(cors_hack + baseUrl + 'addTalkToEventByEventId' , {params:data})
+  const request = axios.get(baseUrl + 'addTalkToEventByEventId' , {params:data})
   return request.then(response => response.data)
 }
 const addEventToTalkByTalkId = (data) => {
-  const request = axios.get(cors_hack + baseUrl + 'addEventToTalkByTalkId' , {params:data})
+  const request = axios.get(baseUrl + 'addEventToTalkByTalkId' , {params:data})
   return request.then(response => response.data)
 }
 const addTalkToSpeakerBySpeakerId = (data) => {
-  const request = axios.get(cors_hack + baseUrl + 'addTalkToSpeakerBySpeakerId' , {params:data})
+  const request = axios.get(baseUrl + 'addTalkToSpeakerBySpeakerId' , {params:data})
   return request.then(response => response.data)
 }
 const addSpeakerToTalkByTalkId  = (data) => {
-  const request = axios.get(cors_hack + baseUrl + 'addSpeakerToTalkByTalkId ' , {params:data})
+  const request = axios.get(baseUrl + 'addSpeakerToTalkByTalkId ' , {params:data})
   return request.then(response => response.data)
 }
 const getRatingByID = (id) => {
-  const request = axios.get(cors_hack + baseUrl + 'getRatingByID?ID='+id)
+  const request = axios.get(baseUrl + 'getRatingByID?ID='+id)
   return request.then(response => response.data)
 }
 const getAllMedia = () => {
-  const request = axios.get(cors_hack + baseUrl + 'getAllMedia')
+  const request = axios.get(baseUrl + 'getAllMedia')
   return request.then(response => response.data)
 }
 const getTalkByID = (id) => {
-  const request = axios.get(cors_hack + baseUrl + 'getTalkByID?ID='+id)
+  const request = axios.get(baseUrl + 'getTalkByID?ID='+id)
   return request.then(response => response.data)
 }
 const getMediaByID = (id) => {
-  const request = axios.get(cors_hack + baseUrl + 'getMediaByID?ID='+id)
+  const request = axios.get(baseUrl + 'getMediaByID?ID='+id)
   return request.then(response => response.data)
 }
 const addMedia = (data) => {
-  const request = axios.get(cors_hack + baseUrl + 'addMedia',{params:data})
+  const request = axios.get(baseUrl + 'addMedia',{params:data})
   return request.then(response => response.data)
 }
 const getRatingByEventByID = (id) => {
-  const request = axios.get(cors_hack + baseUrl + 'getRatingByEventByID?ID='+id)
+  const request = axios.get(baseUrl + 'getRatingByEventByID?ID='+id)
   return request.then(response => response.data)
 }
 const getAllRatings = () => {
-  const request = axios.get(cors_hack + baseUrl + 'getAllRatings')
+  const request = axios.get(baseUrl + 'getAllRatings')
   return request.then(response => response.data)
 }
 const getUserRatingOfEvent = (event_id, email) => {
-  const request = axios.get(cors_hack + baseUrl + 'getUserRatingAndAverageRatingOfEvent?event_id=' + event_id + '&email=' + email)
+  const request = axios.get(baseUrl + 'getUserRatingAndAverageRatingOfEvent?event_id=' + event_id + '&email=' + email)
   return request.then(response => response.data)
 }
 const addTalk = (data) => {
-  const request = axios.get(cors_hack + baseUrl + 'addTalk',{params:data})
+  const request = axios.get(baseUrl + 'addTalk',{params:data})
   return request.then(response => response.data)
 }
 
