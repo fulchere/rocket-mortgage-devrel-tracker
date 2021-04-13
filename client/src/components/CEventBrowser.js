@@ -7,7 +7,7 @@ import CEvent from './CEvent'
 
 export default function CEventBrowser({ type, event_data }) {
     const [selectedEvent, setSelectedEvent] = useState()
-    const [isSelected, setIsSelected] = useState(true)
+    const [isSelected, setIsSelected] = useState(false)
 
     const select_Event = (event) => {
         setSelectedEvent(event.id)
