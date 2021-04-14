@@ -16,49 +16,36 @@ export default function CEventTalk({ event_id }) {
     const [eventTalks, setEventTalks] = useState([])
     const [loading, setLoading] = useState(true)
 
-    useEffect(() => {
+    useEffect(async () => {
         let mounted = true
-
-
-        get_talk()
-        console.log(talk)
+        let talks = await CAPIService.getTalkByID(event_id)
+        setTalk(talks);
         CAPIService.getAllUserEvents(currentUser.email)
             .then(res2 => {
                 if (mounted) {
                     setLoading(false)
                   }
                 setEvent(res2['event_pairs']);
-            })
-
-            var temp_array = []
-
-            for (var i = 0; i < event.length; i++){
-                for (var j = 0; j < talk['event_ids'].length; j++){
-                    if (event[i].id === talk['event_ids'][j]){
-                      temp_array.push(
-                          event[i].event_name
-                        )
-                      break
+                var evt = res2['event_pairs'];
+                var temp_array = []
+                for (var i = 0; i < evt.length; i++){
+                    for (var j = 0; j < talks['event_ids'].length; j++){
+                        if (evt[i].id === talks['event_ids'][j]){
+                          temp_array.push(
+                              evt[i].event_name
+                            )
+                          break
+                        }
                     }
                 }
-            }
-            setEventTalks(temp_array)
+                setEventTalks(temp_array)
+            })
 
-        
             return function cleanup() {
                 mounted = false
               }
-    }, [currentUser.email, event])
+    }, [currentUser.email, event_id])
 
-
-    const get_talk = async () => {
-        CAPIService.getTalkByID(event_id)
-        .then(res => {
-        setTalk(res);
-    })
-    }
-
-    
     const add = async () => {
         await CAPIService.addTalkToEventByEventId({ event_id: eventId, talk_id: event_id })
         await CAPIService.addEventToTalkByTalkId({ event_id: eventId, talk_id: event_id })
