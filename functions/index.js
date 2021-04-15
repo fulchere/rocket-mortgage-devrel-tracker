@@ -7,6 +7,8 @@ const admin = require('firebase-admin');
 const { firebaseConfig } = require('firebase-functions');
 const { json } = require('express');
 admin.initializeApp();
+const cors = require('cors')({origin: true});
+const app = express();
 
 // Booths Collection
 exports.addBooth = functions.https.onRequest(async (req, res) => {
@@ -693,37 +695,5 @@ exports.addTalkToEventByEventId = functions.https.onRequest(async (req, res) => 
     res.json({MESSAGE: `added talk_id: ${talk_id} to talk array in event document with event_id: ${event_id}`});
 });
 
-// TODO
-//
-// TYLER
-// - make sure that all collections have getAllX functions (DONE)
-// - GetAllBooths DONE
-// - GetAllTalks DONE
-// - make sure all collections have a getXByID function (DONE)
-// - GetBoothById DONE
-// - GetCallforpapersById DONE
-// - GetHostById DONE
-// - GetRatingById DONE
-// - reorganize file so that the ALL functions are grouped and the getXByID functions are grouped (DONE)
-// - create AddXToXByXID function for all arrays, this may be a lot of work I can do some of them if you want
-//   this will need to be done for the following:
-//   COLLECTION | ARRAY
-//   booths     | speaker_ids
-//   events     | host_ids
-//   hosts      | event_ids MATCH
-//   media      | speaker_ids
-//   speakers   | booth_ids
-//   speakers   | event_ids MATCH => function name is addEventToSpeakerBySpeakerId
-//   speakers   | media_ids
-//   speakers   | talk_ids
-//   talks      | speaker_ids
-//   talks      | event_ids MATCH
-//   events      | talk_ids MATCH
-//
-//   Why is there not a matching one for every one? (Ask tyler to explain more)
-//
-// ETHAN
-// did a bunch, see github for info
-//
-// TODO
-// - find way to set default (null?) parameters so if they dont pass all the query params it doesnt throw an error
+app.use(cors);
+exports.app = functions.https.onRequest(app);
