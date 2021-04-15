@@ -5,7 +5,7 @@ const functions = require('firebase-functions');
 // The Firebase Admin SDK to access Firestore.
 const admin = require('firebase-admin');
 const { firebaseConfig } = require('firebase-functions');
-const { json } = require('express');
+const express = require('express');
 admin.initializeApp();
 const cors = require('cors')({origin: true});
 const app = express();
