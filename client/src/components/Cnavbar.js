@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "shards-ui/dist/css/shards.min.css"
 import { useAuth } from '../contexts/AuthContext'
 
-import { useHistory } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 import {
   Button,
@@ -28,7 +28,7 @@ import {
 export default function Cnavbar() {
   const { logout } = useAuth()
   const [error, setError] = useState('')
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const { currentUser } = useAuth()
 
@@ -37,7 +37,7 @@ export default function Cnavbar() {
 
     try{
       await logout()
-      history.push("/login")
+      navigate("/login")
     }
     catch{
       setError('Failed to log out')
